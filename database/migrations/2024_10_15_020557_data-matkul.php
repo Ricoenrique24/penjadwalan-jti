@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('data-matkul', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('status');
-            $table->string('password');
+            $table->string('kd-matkul')->unique();
+            $table->string('nama-matkul');
+            $table->integer('jumlah-sks');
+            $table->integer('semester');
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('data-matkul');
     }
 };
