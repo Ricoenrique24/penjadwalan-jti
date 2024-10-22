@@ -21,10 +21,46 @@ use App\Http\Controllers\admin\TeknisiController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+//ROUTER SLICING
 Route::get('/', function () {
-    return view('welcome');
+    return view('login');
 });
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->name('dashboard');
+
+Route::get('/dosen', function () {
+    return view('dosen');
+})->name('dosen');
+
+Route::get('/teknisi', function () {
+    return view('teknisi');
+})->name('teknisi');
+
+Route::get('/ruangan', function () {
+    return view('ruangan');
+})->name('ruangan');
+
+Route::get('/kelas', function () {
+    return view('kelas');
+})->name('kelas');
+
+Route::get('/mataKuliah', function () {
+    return view('mataKuliah');
+})->name('mataKuliah');
+
+Route::get('/jam', function () {
+    return view('jam');
+})->name('jam');
+
+Route::get('/jadwal', function () {
+    return view('jadwal');
+})->name('jadwal');
+
+Route::get('/pengguna', function () {
+    return view('pengguna');
+})->name('pengguna');
+
 
 Route::prefix('admin')->group(function () {
     // Route untuk halaman beranda
