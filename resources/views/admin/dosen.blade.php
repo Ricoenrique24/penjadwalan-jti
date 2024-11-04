@@ -1,15 +1,13 @@
-@extends('default')
-
-@section('content')
+@extends('admin.default')@section('content')
     <div class="container mx-auto p-6 mt-10 min-h-screen">
         <div class="flex items-center justify-between p-2 border-b">
             <div class="flex-1 text-center">
-                <h1 class="text-3xl font-bold text-gray-800">Kelas</h1>
+                <h1 class="text-3xl font-bold text-gray-800">Dosen</h1>
             </div>
             <button data-modal-target="crud-modal" data-modal-toggle="crud-modal"
                 class="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300 text-sm"
                 type="button">
-                <i class="fa-solid fa-plus"></i> Tambah Kelas
+                <i class="fa-solid fa-plus"></i> Tambah Dosen
             </button>
         </div>
         <div class="overflow-x-auto">
@@ -27,7 +25,7 @@
                     </div>
                     <input type="search" id="default-search"
                         class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Temukan kelas disini..." required />
+                        placeholder="Temukan dosen disini..." required />
                     <button type="submit"
                         class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
                 </div>
@@ -38,18 +36,20 @@
                 <table class="w-full border-separate border-spacing-0 text-sm text-black">
                     <thead class="bg-gray-200 text-gray-800">
                         <tr>
-                            <th class="p-2 text-center">Semester</th>
-                            <th class="p-2 text-center">Golongan</th>
-                            <th class="p-2 text-center">Total Mahasiswa</th>
+                            <th class="p-2 text-center">Kode Dosen</th>
+                            <th class="p-2 text-center">NIP</th>
+                            <th class="p-2 text-center">Nama</th>
+                            <th class="p-2 text-center">Jenis Kelamin</th>
                             <th class="p-2 text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="bg-white text-center" id="dosenTableBody">
                         <?php for ($i = 1; $i <= 10; $i++): ?>
                         <tr class="border-b border-gray-200">
-                            <td class="p-2"><?php echo sprintf('%02d', $i); ?></td>
-                            <td class="p-2">A</td>
-                            <td class="p-2">30 Orang</td>
+                            <td class="p-2"><?php printf('%03d', $i); ?></td>
+                            <td class="p-2">19850101201001200<?php echo sprintf('%02d', $i); ?></td>
+                            <td class="p-2">Junia Vitasari, S.Tr.Kom., M.T.</td>
+                            <td class="p-2">Perempuan</td>
                             <td class="p-2">
                                 <button type="button" data-modal-target="#edit-item-modal-<?php echo $i; ?>"
                                     class="inline-flex items-center justify-center w-8 h-8 text-gray-800 bg-gray-200 border border-gray-300 rounded-sm shadow-sm hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500">
@@ -61,13 +61,12 @@
                                     @method('DELETE')
                                     <button type="button"
                                         class="inline-flex items-center justify-center w-8 h-8 text-white bg-red-700 border border-red-600 rounded shadow-sm hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-500 ml-1"
-                                        onclick="confirmDelete('<?php echo sprintf('%03d', $i); ?>')">
+                                        onclick="confirmDelete('<?php printf('%03d', $i); ?>')">
                                         <i class="fa-regular fa-trash-can text-base"></i>
                                     </button>
                                 </form>
                             </td>
                         </tr>
-
                         <!-- Modal Edit Dosen -->
                         <div id="edit-item-modal-<?php echo $i; ?>" tabindex="-1" aria-hidden="true"
                             class="fixed inset-0 z-50 flex items-center justify-center w-full p-4 overflow-x-hidden overflow-y-auto h-modal hidden">
@@ -84,28 +83,45 @@
                                         <span class="sr-only">Close modal</span>
                                     </button>
                                     <div class="p-6 text-center">
-                                        <h3 class="text-lg font-semibold text-gray-900">Edit Kelas</h3>
+                                        <h3 class="text-lg font-semibold text-gray-900">Edit Dosen</h3>
                                         <form action="/" method="POST" class="space-y-4">
                                             @csrf
                                             @method('PUT')
-                                            <div class="text-left">
-                                              <label for="nik" class="block text-sm font-medium text-gray-900">Semester</label>
-                                              <input type="text" name="nik" id="nik"
-                                                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
-                                                  placeholder="Masukkan Semester" required>
-                                          </div>
-                                          <div class="text-left mt-4">
-                                              <label for="nama_teknisi" class="block text-sm font-medium text-gray-900">Golongan</label>
-                                              <input type="text" name="nama_dosen" id="nama_dosen"
-                                                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
-                                                  placeholder="Masukkan Golongan" required>
-                                          </div>
-                                          <div class="text-left mt-4">
-                                              <label for="jabatan" class="block text-sm font-medium text-gray-900">Total Mahasiswa</label>
-                                              <input type="text" name="jabatan" id="jabatan"
-                                                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
-                                                  placeholder="Masukkan Total Mahasiswa" required>
-                                          </div>
+                                            <div class="text-left mt-">
+                                                <label for="kode_dosen" class="block text-sm font-medium text-gray-900">Kode
+                                                    Dosen</label>
+                                                <input type="text" name="kode_dosen" id="kode_dosen"
+                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
+                                                    placeholder="Masukkan Kode Dosen" required>
+                                            </div>
+                                            <div class="text-left mt-4">
+                                                <label for="nama_dosen" class="block text-sm font-medium text-gray-900">Nama
+                                                    Dosen</label>
+                                                <input type="text" name="nama_dosen" id="nama_dosen"
+                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
+                                                    placeholder="Masukkan Nama Dosen" required>
+                                            </div>
+
+                                            <div class="text-left mt-4">
+                                                <label for="nip"
+                                                    class="block text-sm font-medium text-gray-900">NIP</label>
+                                                <input type="text" name="nip" id="nip"
+                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
+                                                    placeholder="Masukkan NIP Dosen" required>
+                                            </div>
+
+                                            <div class="text-left mt-4">
+                                                <label for="jenis_kelamin"
+                                                    class="block text-sm font-medium text-gray-900">Jenis
+                                                    Kelamin</label>
+                                                <select name="jenis_kelamin" id="jenis_kelamin"
+                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
+                                                    required>
+                                                    <option value="">Pilih Jenis Kelamin</option>
+                                                    <option value="Laki-laki">Laki-laki</option>
+                                                    <option value="Perempuan">Perempuan</option>
+                                                </select>
+                                            </div>
                                             <div class="flex justify-end">
                                                 <button type="submit"
                                                     class="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300 font-medium text-sm my-2">
@@ -130,7 +146,7 @@
             <div class="relative p-4 w-full max-w-md max-h-full">
                 <div class="relative bg-white rounded-lg shadow-lg">
                     <div class="flex items-center justify-between p-4 border-b border-gray-200">
-                        <h3 class="text-lg font-semibold text-black">Tambah Kelas</h3>
+                        <h3 class="text-lg font-semibold text-black">Tambah Dosen</h3>
                         <button type="button"
                             class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 inline-flex justify-center items-center"
                             data-modal-toggle="crud-modal" data-modal-hide="crud-modal">
@@ -144,24 +160,36 @@
                     </div>
                     <form action="" method="POST" class="p-4">
                         @csrf
-
-                        <div class="text-left">
-                            <label for="nik" class="block text-sm font-medium text-gray-900">Semester</label>
-                            <input type="text" name="nik" id="nik"
+                        <div class="text-left mt-">
+                            <label for="kode_dosen" class="block text-sm font-medium text-gray-900">Kode Dosen</label>
+                            <input type="text" name="kode_dosen" id="kode_dosen"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
-                                placeholder="Masukkan Semester" required>
+                                placeholder="Masukkan Kode Dosen" required>
                         </div>
                         <div class="text-left mt-4">
-                            <label for="nama_teknisi" class="block text-sm font-medium text-gray-900">Golongan</label>
+                            <label for="nama_dosen" class="block text-sm font-medium text-gray-900">Nama Dosen</label>
                             <input type="text" name="nama_dosen" id="nama_dosen"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
-                                placeholder="Masukkan Golongan" required>
+                                placeholder="Masukkan Nama Dosen" required>
                         </div>
+
                         <div class="text-left mt-4">
-                            <label for="jabatan" class="block text-sm font-medium text-gray-900">Total Mahasiswa</label>
-                            <input type="text" name="jabatan" id="jabatan"
+                            <label for="nip" class="block text-sm font-medium text-gray-900">NIP</label>
+                            <input type="text" name="nip" id="nip"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
-                                placeholder="Masukkan Total Mahasiswa" required>
+                                placeholder="Masukkan NIP Dosen" required>
+                        </div>
+
+                        <div class="text-left mt-4">
+                            <label for="jenis_kelamin" class="block text-sm font-medium text-gray-900">Jenis
+                                Kelamin</label>
+                            <select name="jenis_kelamin" id="jenis_kelamin"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
+                                required>
+                                <option value="">Pilih Jenis Kelamin</option>
+                                <option value="Laki-laki">Laki-laki</option>
+                                <option value="Perempuan">Perempuan</option>
+                            </select>
                         </div>
                         <div class="flex justify-end">
                             <button type="submit"
@@ -225,7 +253,7 @@
         function confirmDelete() {
             Swal.fire({
                 title: 'Apakah Anda yakin?',
-                text: "Anda tidak akan dapat mengembalikan kelas ini!",
+                text: "Anda tidak akan dapat mengembalikan dosen ini!",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#d33',

@@ -1,4 +1,4 @@
-@extends('default')
+@extends('admin.default')
 
 @section('content')
 <div class="container mx-auto p-6 mt-12 bg-gray-50 rounded-lg shadow-lg min-h-screen">
