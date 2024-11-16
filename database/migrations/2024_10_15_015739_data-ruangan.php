@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('kd-ruangan')->unique();
             $table->string('nama-ruangan');
             $table->integer('kapasitas');
-            $table->boolean('status');
             $table->timestamps();
         });
     }

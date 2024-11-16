@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('data-jam', function (Blueprint $table) {
             $table->id();
             $table->String('sesi');
-            $table->String('jam');
+            $table->String('jam-awal');
+            $table->String('jam-akhir');
             $table->timestamps();
         });
     }

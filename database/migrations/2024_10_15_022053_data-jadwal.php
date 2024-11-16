@@ -16,6 +16,7 @@ return new class extends Migration
             $table->String('hari');
             $table->string('jam');
             $table->string('matkul');
+            $table->string('tahun-ajaran');
             $table->integer('semester');
             $table->string('ruangan');
             $table->string('dosen');
