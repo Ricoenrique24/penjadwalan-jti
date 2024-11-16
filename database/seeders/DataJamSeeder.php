@@ -12,34 +12,39 @@ class DataJamSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('data-jam')->insert([
+        DB::table('data_jam')->insert([
             [
                 'sesi' => 'Sesi 1',
-                'jam' => '07.00 - 08.00',
+                'jam_awal' => '07:00',
+                'jam_akhir' => '08:00',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'sesi' => 'Sesi 2',
-                'jam' => '08.00 - 09.00',
+                'jam_awal' => '08:00',
+                'jam_akhir' => '09:00',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'sesi' => 'Sesi 3',
-                'jam' => '09.00 - 10.00',
+                'jam_awal' => '09:00',
+                'jam_akhir' => '10:00',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'sesi' => 'Sesi 4',
-                'jam' => '10.00 - 11.00',
+                'jam_awal' => '10:00',
+                'jam_akhir' => '11:00',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'sesi' => 'Sesi 5',
-                'jam' => '11.00 - 12.00',
+                'jam_awal' => '11:00',
+                'jam_akhir' => '12:00',
                 'created_at' => now(),
                 'updated_at' => now(),
             ]

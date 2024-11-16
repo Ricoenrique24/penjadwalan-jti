@@ -12,7 +12,7 @@ class DataJadwalSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('data-jadwal')->insert([
+        DB::table('data_jadwal')->insert([
             [
                 'hari' => 'Senin',
                 'jam' => '07.00 - 08.00',
@@ -22,6 +22,7 @@ class DataJadwalSeeder extends Seeder
                 'dosen' => 'Dr. Budi Santoso',
                 'teknisi' => 'Joko Prasetyo',
                 'kelas' => 'Sesi 1 - Teknik Informatika A',
+                'tahun_ajaran' => '2024/2025',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -34,6 +35,7 @@ class DataJadwalSeeder extends Seeder
                 'dosen' => 'Prof. Siti Aminah',
                 'teknisi' => 'Rina Setiawan',
                 'kelas' => 'Sesi 2 - Sistem Informasi B',
+                'tahun_ajaran' => '2024/2025',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -46,9 +48,10 @@ class DataJadwalSeeder extends Seeder
                 'dosen' => 'Ahmad Fauzi, M.Sc',
                 'teknisi' => 'Dedi Kurniawan',
                 'kelas' => 'Sesi 3 - Manajemen Informatika C',
+                'tahun_ajaran' => '2024/2025',
                 'created_at' => now(),
                 'updated_at' => now(),
-            ]
+            ],
         ]);
     }
 }

@@ -10,13 +10,13 @@ class Matkul extends Model
     use HasFactory;
 
     // Nama tabel yang digunakan oleh model ini
-    protected $table = 'data-matkul';
+    protected $table = 'data_matkul';
 
     // Kolom-kolom yang dapat diisi secara massal
     protected $fillable = [
-        'kd-matkul',
-        'nama-matkul',
-        'jumlah-sks',
+        'kd_matkul',
+        'nama_matkul',
+        'jumlah_matkul',
         'semester',
     ];
 

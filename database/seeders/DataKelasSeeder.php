@@ -12,12 +12,12 @@ class DataKelasSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('data-kelas')->insert([
+        DB::table('data_kelas')->insert([
             [
                 'semester' => 1,
                 'golongan' => 'A',
                 'prodi' => 'Teknik Informatika',
-                'total-mhs' => 30,
+                'total_mhs' => 30,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -25,7 +25,7 @@ class DataKelasSeeder extends Seeder
                 'semester' => 3,
                 'golongan' => 'B',
                 'prodi' => 'Sistem Informasi',
-                'total-mhs' => 25,
+                'total_mhs' => 25,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -33,7 +33,7 @@ class DataKelasSeeder extends Seeder
                 'semester' => 5,
                 'golongan' => 'C',
                 'prodi' => 'Manajemen Informatika',
-                'total-mhs' => 28,
+                'total_mhs' => 28,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]

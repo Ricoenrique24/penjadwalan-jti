@@ -10,7 +10,7 @@ class Jadwal extends Model
     use HasFactory;
 
     // Nama tabel yang digunakan oleh model ini
-    protected $table = 'data-jadwal';
+    protected $table = 'data_jadwal';
 
     // Kolom-kolom yang dapat diisi secara massal
     protected $fillable = [

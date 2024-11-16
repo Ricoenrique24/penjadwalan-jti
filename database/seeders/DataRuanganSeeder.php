@@ -13,28 +13,25 @@ class DataRuanganSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('data-ruangan')->insert([
+        DB::table('data_ruangan')->insert([
             [
-                'kd-ruangan' => Str::random(5),
-                'nama-ruangan' => 'Ruang Serbaguna',
+                'kd_ruangan' => Str::random(5),
+                'nama_ruangan' => 'Ruang Serbaguna',
                 'kapasitas' => 50,
-                'status' => true, // true untuk aktif, false untuk tidak aktif
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'kd-ruangan' => Str::random(5),
-                'nama-ruangan' => 'Ruang Kelas 1',
+                'kd_ruangan' => Str::random(5),
+                'nama_ruangan' => 'Ruang Kelas 1',
                 'kapasitas' => 30,
-                'status' => true,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'kd-ruangan' => Str::random(5),
-                'nama-ruangan' => 'Ruang Kelas 2',
+                'kd_ruangan' => Str::random(5),
+                'nama_ruangan' => 'Ruang Kelas 2',
                 'kapasitas' => 25,
-                'status' => false, // false untuk ruangan yang sedang tidak digunakan
                 'created_at' => now(),
                 'updated_at' => now(),
             ]

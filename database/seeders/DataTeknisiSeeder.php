@@ -13,24 +13,24 @@ class DataTeknisiSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('data-teknisi')->insert([
+        DB::table('data_teknisi')->insert([
             [
                 'nik' => Str::random(10),
-                'nama-teknisi' => 'Joko Prasetyo',
+                'nama_teknisi' => 'Joko Prasetyo',
                 'jabatan' => 'Teknisi Jaringan',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'nik' => Str::random(10),
-                'nama-teknisi' => 'Rina Setiawan',
+                'nama_teknisi' => 'Rina Setiawan',
                 'jabatan' => 'Teknisi Listrik',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'nik' => Str::random(10),
-                'nama-teknisi' => 'Dedi Kurniawan',
+                'nama_teknisi' => 'Dedi Kurniawan',
                 'jabatan' => 'Teknisi Perangkat Keras',
                 'created_at' => now(),
                 'updated_at' => now(),

@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('data-matkul', function (Blueprint $table) {
+        Schema::create('data_matkul', function (Blueprint $table) {
             $table->id();
-            $table->string('kd-matkul')->unique();
-            $table->string('nama-matkul');
-            $table->integer('jumlah-sks');
+            $table->string('kd_matkul')->unique();
+            $table->string('nama_matkul');
+            $table->integer('jumlah_sks');
             $table->integer('semester');
             $table->timestamps();
         });

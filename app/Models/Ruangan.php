@@ -10,12 +10,12 @@ class Ruangan extends Model
     use HasFactory;
 
     // Nama tabel yang digunakan oleh model ini
-    protected $table = 'data-ruangan';
+    protected $table = 'data_ruangan';
 
     // Kolom-kolom yang dapat diisi secara massal
     protected $fillable = [
-        'kd-ruangan',
-        'nama-ruangan',
+        'kd_ruangan',
+        'nama_ruangan',
         'kapasitas',
         'status',
     ];

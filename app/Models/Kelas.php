@@ -10,14 +10,14 @@ class Kelas extends Model
     use HasFactory;
 
     // Nama tabel yang digunakan oleh model ini
-    protected $table = 'data-kelas';
+    protected $table = 'data_kelas';
 
     // Kolom-kolom yang dapat diisi secara massal
     protected $fillable = [
         'semester',
         'golongan',
         'prodi',
-        'total-mhs',
+        'total_mhs',
     ];
 
     // Menyesuaikan jika nama kolom primary key bukan 'id'

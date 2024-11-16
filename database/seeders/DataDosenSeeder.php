@@ -13,28 +13,28 @@ class DataDosenSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('data-dosen')->insert([
+        DB::table('data_dosen')->insert([
             [
-                'kd-dosen' => Str::random(5),
+                'kd_dosen' => Str::random(5),
                 'nip' => '197001012021012001',
-                'nama-dosen' => 'Dr. Budi Santoso',
-                'jenis-kelamin' => 'Laki-laki',
+                'nama_dosen' => 'Dr. Budi Santoso',
+                'jenis_kelamin' => 'Laki-laki',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'kd-dosen' => Str::random(5),
+                'kd_dosen' => Str::random(5),
                 'nip' => '198002022022022002',
-                'nama-dosen' => 'Prof. Siti Aminah',
-                'jenis-kelamin' => 'Perempuan',
+                'nama_dosen' => 'Prof. Siti Aminah',
+                'jenis_kelamin' => 'Perempuan',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'kd-dosen' => Str::random(5),
+                'kd_dosen' => Str::random(5),
                 'nip' => '198503032023033003',
-                'nama-dosen' => 'Ahmad Fauzi, M.Sc',
-                'jenis-kelamin' => 'Laki-laki',
+                'nama_dosen' => 'Ahmad Fauzi, M.Sc',
+                'jenis_kelamin' => 'Laki-laki',
                 'created_at' => now(),
                 'updated_at' => now(),
             ]

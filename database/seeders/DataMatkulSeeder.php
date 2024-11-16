@@ -13,27 +13,27 @@ class DataMatkulSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('data-matkul')->insert([
+        DB::table('data_matkul')->insert([
             [
-                'kd-matkul' => Str::random(5),
-                'nama-matkul' => 'Pemrograman Web',
-                'jumlah-sks' => 3,
+                'kd_matkul' => Str::random(5),
+                'nama_matkul' => 'Pemrograman Web',
+                'jumlah_sks' => 3,
                 'semester' => 3,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'kd-matkul' => Str::random(5),
-                'nama-matkul' => 'Sistem Operasi',
-                'jumlah-sks' => 4,
+                'kd_matkul' => Str::random(5),
+                'nama_matkul' => 'Sistem Operasi',
+                'jumlah_sks' => 4,
                 'semester' => 2,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'kd-matkul' => Str::random(5),
-                'nama-matkul' => 'Jaringan Komputer',
-                'jumlah-sks' => 3,
+                'kd_matkul' => Str::random(5),
+                'nama_matkul' => 'Jaringan Komputer',
+                'jumlah_sks' => 3,
                 'semester' => 4,
                 'created_at' => now(),
                 'updated_at' => now(),

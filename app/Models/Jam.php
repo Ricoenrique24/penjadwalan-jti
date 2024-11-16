@@ -10,7 +10,7 @@ class Jam extends Model
     use HasFactory;
 
     // Nama tabel yang digunakan oleh model ini
-    protected $table = 'data-jam';
+    protected $table = 'data_jam';
 
     // Kolom-kolom yang dapat diisi secara massal
     protected $fillable = [

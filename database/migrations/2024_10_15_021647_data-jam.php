@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('data-jam', function (Blueprint $table) {
+        Schema::create('data_jam', function (Blueprint $table) {
             $table->id();
             $table->String('sesi');
-            $table->String('jam-awal');
-            $table->String('jam-akhir');
+            $table->String('jam_awal');
+            $table->String('jam_akhir');
             $table->timestamps();
         });
     }

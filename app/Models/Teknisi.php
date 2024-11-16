@@ -10,12 +10,12 @@ class Teknisi extends Model
     use HasFactory;
 
     // Nama tabel yang digunakan oleh model ini
-    protected $table = 'data-teknisi';
+    protected $table = 'data_teknisi';
 
     // Kolom-kolom yang dapat diisi secara massal
     protected $fillable = [
         'nik',
-        'nama-teknisi',
+        'nama_teknisi',
         'jabatan',
     ];
 

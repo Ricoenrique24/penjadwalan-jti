@@ -10,13 +10,13 @@ class Dosen extends Model
     use HasFactory;
 
     // Nama tabel yang digunakan oleh model ini
-    protected $table = 'data-dosen';
+    protected $table = 'data_dosen';
 
     // Kolom-kolom yang dapat diisi secara massal
     protected $fillable = [
-        'kd-dosen',
+        'kd_dosen',
         'nip',
-        'nama-dosen',
+        'nama_dosen',
         'jenis-kelamin',
     ];
 
