@@ -21,76 +21,125 @@ use App\Http\Controllers\admin\TeknisiController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+//ROUTER SLICING
 Route::get('/', function () {
-    return view('welcome');
+    return view('login');
 });
+Route::get('/admin/dashboard', function () {
+    return view('admin.dashboard');
+})->name('dashboard');
 
-Route::prefix('admin')->group(function () {
-    // Route untuk halaman beranda
-    Route::get('/beranda', [BerandaController::class, 'index'])->name('admin.beranda');
+Route::get('/admin/dosen', function () {
+    return view('admin.dosen');
+})->name('dosen');
 
-    // Route untuk autentikasi
-    Route::get('/login', [AuthController::class, 'showLoginForm'])->name('admin.login');
-    Route::post('/login', [AuthController::class, 'login']);
-    Route::post('/logout', [AuthController::class, 'logout'])->name('admin.logout');
+Route::get('/admin/teknisi', function () {
+    return view('admin.teknisi');
+})->name('teknisi');
 
-     // Route untuk halaman beranda
-    Route::get('/beranda', [BerandaController::class, 'index'])->name('admin.beranda');
+Route::get('/admin/ruangan', function () {
+    return view('admin.ruangan');
+})->name('ruangan');
 
-    // Route untuk autentikasi
-    Route::get('/login', [AuthController::class, 'showLoginForm'])->name('admin.login');
-    Route::post('/login', [AuthController::class, 'login']);
-    Route::post('/logout', [AuthController::class, 'logout'])->name('admin.logout');
+Route::get('/admin/kelas', function () {
+    return view('admin.kelas');
+})->name('kelas');
 
-    // Route untuk data dosen
-    Route::get('/dosen', [DosenController::class, 'index'])->name('admin.dosen.index');
-    Route::post('/dosen', [DosenController::class, 'store'])->name('admin.dosen.store');
-    Route::get('/dosen/{id}', [DosenController::class, 'show'])->name('admin.dosen.show');
-    Route::put('/dosen/{id}', [DosenController::class, 'update'])->name('admin.dosen.update');
-    Route::delete('/dosen/{id}', [DosenController::class, 'destroy'])->name('admin.dosen.destroy');
+Route::get('/admin/mataKuliah', function () {
+    return view('admin.mataKuliah');
+})->name('mataKuliah');
 
-    // Route untuk data jadwal
-    Route::get('/jadwal', [JadwalController::class, 'index'])->name('admin.jadwal.index');
-    Route::post('/jadwal', [JadwalController::class, 'store'])->name('admin.jadwal.store');
-    Route::get('/jadwal/{id}', [JadwalController::class, 'show'])->name('admin.jadwal.show');
-    Route::put('/jadwal/{id}', [JadwalController::class, 'update'])->name('admin.jadwal.update');
-    Route::delete('/jadwal/{id}', [JadwalController::class, 'destroy'])->name('admin.jadwal.destroy');
+Route::get('/admin/jam', function () {
+    return view('admin.jam');
+})->name('jam');
 
-    // Route untuk data kelas
-    Route::get('/kelas', [KelasController::class, 'index'])->name('admin.kelas.index');
-    Route::post('/kelas', [KelasController::class, 'store'])->name('admin.kelas.store');
-    Route::get('/kelas/{id}', [KelasController::class, 'show'])->name('admin.kelas.show');
-    Route::put('/kelas/{id}', [KelasController::class, 'update'])->name('admin.kelas.update');
-    Route::delete('/kelas/{id}', [KelasController::class, 'destroy'])->name('admin.kelas.destroy');
+Route::get('/admin/jadwal', function () {
+    return view('admin.jadwal');
+})->name('jadwal');
 
-    // Route untuk data mata kuliah
-    Route::get('/matkul', [MatkulController::class, 'index'])->name('admin.matkul.index');
-    Route::post('/matkul', [MatkulController::class, 'store'])->name('admin.matkul.store');
-    Route::get('/matkul/{id}', [MatkulController::class, 'show'])->name('admin.matkul.show');
-    Route::put('/matkul/{id}', [MatkulController::class, 'update'])->name('admin.matkul.update');
-    Route::delete('/matkul/{id}', [MatkulController::class, 'destroy'])->name('admin.matkul.destroy');
+Route::get('/admin/pengguna', function () {
+    return view('admin.pengguna');
+})->name('pengguna');
 
-    // Route untuk data pengguna
-    Route::get('/pengguna', [PenggunaController::class, 'index'])->name('admin.pengguna.index');
-    Route::post('/pengguna', [PenggunaController::class, 'store'])->name('admin.pengguna.store');
-    Route::get('/pengguna/{id}', [PenggunaController::class, 'show'])->name('admin.pengguna.show');
-    Route::put('/pengguna/{id}', [PenggunaController::class, 'update'])->name('admin.pengguna.update');
-    Route::delete('/pengguna/{id}', [PenggunaController::class, 'destroy'])->name('admin.pengguna.destroy');
+//ROUTE DOSEN DAN TEKNISI
+Route::get('/dosen/dashboard', function () {
+    return view('dosen.dashboard');
+})->name('dosen-dashboard');
+Route::get('/dosen/jadwal', function () {
+    return view('dosen.jadwal');
+})->name('dosen-jadwal');
+Route::get('/dosen/beban', function () {
+    return view('dosen.beban');
+})->name('dosen-beban');
+Route::get('/dosen/beban-pegawai', function () {
+    return view('dosen.beban-pegawai');
+})->name('dosen-beban-pegawai');
 
-    // Route untuk data ruangan
-    Route::get('/ruangan', [RuanganController::class, 'index'])->name('admin.ruangan.index');
-    Route::post('/ruangan', [RuanganController::class, 'store'])->name('admin.ruangan.store');
-    Route::get('/ruangan/{id}', [RuanganController::class, 'show'])->name('admin.ruangan.show');
-    Route::put('/ruangan/{id}', [RuanganController::class, 'update'])->name('admin.ruangan.update');
-    Route::delete('/ruangan/{id}', [RuanganController::class, 'destroy'])->name('admin.ruangan.destroy');
+// Route::prefix('admin')->group(function () {
+//     // Route untuk halaman beranda
+//     Route::get('/beranda', [BerandaController::class, 'index'])->name('admin.beranda');
 
-    // Route untuk data teknisi
-    Route::get('/teknisi', [TeknisiController::class, 'index'])->name('admin.teknisi.index');
-    Route::post('/teknisi', [TeknisiController::class, 'store'])->name('admin.teknisi.store');
-    Route::get('/teknisi/{id}', [TeknisiController::class, 'show'])->name('admin.teknisi.show');
-    Route::put('/teknisi/{id}', [TeknisiController::class, 'update'])->name('admin.teknisi.update');
-    Route::delete('/teknisi/{id}', [TeknisiController::class, 'destroy'])->name('admin.teknisi.destroy');
+//     // Route untuk autentikasi
+//     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('admin.login');
+//     Route::post('/login', [AuthController::class, 'login']);
+//     Route::post('/logout', [AuthController::class, 'logout'])->name('admin.logout');
+
+//      // Route untuk halaman beranda
+//     Route::get('/beranda', [BerandaController::class, 'index'])->name('admin.beranda');
+
+//     // Route untuk autentikasi
+//     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('admin.login');
+//     Route::post('/login', [AuthController::class, 'login']);
+//     Route::post('/logout', [AuthController::class, 'logout'])->name('admin.logout');
+
+//     // Route untuk data dosen
+//     Route::get('/dosen', [DosenController::class, 'index'])->name('admin.dosen.index');
+//     Route::post('/dosen', [DosenController::class, 'store'])->name('admin.dosen.store');
+//     Route::get('/dosen/{id}', [DosenController::class, 'show'])->name('admin.dosen.show');
+//     Route::put('/dosen/{id}', [DosenController::class, 'update'])->name('admin.dosen.update');
+//     Route::delete('/dosen/{id}', [DosenController::class, 'destroy'])->name('admin.dosen.destroy');
+
+//     // Route untuk data jadwal
+//     Route::get('/jadwal', [JadwalController::class, 'index'])->name('admin.jadwal.index');
+//     Route::post('/jadwal', [JadwalController::class, 'store'])->name('admin.jadwal.store');
+//     Route::get('/jadwal/{id}', [JadwalController::class, 'show'])->name('admin.jadwal.show');
+//     Route::put('/jadwal/{id}', [JadwalController::class, 'update'])->name('admin.jadwal.update');
+//     Route::delete('/jadwal/{id}', [JadwalController::class, 'destroy'])->name('admin.jadwal.destroy');
+
+//     // Route untuk data kelas
+//     Route::get('/kelas', [KelasController::class, 'index'])->name('admin.kelas.index');
+//     Route::post('/kelas', [KelasController::class, 'store'])->name('admin.kelas.store');
+//     Route::get('/kelas/{id}', [KelasController::class, 'show'])->name('admin.kelas.show');
+//     Route::put('/kelas/{id}', [KelasController::class, 'update'])->name('admin.kelas.update');
+//     Route::delete('/kelas/{id}', [KelasController::class, 'destroy'])->name('admin.kelas.destroy');
+
+//     // Route untuk data mata kuliah
+//     Route::get('/matkul', [MatkulController::class, 'index'])->name('admin.matkul.index');
+//     Route::post('/matkul', [MatkulController::class, 'store'])->name('admin.matkul.store');
+//     Route::get('/matkul/{id}', [MatkulController::class, 'show'])->name('admin.matkul.show');
+//     Route::put('/matkul/{id}', [MatkulController::class, 'update'])->name('admin.matkul.update');
+//     Route::delete('/matkul/{id}', [MatkulController::class, 'destroy'])->name('admin.matkul.destroy');
+
+//     // Route untuk data pengguna
+//     Route::get('/pengguna', [PenggunaController::class, 'index'])->name('admin.pengguna.index');
+//     Route::post('/pengguna', [PenggunaController::class, 'store'])->name('admin.pengguna.store');
+//     Route::get('/pengguna/{id}', [PenggunaController::class, 'show'])->name('admin.pengguna.show');
+//     Route::put('/pengguna/{id}', [PenggunaController::class, 'update'])->name('admin.pengguna.update');
+//     Route::delete('/pengguna/{id}', [PenggunaController::class, 'destroy'])->name('admin.pengguna.destroy');
+
+//     // Route untuk data ruangan
+//     Route::get('/ruangan', [RuanganController::class, 'index'])->name('admin.ruangan.index');
+//     Route::post('/ruangan', [RuanganController::class, 'store'])->name('admin.ruangan.store');
+//     Route::get('/ruangan/{id}', [RuanganController::class, 'show'])->name('admin.ruangan.show');
+//     Route::put('/ruangan/{id}', [RuanganController::class, 'update'])->name('admin.ruangan.update');
+//     Route::delete('/ruangan/{id}', [RuanganController::class, 'destroy'])->name('admin.ruangan.destroy');
+
+//     // Route untuk data teknisi
+//     Route::get('/teknisi', [TeknisiController::class, 'index'])->name('admin.teknisi.index');
+//     Route::post('/teknisi', [TeknisiController::class, 'store'])->name('admin.teknisi.store');
+//     Route::get('/teknisi/{id}', [TeknisiController::class, 'show'])->name('admin.teknisi.show');
+//     Route::put('/teknisi/{id}', [TeknisiController::class, 'update'])->name('admin.teknisi.update');
+//     Route::delete('/teknisi/{id}', [TeknisiController::class, 'destroy'])->name('admin.teknisi.destroy');
 
     // // Route untuk data dosen
     // Route::resource('dosen', DosenController::class);
