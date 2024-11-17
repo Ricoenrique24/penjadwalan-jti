@@ -33,4 +33,14 @@ class Jadwal extends Model
 
     // Jika tidak menggunakan timestamps
     // public $timestamps = true;
+
+    public function dosen()
+    {
+        return $this->belongsTo(User::class, 'id_dosen');
+    }
+
+    public function teknisi()
+    {
+        return $this->belongsTo(User::class, 'id_teknisi');
+    }
 }

@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 // ADMIN
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\JamController;
-use App\Http\Controllers\admin\AuthController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\admin\BerandaController;
 use App\Http\Controllers\admin\DosenController;
 use App\Http\Controllers\admin\JadwalController;
@@ -32,9 +32,9 @@ use App\Http\Controllers\dosen\RuanganDosen;
 |
 */
 //ROUTER SLICING
-Route::get('/', function () {
-    return view('login');
-});
+// Route::get('/', function () {
+//     return view('login');
+// });
 Route::get('/admin/dashboard', function () {
     return view('admin.dashboard');
 })->name('dashboard');
@@ -88,6 +88,11 @@ Route::get('/dosen/beban', function () {
 Route::get('/dosen/beban-pegawai', function () {
     return view('dosen.beban-pegawai');
 })->name('dosen-beban-pegawai');
+
+// Route untuk autentikasi
+Route::get('/', [AuthController::class, 'index'])->name('login');
+Route::post('/signin', [AuthController::class, 'signin'])->name('signin');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::prefix('admin')->group(function () {
     // Route untuk halaman beranda
@@ -162,20 +167,19 @@ Route::prefix('admin')->group(function () {
 
 });
 
-// Route::prefix('dosen')->group(function () {
-//     // Route untuk Dashboard Dosen
-//     Route::get('/dashboard', [DashboardDosen::class, 'index'])->name('dosenDashboard');
+Route::prefix('dosen')->group(function () {
+    // Route untuk Dashboard Dosen
+    Route::get('/dashboard', [DashboardDosen::class, 'index'])->name('dosenDashboard');
 
-//     // Route untuk Beban Dosen
-//     Route::get('/beban', [BebanDosen::class, 'index'])->name('dosenBeban');
+    // Route untuk Beban Dosen
+    Route::get('/beban', [BebanDosen::class, 'index'])->name('dosenBeban');
 
-//     // Route untuk Jadwal Dosen
-//     Route::get('/jadwal', [JadwalDosen::class, 'index'])->name('dosenJadwal');
+    // Route untuk Jadwal Dosen
+    Route::get('/jadwal', [JadwalDosen::class, 'index'])->name('dosenJadwal');
     
-//     // Route untuk Ruangan Dosen
-//     Route::get('/ruangan', [RuanganDosen::class, 'index'])->name('dosenRuangan');
-// });
-
+    // // Route untuk Ruangan Dosen
+    // Route::get('/ruangan', [RuanganDosen::class, 'index'])->name('dosenRuangan');
+});
 
 
 

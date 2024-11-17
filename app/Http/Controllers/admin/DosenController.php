@@ -20,7 +20,7 @@ class DosenController extends Controller
         //     'data' => $dosen
         // ]);
 
-         $dosen = Dosen::orderBy('id', 'desc')->paginate(5);
+        $dosen = Dosen::orderBy('id', 'desc')->paginate(5);
         return view('admin.dosen', compact('dosen'));
     }
 
@@ -38,7 +38,7 @@ class DosenController extends Controller
     public function store(Request $request)
     {
         // dd($request);
-
+        
         // Simpan data langsung ke database
         $dosen = new Dosen();
         $dosen->kd_dosen        = $request->kd_dosen;

@@ -12,7 +12,7 @@ class JadwalDosen extends Controller
      */
     public function index()
     {
-        //
+        return view('dosen.beban');
     }
 
     /**
