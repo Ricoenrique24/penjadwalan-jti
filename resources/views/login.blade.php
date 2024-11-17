@@ -65,7 +65,7 @@
 
                 <!-- Button -->
                 <div>
-                    <button type="submit" class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-2 focus:ring-blue-300 font-medium rounded-lg text-sm py-2.5 text-center block"></button>
+                    <button type="submit" class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-2 focus:ring-blue-300 font-medium rounded-lg text-sm py-2.5 text-center block">LOGIN</button>
                 </div>
                 
             </form>
