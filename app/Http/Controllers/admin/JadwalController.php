@@ -14,10 +14,12 @@ class JadwalController extends Controller
     public function index()
     {
         $jadwal = Jadwal::all();
-        return response()->json([
-            'status' => 'success',
-            'data' => $jadwal
-        ]);
+        // return response()->json([
+        //     'status' => 'success',
+        //     'data' => $jadwal
+        // ]);
+        
+        return view('admin.jadwal');
     }
 
     /**

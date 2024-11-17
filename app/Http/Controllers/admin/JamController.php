@@ -12,7 +12,7 @@ class JamController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.jam');
     }
 
     /**

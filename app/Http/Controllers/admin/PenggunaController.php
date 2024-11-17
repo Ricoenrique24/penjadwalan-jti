@@ -12,7 +12,7 @@ class PenggunaController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.pengguna');
     }
 
     /**
