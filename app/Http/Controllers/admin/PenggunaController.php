@@ -14,8 +14,8 @@ class PenggunaController extends Controller
     public function index()
     {
         // Menampilkan semua pengguna
-        $pengguna = User::all();
-
+        // $pengguna = User::all();
+        $pengguna = User::orderBy('id', 'desc')->paginate(5);
         // Menghitung jumlah pengguna berdasarkan status
         $totalDosen     = User::where('status', 'dosen')->count();
         $totalTeknisi   = User::where('status', 'teknisi')->count();
