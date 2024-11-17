@@ -14,6 +14,8 @@ class DataJadwalSeeder extends Seeder
     {
         DB::table('data_jadwal')->insert([
             [
+                'id_dosen' => 1, // ID referensi dari tabel dosen
+                'id_teknisi' => 1, // ID referensi dari tabel teknisi
                 'hari' => 'Senin',
                 'jam' => '07.00 - 08.00',
                 'matkul' => 'Pemrograman Web',
@@ -27,6 +29,8 @@ class DataJadwalSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
+                'id_dosen' => 2, // ID referensi dari tabel dosen
+                'id_teknisi' => 2, // ID referensi dari tabel teknisi
                 'hari' => 'Senin',
                 'jam' => '08.00 - 09.00',
                 'matkul' => 'Sistem Operasi',
@@ -40,6 +44,8 @@ class DataJadwalSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
+                'id_dosen' => 3, // ID referensi dari tabel dosen
+                'id_teknisi' => 3, // ID referensi dari tabel teknisi
                 'hari' => 'Senin',
                 'jam' => '09.00 - 10.00',
                 'matkul' => 'Jaringan Komputer',

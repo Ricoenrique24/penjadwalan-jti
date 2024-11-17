@@ -16,7 +16,7 @@ class Matkul extends Model
     protected $fillable = [
         'kd_matkul',
         'nama_matkul',
-        'jumlah_matkul',
+        'jumlah_sks',
         'semester',
     ];
 

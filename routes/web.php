@@ -1,8 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\JamController;
+
+// ADMIN
+use App\Http\Controllers\admin\DashboardController;
+use App\Http\Controllers\admin\JamController;
 use App\Http\Controllers\admin\AuthController;
 use App\Http\Controllers\admin\BerandaController;
 use App\Http\Controllers\admin\DosenController;

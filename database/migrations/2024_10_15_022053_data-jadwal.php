@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('data_jadwal', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('id_dosen');
+            $table->bigInteger('id_teknisi');
             $table->String('hari');
             $table->string('jam');
             $table->string('matkul');
@@ -31,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('data-jadwal');
+        Schema::dropIfExists('data_jadwal');
     }
 };
