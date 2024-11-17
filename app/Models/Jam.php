@@ -15,7 +15,8 @@ class Jam extends Model
     // Kolom-kolom yang dapat diisi secara massal
     protected $fillable = [
         'sesi',
-        'jam',
+        'jam_awal',
+        'jam_akhir',
     ];
 
     // Menyesuaikan jika nama kolom primary key bukan 'id'

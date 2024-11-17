@@ -84,7 +84,7 @@
                                         </button>
                                         <div class="p-6 text-center">
                                             <h3 class="text-lg font-semibold text-gray-900">Edit Ruangan</h3>
-                                            <form action="{{ route('adminRuangan.update', $item->id) }}"method="POST"
+                                            <form action="{{ route('adminRuangan.update', $item->id) }}" method="POST"
                                                 class="space-y-4">
                                                 @csrf
                                                 @method('PUT')
