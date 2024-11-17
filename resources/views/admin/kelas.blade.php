@@ -12,7 +12,6 @@
             </button>
         </div>
         <div class="overflow-x-auto">
-
             <form class="max-w-md mx-auto my-4">
                 <label for="default-search"
                     class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
@@ -39,84 +38,109 @@
                         <tr>
                             <th class="p-2 text-center">Semester</th>
                             <th class="p-2 text-center">Golongan</th>
+                            <th class="p-2 text-center">Prodi</th>
                             <th class="p-2 text-center">Total Mahasiswa</th>
                             <th class="p-2 text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="bg-white text-center" id="dosenTableBody">
-                        <?php for ($i = 1; $i <= 10; $i++): ?>
-                        <tr class="border-b border-gray-200">
-                            <td class="p-2"><?php echo sprintf('%02d', $i); ?></td>
-                            <td class="p-2">A</td>
-                            <td class="p-2">30 Orang</td>
-                            <td class="p-2">
-                                <button type="button" data-modal-target="#edit-item-modal-<?php echo $i; ?>"
-                                    class="inline-flex items-center justify-center w-8 h-8 text-gray-800 bg-gray-200 border border-gray-300 rounded-sm shadow-sm hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500">
-                                    <i class="fa-regular fa-pen-to-square text-lg"></i>
-                                </button>
-                                <form id="delete-form-<?php echo $i; ?>" action="/" method="POST"
-                                    class="inline-block">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="button"
-                                        class="inline-flex items-center justify-center w-8 h-8 text-white bg-red-700 border border-red-600 rounded shadow-sm hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-500 ml-1"
-                                        onclick="confirmDelete('<?php echo sprintf('%03d', $i); ?>')">
-                                        <i class="fa-regular fa-trash-can text-base"></i>
+                        @foreach ($kelas as $index => $item)
+                            <tr class="border-b border-gray-200">
+                                <td class="p-2">{{ $item->semester }}</td>
+                                <td class="p-2">{{ $item->golongan }}</td>
+                                <td class="p-2">{{ $item->prodi }}</td>
+                                <td class="p-2">{{ $item->total_mhs }}</td>
+                                <td class="p-2">
+                                    <button type="button" data-modal-target="#edit-item-modal-{{ $item->id }}"
+                                        class="inline-flex items-center justify-center w-8 h-8 text-gray-800 bg-gray-200 border border-gray-300 rounded-sm shadow-sm hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500">
+                                        <i class="fa-regular fa-pen-to-square text-lg"></i>
                                     </button>
-                                </form>
-                            </td>
-                        </tr>
+                                    <form id="delete-form-{{ $item->id }}"
+                                        action="{{ route('adminKelas.destroy', $item->id) }}" method="POST"
+                                        class="inline-block">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="button"
+                                            class="inline-flex items-center justify-center w-8 h-8 text-white bg-red-700 border border-red-600 rounded shadow-sm hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-500 ml-1"
+                                            onclick="confirmDelete('{{ $item->id }}')">
+                                            <i class="fa-regular fa-trash-can text-base"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
 
-                        <!-- Modal Edit Dosen -->
-                        <div id="edit-item-modal-<?php echo $i; ?>" tabindex="-1" aria-hidden="true"
-                            class="fixed inset-0 z-50 flex items-center justify-center w-full p-4 overflow-x-hidden overflow-y-auto h-modal hidden">
-                            <div class="relative w-full max-w-full md:max-w-md h-full max-h-full md:h-auto">
-                                <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                                    <button type="button"
-                                        class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:text-gray-500 dark:hover:bg-gray-600 dark:hover:text-white"
-                                        data-modal-hide="#edit-item-modal-<?php echo $i; ?>">
-                                        <svg aria-hidden="true" class="w-5 h-5" fill="none" stroke="currentColor"
-                                            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M6 18L18 6M6 6l12 12"></path>
-                                        </svg>
-                                        <span class="sr-only">Close modal</span>
-                                    </button>
-                                    <div class="p-6 text-center">
-                                        <h3 class="text-lg font-semibold text-gray-900">Edit Kelas</h3>
-                                        <form action="/" method="POST" class="space-y-4">
-                                            @csrf
-                                            @method('PUT')
-                                            <div class="text-left">
-                                              <label for="nik" class="block text-sm font-medium text-gray-900">Semester</label>
-                                              <input type="text" name="nik" id="nik"
-                                                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
-                                                  placeholder="Masukkan Semester" required>
-                                          </div>
-                                          <div class="text-left mt-4">
-                                              <label for="nama_teknisi" class="block text-sm font-medium text-gray-900">Golongan</label>
-                                              <input type="text" name="nama_dosen" id="nama_dosen"
-                                                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
-                                                  placeholder="Masukkan Golongan" required>
-                                          </div>
-                                          <div class="text-left mt-4">
-                                              <label for="jabatan" class="block text-sm font-medium text-gray-900">Total Mahasiswa</label>
-                                              <input type="text" name="jabatan" id="jabatan"
-                                                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
-                                                  placeholder="Masukkan Total Mahasiswa" required>
-                                          </div>
-                                            <div class="flex justify-end">
-                                                <button type="submit"
-                                                    class="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300 font-medium text-sm my-2">
-                                                    Simpan
-                                                </button>
-                                            </div>
-                                        </form>
+                            <!-- Modal Edit Dosen -->
+                            <div id="edit-item-modal-{{ $item->id }}" tabindex="-1" aria-hidden="true"
+                                class="fixed inset-0 z-50 flex items-center justify-center w-full p-4 overflow-x-hidden overflow-y-auto h-modal hidden">
+                                <div class="relative w-full max-w-full md:max-w-md h-full max-h-full md:h-auto">
+                                    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                        <button type="button"
+                                            class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:text-gray-500 dark:hover:bg-gray-600 dark:hover:text-white"
+                                            data-modal-hide="#edit-item-modal-{{ $item->id }}">
+                                            <svg aria-hidden="true" class="w-5 h-5" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M6 18L18 6M6 6l12 12"></path>
+                                            </svg>
+                                            <span class="sr-only">Close modal</span>
+                                        </button>
+                                        <div class="p-6 text-center">
+                                            <h3 class="text-lg font-semibold text-gray-900">Edit Kelas</h3>
+                                            <form action="{{ route('adminKelas.update', $item->id) }}" method="POST"
+                                                class="space-y-4">
+                                                @csrf
+                                                @method('PUT')
+                                                <div class="text-left">
+                                                    <label for="semester"
+                                                        class="block text-sm font-medium text-gray-900">Semester</label>
+                                                    <input type="text" name="semester" id="semester"
+                                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
+                                                        placeholder="Masukkan Semester" value="{{ $item->semester }}">
+                                                </div>
+                                                <div class="text-left">
+                                                    <label for="golongan"
+                                                        class="block text-sm font-medium text-gray-900">Golongan</label>
+                                                    <input type="text" name="golongan" id="golongan"
+                                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
+                                                        placeholder="Masukkan golongan" value="{{ $item->golongan }}">
+                                                </div>
+                                                <div class="text-left mt-4">
+                                                    <label for="prodi" class="block text-sm font-medium text-gray-900">
+                                                        Program Studi
+                                                    </label>
+                                                    <select name="prodi" id="prodi"
+                                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1">
+                                                        <option value="Teknik Informatika"
+                                                            {{ $item->prodi == 'Teknik Informatika' ? 'selected' : '' }}>
+                                                            Teknik Informatika
+                                                        </option>
+                                                        <option value="Manajemen Informatika"
+                                                            {{ $item->prodi == 'Manajemen Informatika' ? 'selected' : '' }}>
+                                                            Manajemen Informatika
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                                <div class="text-left mt-4">
+                                                    <label for="total_mhs"
+                                                        class="block text-sm font-medium text-gray-900">Total
+                                                        Mahasiswa</label>
+                                                    <input type="text" name="total_mhs" id="total_mhs"
+                                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
+                                                        placeholder="Masukkan Total Mahasiswa"
+                                                        value="{{ $item->total_mhs }}">
+                                                </div>
+                                                <div class="flex justify-end">
+                                                    <button type="submit"
+                                                        class="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300 font-medium text-sm my-2">
+                                                        Simpan
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <?php endfor; ?>
+                        @endforeach
                     </tbody>
 
                 </table>
@@ -141,24 +165,37 @@
                             <span class="sr-only">Close modal</span>
                         </button>
                     </div>
-                    <form action="" method="POST" class="p-4">
+                    <form action="{{ route('adminKelas.store') }}" method="POST" class="p-4">
                         @csrf
 
                         <div class="text-left">
-                            <label for="nik" class="block text-sm font-medium text-gray-900">Semester</label>
-                            <input type="text" name="nik" id="nik"
+                            <label for="semester" class="block text-sm font-medium text-gray-900">Semester</label>
+                            <input type="text" name="semester" id="semester"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
                                 placeholder="Masukkan Semester" required>
                         </div>
                         <div class="text-left mt-4">
-                            <label for="nama_teknisi" class="block text-sm font-medium text-gray-900">Golongan</label>
-                            <input type="text" name="nama_dosen" id="nama_dosen"
+                            <label for="golongan" class="block text-sm font-medium text-gray-900">Golongan</label>
+                            <input type="text" name="golongan" id="golongan"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
                                 placeholder="Masukkan Golongan" required>
                         </div>
                         <div class="text-left mt-4">
-                            <label for="jabatan" class="block text-sm font-medium text-gray-900">Total Mahasiswa</label>
-                            <input type="text" name="jabatan" id="jabatan"
+                            <label for="prodi" class="block text-sm font-medium text-gray-900">Program Studi</label>
+                            <select name="prodi" id="prodi"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
+                                required>
+                                <option value="" disabled {{ empty($item->prodi) ? 'selected' : '' }}>Pilih
+                                    Program Studi</option>
+                                <option value="Teknik Informatika" {{ $item->prodi == 'Teknik Informatika' ? 'selected' : '' }}>
+                                    Teknik Informatika</option>
+                                <option value="Manajemen Informatika" {{ $item->prodi == 'Manajemen Informatika' ? 'selected' : '' }}>
+                                    Manajemen Informatika</option>
+                            </select>
+                        </div>
+                        <div class="text-left mt-4">
+                            <label for="total_mhs" class="block text-sm font-medium text-gray-900">Total Mahasiswa</label>
+                            <input type="text" name="total_mhs" id="total_mhs"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
                                 placeholder="Masukkan Total Mahasiswa" required>
                         </div>
@@ -172,35 +209,30 @@
                 </div>
             </div>
         </div>
-        <div class="flex flex-col items-center mt-4">
-            <!-- Help text -->
-            <span class="text-sm text-gray-700 dark:text-gray-400">
-                Showing <span class="font-semibold text-gray-900 dark:text-white">1</span> to <span
-                    class="font-semibold text-gray-900 dark:text-white">10</span> of <span
-                    class="font-semibold text-gray-900 dark:text-white">100</span> Entries
-            </span>
-            <div class="inline-flex mt-2 xs:mt-0">
-                <!-- Buttons -->
-                <button
-                    class="flex items-center justify-center px-3 h-8 text-sm font-medium text-white bg-gray-800 rounded-s hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                    <svg class="w-3.5 h-3.5 me-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                        fill="none" viewBox="0 0 14 10">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M13 5H1m0 0 4 4M1 5l4-4" />
-                    </svg>
-                    Prev
-                </button>
-                <button
-                    class="flex items-center justify-center px-3 h-8 text-sm font-medium text-white bg-gray-800 border-0 border-s border-gray-700 rounded-e hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                    Next
-                    <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                        fill="none" viewBox="0 0 14 10">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M1 5h12m0 0L9 1m4 4L9 9" />
-                    </svg>
-                </button>
-            </div>
-        </div>
+         <!-- Custom Pagination -->
+         @if ($kelas->total() > 5)
+         <div class="flex flex-col items-center my-6">
+             <span class="text-sm text-gray-700 dark:text-gray-400">
+                 Menampilkan <span
+                     class="font-semibold text-gray-900 dark:text-white">{{ $kelas->firstItem() }}</span>
+                 sampai
+                 <span class="font-semibold text-gray-900 dark:text-white">{{ $kelas->lastItem() }}</span> dari <span
+                     class="font-semibold text-gray-900 dark:text-white">{{ $kelas->total() }}</span> kelas
+             </span>
+             <div class="inline-flex mt-2 xs:mt-0">
+                 <button {{ $kelas->onFirstPage() ? 'disabled' : '' }}
+                     class="flex items-center justify-center px-3 h-8 text-sm font-medium text-white bg-gray-800 rounded-s hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                     {{ $kelas->previousPageUrl() ? 'onclick=window.location.href=\'' . $kelas->previousPageUrl() . '\'' : '' }}>
+                     Sebelumnya
+                 </button>
+                 <button {{ !$kelas->hasMorePages() ? 'disabled' : '' }}
+                     class="flex items-center justify-center px-3 h-8 text-sm font-medium text-white bg-gray-800 border-0 border-s border-gray-700 rounded-e hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                     {{ $kelas->nextPageUrl() ? 'onclick=window.location.href=\'' . $kelas->nextPageUrl() . '\'' : '' }}>
+                     Selanjutnya
+                 </button>
+             </div>
+         </div>
+     @endif
     </div>
 
 
@@ -221,7 +253,7 @@
             });
         });
 
-        function confirmDelete() {
+        function confirmDelete(id) {
             Swal.fire({
                 title: 'Apakah Anda yakin?',
                 text: "Anda tidak akan dapat mengembalikan kelas ini!",

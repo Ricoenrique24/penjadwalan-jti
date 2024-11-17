@@ -4,15 +4,17 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Matkul;
 
 class MatkulController extends Controller
 {
-     /**
+    /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $matkul = Matkul::orderBy('id', 'desc')->paginate(5);
+        return view('admin.mataKuliah', compact('matkul'));
     }
 
     /**
@@ -28,7 +30,16 @@ class MatkulController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Simpan data langsung ke database
+        $matkul = new Matkul();
+        $matkul->kd_matkul = $request->kd_matkul;
+        $matkul->nama_matkul = $request->nama_matkul;
+        $matkul->jumlah_sks = $request->jumlah_sks;
+        $matkul->semester = $request->semester;
+        $matkul->save();
+
+
+        return redirect()->route('adminMataKuliah')->with('success', 'matkul berhasil ditambahkan.');
     }
 
     /**
@@ -52,7 +63,18 @@ class MatkulController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $matkul = Matkul::find($id);
+
+        if (!$matkul) {
+            return redirect()->back()->with('error', 'matkul tidak ditemukan.');
+        }
+        $matkul->kd_matkul             = $request->kd_matkul;
+        $matkul->nama_matkul      = $request->nama_matkul;
+        $matkul->jumlah_sks = $request->jumlah_sks;
+        $matkul->semester = $request->semester;
+        $matkul->save();
+
+        return redirect()->route('admin.Matkul')->with('success', 'Matkul berhasil diperbarui.');
     }
 
     /**
@@ -60,6 +82,18 @@ class MatkulController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $matkul = Matkul::find($id);
+
+        if (!$matkul) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'matkul tidak ditemukan'
+            ], 404);
+        }
+
+        // Hapus data matkul
+        $matkul->delete();
+
+        return redirect()->route('adminMataKuliah')->with('success', 'matkul terkait berhasil dihapus.');
     }
 }

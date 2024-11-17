@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\JamController;
 use App\Http\Controllers\admin\AuthController;
 use App\Http\Controllers\admin\BerandaController;
 use App\Http\Controllers\admin\DosenController;
@@ -25,42 +27,45 @@ use App\Http\Controllers\admin\TeknisiController;
 Route::get('/', function () {
     return view('login');
 });
-// Route::get('/admin/dashboard', function () {
-//     return view('admin.dashboard');
-// })->name('dashboard');
+Route::get('/admin/dashboard', function () {
+    return view('admin.dashboard');
+})->name('dashboard');
 
-// Route::get('/admin/dosen', [DosenController::class, 'index'])->name('adminDosen');
-// Route::post('/adminDosen', [DosenController::class, 'store'])->name('adminDosen.store');
-// Route::delete('/admin/dosen/{id_Dosen}', [DosenController::class, 'destroy'])->name('adminDosen.destroy');
-// Route::put('/Dosen/update/{id_Dosen}', [DosenController::class, 'update'])->name('adminDosen.update');
+Route::get('/admin/dosen', [DosenController::class, 'index'])->name('adminDosen');
+Route::post('/adminDosen', [DosenController::class, 'store'])->name('adminDosen.store');
+Route::delete('/admin/dosen/{id_Dosen}', [DosenController::class, 'destroy'])->name('adminDosen.destroy');
+Route::put('/Dosen/update/{id_Dosen}', [DosenController::class, 'update'])->name('adminDosen.update');
 
-// Route::get('/admin/teknisi', function () {
-//     return view('admin.teknisi');
-// })->name('teknisi');
+Route::get('/teknisi', [TeknisiController::class, 'index'])->name('adminTeknisi');
+Route::post('/teknisi', [TeknisiController::class, 'store'])->name('adminTeknisi.store');
+Route::get('/teknisi/{id}', [TeknisiController::class, 'show'])->name('adminTeknisi.show');
+Route::put('/teknisi/{id}', [TeknisiController::class, 'update'])->name('adminTeknisi.update');
+Route::delete('/teknisi/{id}', [TeknisiController::class, 'destroy'])->name('adminTeknisi.destroy');
 
-// Route::get('/admin/ruangan', function () {
-//     return view('admin.ruangan');
-// })->name('ruangan');
 
-// Route::get('/admin/kelas', function () {
-//     return view('admin.kelas');
-// })->name('kelas');
+Route::get('/admin/ruangan', function () {
+    return view('admin.ruangan');
+})->name('adminRuangan');
 
-// Route::get('/admin/mataKuliah', function () {
-//     return view('admin.mataKuliah');
-// })->name('mataKuliah');
+Route::get('/admin/kelas', function () {
+    return view('admin.kelas');
+})->name('kelas');
 
-// Route::get('/admin/jam', function () {
-//     return view('admin.jam');
-// })->name('jam');
+Route::get('/admin/mataKuliah', function () {
+    return view('admin.mataKuliah');
+})->name('mataKuliah');
 
-// Route::get('/admin/jadwal', function () {
-//     return view('admin.jadwal');
-// })->name('jadwal');
+Route::get('/admin/jam', function () {
+    return view('admin.jam');
+})->name('jam');
 
-// Route::get('/admin/pengguna', function () {
-//     return view('admin.pengguna');
-// })->name('pengguna');
+Route::get('/admin/jadwal', function () {
+    return view('admin.jadwal');
+})->name('jadwal');
+
+Route::get('/admin/pengguna', function () {
+    return view('admin.pengguna');
+})->name('pengguna');
 
 //ROUTE DOSEN DAN TEKNISI
 Route::get('/dosen/dashboard', function () {
