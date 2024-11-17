@@ -14,8 +14,8 @@ class JamController extends Controller
     public function index()
     {
         // Ambil semua data jam dari tabel data_jam
-        $dataJam = Jam::all();
-        // return response()->json($dataJam, 200);
+        // $dataJam = Jam::all();
+        $dataJam = Jam::orderBy('id', 'desc')->paginate(5);
         return view('admin.jam', compact('dataJam'));
     }
 
@@ -31,9 +31,9 @@ class JamController extends Controller
             'jam_akhir' => $request->jam_akhir,
         ]);
 
-        return response()->json(200);
+        // return response()->json(200);
 
-        // return redirect()->route('adminJam')->with('success', 'Data jam berhasil ditambahkan.');
+        return redirect()->route('adminJam')->with('success', 'Data jam berhasil ditambahkan.');
     }
 
     /**

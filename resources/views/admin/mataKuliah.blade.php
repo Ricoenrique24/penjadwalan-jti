@@ -37,7 +37,7 @@
                     <tr>
                         <th class="p-2 text-center">Kode Mata Kuliah</th>
                         <th class="p-2 text-center">Mata Kuliah</th>
-                        <th class="p-2 text-center">Jumlah Matkul</th>
+                        <th class="p-2 text-center">Jumlah SKS</th>
                         <th class="p-2 text-center">Semester</th>
                         <th class="p-2 text-center">Aksi</th>
                     </tr>
@@ -85,7 +85,7 @@
                                     </button>
                                     <div class="p-6 text-center">
                                         <h3 class="text-lg font-semibold text-gray-900">Edit Mata Kuliah</h3>
-                                        <form action="/" method="POST" class="space-y-4">
+                                        <form action="{{ route('adminMataKuliah.update', $item->id) }}"  method="POST" class="space-y-4">
                                             @csrf
                                             @method('PUT')
                                             <div class="text-left mt-">
@@ -112,7 +112,7 @@
                                                     Matkul</label>
                                                 <input type="text" name="jumlah_sks" id="jumlah_sks"
                                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
-                                                    placeholder="Masukkan Jumlah Matkul"
+                                                    placeholder="Masukkan Jumlah SKS"
                                                     value="{{ $item->jumlah_sks }}">
                                             </div>
 
@@ -159,7 +159,7 @@
                         <span class="sr-only">Close modal</span>
                     </button>
                 </div>
-                <form action="" method="POST" class="p-4">
+                <form action="{{ route('adminMataKuliah.store') }}" method="POST" class="p-4">
                     @csrf
                     <div class="text-left mt-">
                         <label for="kd_matkul" class="block text-sm font-medium text-gray-900">Kode Mata
@@ -180,7 +180,7 @@
                             Matkul</label>
                         <input type="text" name="jumlah_sks" id="jumlah_sks"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
-                            placeholder="Masukkan Jumlah Matkul" required>
+                            placeholder="Masukkan Jumlah SKS" required>
                     </div>
 
                     <div class="text-left mt-4">

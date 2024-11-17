@@ -11,12 +11,32 @@ class TeknisiController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $teknisi = Teknisi::orderBy('id', 'desc')->paginate(5);
-        return view('admin.teknisi', compact('teknisi'));
-    }
+    // public function index()
+    // {
+    //     $teknisi = Teknisi::orderBy('id', 'desc')->paginate(5);
+    //     return view('admin.teknisi', compact('teknisi'));
+    // }
 
+    public function index(Request $request)
+    {
+        $query = $request->input('search'); // Mendapatkan query pencarian
+        $teknisi = teknisi::query();
+    
+        // Jika ada pencarian, terapkan pencarian
+        if ($query) {
+            $teknisi->where('nama_teknisi', 'like', "%$query%")
+                ->orWhere('nik', 'like', "%$query%")
+                ->orWhere('jabatan', 'like', "%$query%");
+        }
+    
+        // Mengurutkan berdasarkan ID terbesar (data terbaru)
+        $teknisi = $teknisi->orderBy('id', 'desc');
+    
+        // Jika ada pencarian, ambil semua data, jika tidak, gunakan pagination
+        $teknisi = $query ? $teknisi->get() : $teknisi->paginate(5);
+    
+        return view('admin.teknisi', compact('teknisi', 'query'));
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -92,6 +112,6 @@ class TeknisiController extends Controller
         // Hapus data teknisi
         $teknisi->delete();
 
-        return redirect()->route('adminTeknisi')->with('success', 'Dosen terkait berhasil dihapus.');
+        return redirect()->route('adminTeknisi')->with('success', 'teknisi terkait berhasil dihapus.');
     }
 }
