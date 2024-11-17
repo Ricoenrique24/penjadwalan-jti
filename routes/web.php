@@ -13,6 +13,12 @@ use App\Http\Controllers\admin\PenggunaController;
 use App\Http\Controllers\admin\RuanganController;
 use App\Http\Controllers\admin\TeknisiController;
 
+// DOSEN
+use App\Http\Controllers\dosen\BebanDosen;
+use App\Http\Controllers\dosen\DashboardDosen;
+use App\Http\Controllers\dosen\JadwalDosen;
+use App\Http\Controllers\dosen\RuanganDosen;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -153,3 +159,21 @@ Route::prefix('admin')->group(function () {
     Route::delete('/jam/{id}', [JamController::class, 'destroy'])->name('adminJam.destroy');
 
 });
+
+// Route::prefix('dosen')->group(function () {
+//     // Route untuk Dashboard Dosen
+//     Route::get('/dashboard', [DashboardDosen::class, 'index'])->name('dosenDashboard');
+
+//     // Route untuk Beban Dosen
+//     Route::get('/beban', [BebanDosen::class, 'index'])->name('dosenBeban');
+
+//     // Route untuk Jadwal Dosen
+//     Route::get('/jadwal', [JadwalDosen::class, 'index'])->name('dosenJadwal');
+    
+//     // Route untuk Ruangan Dosen
+//     Route::get('/ruangan', [RuanganDosen::class, 'index'])->name('dosenRuangan');
+// });
+
+
+
+
