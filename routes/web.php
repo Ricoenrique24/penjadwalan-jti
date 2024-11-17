@@ -38,9 +38,9 @@ Route::get('/', function () {
 //     return view('admin.teknisi');
 // })->name('teknisi');
 
-// Route::get('/admin/ruangan', function () {
-//     return view('admin.ruangan');
-// })->name('ruangan');
+Route::get('/admin/ruangan', function () {
+    return view('admin.ruangan');
+})->name('ruangan');
 
 // Route::get('/admin/kelas', function () {
 //     return view('admin.kelas');
@@ -148,3 +148,5 @@ Route::prefix('admin')->group(function () {
     Route::delete('/jam/{id}', [JamController::class, 'destroy'])->name('adminJam.destroy');
 
 });
+
+
