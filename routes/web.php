@@ -50,7 +50,6 @@ Route::get('/teknisi/{id}', [TeknisiController::class, 'show'])->name('adminTekn
 Route::put('/teknisi/{id}', [TeknisiController::class, 'update'])->name('adminTeknisi.update');
 Route::delete('/teknisi/{id}', [TeknisiController::class, 'destroy'])->name('adminTeknisi.destroy');
 
-
 Route::get('/admin/ruangan', function () {
     return view('admin.ruangan');
 })->name('adminRuangan');
@@ -92,24 +91,14 @@ Route::get('/dosen/beban-pegawai', function () {
 // Route untuk autentikasi
 Route::get('/', [AuthController::class, 'index'])->name('login');
 Route::post('/signin', [AuthController::class, 'signin'])->name('signin');
-Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::prefix('admin')->group(function () {
+Route::prefix('admin')->middleware('auth')->group(function () {
     // Route untuk halaman beranda
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('adminDashboard');
 
-    // Route untuk autentikasi
-    Route::get('/login', [AuthController::class, 'showLoginForm'])->name('admin.login');
-    Route::post('/login', [AuthController::class, 'login']);
-    Route::post('/logout', [AuthController::class, 'logout'])->name('admin.logout');
-
      // Route untuk halaman beranda
     Route::get('/beranda', [BerandaController::class, 'index'])->name('admin.beranda');
-
-    // Route untuk autentikasi
-    Route::get('/login', [AuthController::class, 'showLoginForm'])->name('admin.login');
-    Route::post('/login', [AuthController::class, 'login']);
-    Route::post('/logout', [AuthController::class, 'logout'])->name('admin.logout');
 
     // Route untuk data dosen
     Route::get('/dosen', [DosenController::class, 'index'])->name('adminDosen');
@@ -120,7 +109,6 @@ Route::prefix('admin')->group(function () {
     // Route untuk data jadwal
     Route::get('/jadwal', [JadwalController::class, 'index'])->name('adminJadwal');
     Route::post('/jadwal', [JadwalController::class, 'store'])->name('adminJadwal.store');
-    Route::get('/jadwal/{id}', [JadwalController::class, 'show'])->name('adminJadwal.show');
     Route::put('/jadwal/{id}', [JadwalController::class, 'update'])->name('adminJadwal.update');
     Route::delete('/jadwal/{id}', [JadwalController::class, 'destroy'])->name('adminJadwal.destroy');
 
@@ -167,7 +155,7 @@ Route::prefix('admin')->group(function () {
 
 });
 
-Route::prefix('dosen')->group(function () {
+Route::prefix('dosen')->middleware('auth')->group(function () {
     // Route untuk Dashboard Dosen
     Route::get('/dashboard', [DashboardDosen::class, 'index'])->name('dosenDashboard');
 

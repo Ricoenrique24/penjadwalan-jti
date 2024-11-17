@@ -23,7 +23,6 @@ return new class extends Migration
             $table->string('ruangan');
             $table->string('dosen');
             $table->string('teknisi');
-            $table->string('kelas');
             $table->timestamps();
         });
     }
