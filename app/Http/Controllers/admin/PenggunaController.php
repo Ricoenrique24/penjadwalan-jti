@@ -4,23 +4,31 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class PenggunaController extends Controller
 {
-     /**
+    /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('admin.pengguna');
-    }
+        // Menampilkan semua pengguna
+        $pengguna = User::all();
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        // Menghitung jumlah pengguna berdasarkan status
+        $totalDosen     = User::where('status', 'dosen')->count();
+        $totalTeknisi   = User::where('status', 'teknisi')->count();
+        $totalAdmin     = User::where('status', 'admin')->count();
+
+        // return response()->json([
+        //     'totalTeknisi' => $totalTeknisi,
+        //     'totalDosen' => $totalDosen,
+        //     'totalAdmin' => $totalAdmin,
+        //     'pengguna' => $pengguna,
+        // ]);
+
+        return view('admin.pengguna', compact('pengguna','totalTeknisi','totalDosen','totalAdmin'));
     }
 
     /**
@@ -28,23 +36,16 @@ class PenggunaController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        // Menyimpan pengguna baru tanpa validasi
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'status' => $request->status,
+            'password' => bcrypt($request->password),
+        ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+        // Mengarahkan kembali dengan pesan sukses
+        return redirect()->route('adminPengguna')->with('success', 'Pengguna berhasil ditambahkan.');
     }
 
     /**
@@ -52,7 +53,21 @@ class PenggunaController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        // Perbarui data pengguna berdasarkan ID tanpa validasi
+        $user = User::findOrFail($id);
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->status = $request->status;
+
+        if ($request->filled('password')) {
+            $user->password = bcrypt($request->password);
+        }
+
+        $user->save();
+
+        // Mengarahkan kembali dengan pesan sukses
+        return redirect()->route('adminPengguna')->with('success', 'Pengguna berhasil diperbarui.');
     }
 
     /**
@@ -60,6 +75,11 @@ class PenggunaController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        // Hapus data pengguna berdasarkan ID
+        $user = User::findOrFail($id);
+        $user->delete();
+
+        // Mengarahkan kembali dengan pesan sukses
+        return redirect()->route('adminPengguna')->with('success', 'Pengguna berhasil dihapus.');
     }
 }

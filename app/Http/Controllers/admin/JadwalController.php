@@ -18,16 +18,8 @@ class JadwalController extends Controller
         //     'status' => 'success',
         //     'data' => $jadwal
         // ]);
-        
-        return view('admin.jadwal');
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        // Tidak perlu jika API, hanya untuk tampilan form
+        return view('admin.jadwal');
     }
 
     /**

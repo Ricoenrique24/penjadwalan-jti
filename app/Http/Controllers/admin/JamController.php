@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Jam;
 
 class JamController extends Controller
 {
@@ -12,15 +13,10 @@ class JamController extends Controller
      */
     public function index()
     {
-        return view('admin.jam');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        // Ambil semua data jam dari tabel data_jam
+        $dataJam = Jam::all();
+        // return response()->json($dataJam, 200);
+        return view('admin.jam', compact('dataJam'));
     }
 
     /**
@@ -28,23 +24,16 @@ class JamController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        // Simpan data baru tanpa validasi
+        Jam::create([
+            'sesi' => $request->sesi,
+            'jam_awal' => $request->jam_awal,
+            'jam_akhir' => $request->jam_akhir,
+        ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+        return response()->json(200);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+        // return redirect()->route('adminJam')->with('success', 'Data jam berhasil ditambahkan.');
     }
 
     /**
@@ -52,7 +41,15 @@ class JamController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        // Perbarui data berdasarkan ID
+        $dataJam = Jam::findOrFail($id);
+
+        $dataJam->sesi      = $request->sesi;
+        $dataJam->jam_awal  = $request->jam_awal;
+        $dataJam->jam_akhir = $request->jam_akhir;
+        $dataJam->save();
+
+        return redirect()->route('adminJam')->with('success', 'Data jam berhasil diperbarui.');
     }
 
     /**
@@ -60,6 +57,10 @@ class JamController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        // Hapus data berdasarkan ID
+        $dataJam = Jam::findOrFail($id);
+        $dataJam->delete();
+
+        return redirect()->route('adminJam')->with('success', 'Data jam berhasil dihapus.');
     }
 }
