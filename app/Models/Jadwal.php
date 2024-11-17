@@ -36,11 +36,16 @@ class Jadwal extends Model
 
     public function dosen()
     {
-        return $this->belongsTo(User::class, 'id_dosen');
+        return $this->belongsTo(Dosen::class, 'id');
     }
 
     public function teknisi()
     {
-        return $this->belongsTo(User::class, 'id_teknisi');
+        return $this->belongsTo(Teknisi::class, 'id');
+    }
+
+    public function matkul()
+    {
+        return $this->belongsTo(Matkul::class, 'id');
     }
 }

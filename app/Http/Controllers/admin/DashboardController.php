@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Jadwal;
 
 class DashboardController extends Controller
 {
@@ -12,7 +13,12 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('admin.dashboard');
+        // Mengurutkan data berdasarkan hari
+        $dataJadwal = Jadwal::orderBy('hari', 'desc')
+                        ->orderBy('jam', 'asc')
+                        ->get();
+
+        return view('admin.dashboard', compact('dataJadwal'));
     }
 
     /**
