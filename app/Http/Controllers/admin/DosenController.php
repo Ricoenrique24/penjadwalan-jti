@@ -11,18 +11,34 @@ class DosenController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        // // Mendapatkan semua data dosen
-        // $dosen = Dosen::all();
-        // return response()->json([
-        //     'status' => 'success',
-        //     'data' => $dosen
-        // ]);
+    // public function index()
+    // {
 
-         $dosen = Dosen::orderBy('id', 'desc')->paginate(5);
-        return view('admin.dosen', compact('dosen'));
+    //      $dosen = Dosen::orderBy('id', 'desc')->paginate(5);
+    //     return view('admin.dosen', compact('dosen'));
+    // }
+
+    public function index(Request $request)
+    {
+        $query = $request->input('search'); // Mendapatkan query pencarian
+        $dosen = Dosen::query();
+    
+        // Jika ada pencarian, terapkan pencarian
+        if ($query) {
+            $dosen->where('nama_dosen', 'like', "%$query%")
+                ->orWhere('nip', 'like', "%$query%")
+                ->orWhere('kd_dosen', 'like', "%$query%");
+        }
+    
+        // Mengurutkan berdasarkan ID terbesar (data terbaru)
+        $dosen = $dosen->orderBy('id', 'desc');
+    
+        // Jika ada pencarian, ambil semua data, jika tidak, gunakan pagination
+        $dosen = $query ? $dosen->get() : $dosen->paginate(5);
+    
+        return view('admin.dosen', compact('dosen', 'query'));
     }
+    
 
     /**
      * Show the form for creating a new resource.
@@ -48,7 +64,7 @@ class DosenController extends Controller
         $dosen->save();
 
 
-      return redirect()->route('admin-dosen')->with('success', 'Dosen berhasil ditambahkan.');
+        return redirect()->route('adminDosen')->with('success', 'Dosen berhasil ditambahkan.');
     }
 
     /**
@@ -94,7 +110,7 @@ class DosenController extends Controller
         $dosen->jenis_kelamin = $request->jenis_kelamin;
         $dosen->save();
 
-          return redirect()->route('admin-dosen')->with('success', 'Dosen berhasil diperbarui.');
+        return redirect()->route('adminDosen')->with('success', 'Dosen berhasil diperbarui.');
     }
 
 
@@ -116,6 +132,6 @@ class DosenController extends Controller
         // Hapus data dosen
         $dosen->delete();
 
-         return redirect()->route('admin-dosen')->with('success', 'Dosen terkait berhasil dihapus.');
+        return redirect()->route('adminDosen')->with('success', 'Dosen terkait berhasil dihapus.');
     }
 }
