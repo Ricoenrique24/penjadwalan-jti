@@ -54,7 +54,7 @@ class DosenController extends Controller
     public function store(Request $request)
     {
         // dd($request);
-
+        
         // Simpan data langsung ke database
         $dosen = new Dosen();
         $dosen->kd_dosen        = $request->kd_dosen;

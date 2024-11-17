@@ -71,32 +71,32 @@
         <div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
             <ul class="space-y-2 font-medium">
                 <li>
-                    <a href="{{ route('dosen-dashboard') }}"
+                    <a href="{{ route('dosenDashboard') }}"
                         class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                         <i class="fa-solid fa-house w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
                         <span class="ms-3">Dashboard</span>
                     </a>
                 </li>
-                <a href="{{ route('dosen-jadwal') }}"
+                <a href="{{ route('dosenJadwal') }}"
                       class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                       <i class="fa-regular fa-calendar-days w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
                       <span class="flex-1 ms-3 whitespace-nowrap">Lihat Jadwal</span>
                   </a>
               </li>
               <li>
-                <a href="{{ route('dosen-beban') }}"
+                <a href="{{ route('dosenBeban') }}"
                     class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                     <i class="fa-solid fa-weight-hanging w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
                     <span class="flex-1 ms-3 whitespace-nowrap">Lihat Beban</span>
                 </a>
             </li>
-            <li>
-                <a href="{{ route('dosen-beban-pegawai') }}"
+            {{-- <li>
+                <a href="{{ route('dosenRuangan') }}"
                     class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                     <i class="fa-solid fa-id-badge w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
-                    <span class="flex-1 ms-3 whitespace-nowrap">Beban Kerja Pegawai</span>
+                    <span class="flex-1 ms-3 whitespace-nowrap">Lihat Ruangan</span>
                 </a>
-            </li>
+            </li> --}}
             </ul>
         </div>
     </aside>
