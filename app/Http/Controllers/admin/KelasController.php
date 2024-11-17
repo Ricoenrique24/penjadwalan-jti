@@ -4,7 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use App\Models\Kelas;
 class KelasController extends Controller
 {
      /**
@@ -12,7 +12,8 @@ class KelasController extends Controller
      */
     public function index()
     {
-        //
+        $kelas = Kelas::orderBy('id', 'desc')->paginate(5);
+        return view('admin.kelas', compact('kelas'));
     }
 
     /**
@@ -28,7 +29,15 @@ class KelasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $kelas = new Kelas();
+        $kelas->semester = $request->semester;
+        $kelas->golongan = $request->golongan;
+        $kelas->prodi = $request->prodi;
+        $kelas->total_mhs   = $request->total_mhs;
+        $kelas->save();
+
+
+        return redirect()->route('adminKelas')->with('success', 'kelas berhasil ditambahkan.');
     }
 
     /**
@@ -52,7 +61,18 @@ class KelasController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $kelas = Kelas::find($id);
+
+        if (!$kelas) {
+            return redirect()->back()->with('error', 'kelas tidak ditemukan.');
+        }
+        $kelas->semester = $request->semester;
+        $kelas->golongan = $request->golongan;
+        $kelas->prodi = $request->prodi;
+        $kelas->total_mhs   = $request->total_mhs;
+        $kelas->save();
+
+        return redirect()->route('adminKelas')->with('success', 'kelas berhasil diperbarui.');
     }
 
     /**
@@ -60,6 +80,18 @@ class KelasController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $kelas = Kelas::find($id);
+
+        if (!$kelas) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'kelas tidak ditemukan'
+            ], 404);
+        }
+
+        // Hapus data kelas
+        $kelas->delete();
+
+        return redirect()->route('adminKelas')->with('success', 'Dosen terkait berhasil dihapus.');
     }
 }
