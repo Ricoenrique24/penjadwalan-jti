@@ -48,14 +48,17 @@
                             id="dropdown-user">
                             <div class="px-4 py-3" role="none">
                                 <p class="text-sm text-gray-900 dark:text-white" role="none">
-                                   Ahmad Fahriannur 
+                                   {{ Auth::user()->name }}
                                 </p>
                             </div>
                             <ul class="py-1" role="none">
                                 <li>
-                                    <a href="#"
-                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                                        role="menuitem">Logout <i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+                                    <form action="{{ route('logout') }}" method="POST" class="block px-4 py-2 text-sm">
+                                        @csrf
+                                        <button type="submit" class="text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white">
+                                            Logout <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                                        </button>
+                                    </form>
                                 </li>
                             </ul>
                         </div>

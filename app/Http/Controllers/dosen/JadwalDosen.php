@@ -4,6 +4,8 @@ namespace App\Http\Controllers\dosen;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Jadwal;
 
 class JadwalDosen extends Controller
 {
@@ -12,7 +14,28 @@ class JadwalDosen extends Controller
      */
     public function index()
     {
-        return view('dosen.beban');
+        // Pastikan user sudah login
+        $userId = Auth::user()->id;
+        $userRole = Auth::user()->status;
+
+        // Query Jadwal berdasarkan role user
+        if ($userRole === 'dosen') {
+            // Jika user adalah dosen, ambil jadwal berdasarkan id_dosen
+            $dataJadwal = Jadwal::with(['dosen', 'teknisi','matkul'])
+                ->where('id_dosen', $userId)
+                ->orderBy('jam', 'asc')
+                ->get();
+        } elseif ($userRole === 'teknisi') {
+            // Jika user adalah teknisi, ambil jadwal berdasarkan id_teknisi
+            $dataJadwal = Jadwal::with(['dosen', 'teknisi','matkul'])
+                ->where('id_teknisi', $userId)
+                ->orderBy('jam', 'asc')
+                ->get();
+        } 
+
+        // return response()->json($dataJadwal);
+
+        return view('dosen.jadwal', compact('dataJadwal'));
     }
 
     /**

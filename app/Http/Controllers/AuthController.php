@@ -50,20 +50,20 @@ class AuthController extends Controller
         ])->onlyInput('email');
     }
 
-    public function logout()
-    {
-        Auth::logout();
-        return redirect('/')->with('success', 'Logout berhasil!');
-    }
+    // public function logout()
+    // {
+    //     Auth::logout();
+    //     return redirect('/')->with('success', 'Logout berhasil!');
+    // }
 
     /**
      * Process user logout.
      */
-    // public function logout(Request $request)
-    // {
-    //     Auth::logout();
-    //     $request->session()->invalidate();
-    //     $request->session()->regenerateToken();
-    //     return redirect('/login')->with('success', 'Logout berhasil!');
-    // }
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/')->with('success', 'Logout berhasil!');
+    }
 }

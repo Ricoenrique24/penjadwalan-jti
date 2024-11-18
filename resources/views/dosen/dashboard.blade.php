@@ -10,7 +10,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M8 7V3m8 4V3M3 11h18M5 5h14a2 2 0 012 2v12a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2z"></path>
                 </svg>
-                <p class="text-white text-lg font-semibold">Terdapat 4 jadwal pada hari ini</p>
+                <p class="text-white text-lg font-semibold">Terdapat {{ $dataJadwal->count() }} jadwal pada hari ini</p>
             </div>
         </div>
 
@@ -20,8 +20,6 @@
                     <tr>
                         <th class="p-3 text-left">No.</th>
                         <th class="p-3 text-left">Mata Kuliah</th>
-                        <th class="p-3 text-left">Kelas</th>
-                        <th class="p-3 text-left">SKS</th>
                         <th class="p-3 text-left">Jam</th>
                         <th class="p-3 text-left">Ruangan</th>
                         <th class="p-3 text-left">Dosen</th>
@@ -29,16 +27,20 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="border-b border-gray-200 hover:bg-gray-100 transition-colors duration-150">
-                        <td class="px-4 py-4">1</td>
-                        <td class="px-4 py-4">Pemrograman Web</td>
-                        <td class="px-4 py-4">TI-3A</td>
-                        <td class="px-4 py-4">3</td>
-                        <td class="px-4 py-4">08:00 - 10:30</td>
-                        <td class="px-4 py-4">Lab Komputer 1</td>
-                        <td class="px-4 py-4">Dr. Junia Vitasari, S.Tr.Kom., M.T.</td>
-                        <td class="px-4 py-4">Budi Santoso</td>
-                    </tr>
+                    @forelse ($dataJadwal as $index => $jadwal)
+                        <tr class="border-b border-gray-200 hover:bg-gray-100 transition-colors duration-150">
+                            <td class="px-4 py-4">{{ $index + 1 }}</td>
+                            <td class="px-4 py-4">{{ $jadwal->matkul }}</td>
+                            <td class="px-4 py-4">{{ $jadwal->jam }}</td>
+                            <td class="px-4 py-4">{{ $jadwal->ruangan }}</td>
+                            <td class="px-4 py-4">{{ $jadwal->dosen ?? '-' }}</td>
+                            <td class="px-4 py-4">{{ $jadwal->teknisi ?? '-' }}</td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="8" class="px-4 py-4 text-center text-gray-500">Tidak ada jadwal untuk hari ini.</td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>

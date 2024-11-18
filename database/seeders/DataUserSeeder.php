@@ -45,6 +45,14 @@ class DataUserSeeder extends Seeder
                 'password' => Hash::make('pass1234'), // Password di-hash
                 'created_at' => now(),
                 'updated_at' => now(),
+            ],
+            [
+                'name' => 'Admin Jurusan',
+                'email' => 'admin@jti.polije.ac.id',
+                'status' => 'admin',
+                'password' => Hash::make('jtiadmin123'), // Password di-hash
+                'created_at' => now(),
+                'updated_at' => now(),
             ]
         ]);
     }

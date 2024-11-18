@@ -39,16 +39,6 @@
             </tr>
         </thead>
         <tbody class="bg-white">
-            @php
-                $jadwal = [
-                    ['hari' => 'Senin', 'jam' => '08:00 - 10:00', 'mata_kuliah' => 'Algoritma', 'dosen' => 'Dr. John Doe', 'kelas' => 'A', 'semester' => 1, 'ruangan' => 'Lab Komputer 1', 'teknisi' => 'Jane Smith'],
-                    ['hari' => 'Selasa', 'jam' => '10:00 - 12:00', 'mata_kuliah' => 'Database', 'dosen' => 'Prof. Jane Doe', 'kelas' => 'B', 'semester' => 2, 'ruangan' => 'Lab Komputer 2', 'teknisi' => 'Tom James'],
-                    ['hari' => 'Rabu', 'jam' => '13:00 - 15:00', 'mata_kuliah' => 'Jaringan', 'dosen' => 'Dr. Alan Turing', 'kelas' => 'C', 'semester' => 3, 'ruangan' => 'Lab Jaringan', 'teknisi' => 'Anna Clark'],
-                    ['hari' => 'Kamis', 'jam' => '15:00 - 17:00', 'mata_kuliah' => 'Pemrograman Web', 'dosen' => 'Mr. Linus Torvalds', 'kelas' => 'D', 'semester' => 4, 'ruangan' => 'Lab Komputer 3', 'teknisi' => 'David Johnson'],
-                    ['hari' => 'Jumat', 'jam' => '08:00 - 10:00', 'mata_kuliah' => 'Kecerdasan Buatan', 'dosen' => 'Ms. Ada Lovelace', 'kelas' => 'E', 'semester' => 5, 'ruangan' => 'Lab AI', 'teknisi' => 'Sarah White'],
-                ];
-            @endphp
-
             @foreach($dataJadwal as $data)
             <tr class="border-b border-gray-200">
                 <td class="px-4 py-4 text-sm text-gray-700">{{ $data['hari'] }}</td>

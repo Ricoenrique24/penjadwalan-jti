@@ -60,6 +60,7 @@ class JadwalController extends Controller
         // Menetapkan nilai atribut untuk jadwal
         $jadwal->id_dosen = $dosen->id;
         $jadwal->id_teknisi = $teknisi->id;
+        $jadwal->id_matkul = $matkul->id;
         $jadwal->hari = $request->hari;
         $jadwal->jam = $request->jam;
         $jadwal->matkul = $matkul->nama_matkul;

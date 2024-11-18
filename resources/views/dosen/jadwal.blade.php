@@ -9,8 +9,6 @@
                     <tr>
                         <th class="p-3 text-left">Hari</th>
                         <th class="p-3 text-left">Mata Kuliah</th>
-                        <th class="p-3 text-left">Kelas</th>
-                        <th class="p-3 text-left">SKS</th>
                         <th class="p-3 text-left">Jam</th>
                         <th class="p-3 text-left">Ruangan</th>
                         <th class="p-3 text-left">Dosen</th>
@@ -18,16 +16,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="border-b border-gray-200 hover:bg-gray-100 transition-colors duration-150">
-                        <td class="px-4 py-4">Senin</td>
-                        <td class="px-4 py-4">Pemrograman Web</td>
-                        <td class="px-4 py-4">TI-3A</td>
-                        <td class="px-4 py-4">3</td>
-                        <td class="px-4 py-4">08:00 - 10:30</td>
-                        <td class="px-4 py-4">Lab Komputer 1</td>
-                        <td class="px-4 py-4">Dr. Junia Vitasari, S.Tr.Kom., M.T.</td>
-                        <td class="px-4 py-4">Budi Santoso</td>
-                    </tr>
+                    @foreach ($dataJadwal as $index => $jadwal)
+                        <tr class="border-b border-gray-200 hover:bg-gray-100 transition-colors duration-150">
+                            <td class="px-4 py-4">{{ $jadwal->hari }}</td>
+                            <td class="px-4 py-4">{{ $jadwal->matkul ?? '-' }}</td> <!-- Menampilkan nama mata kuliah -->
+                            <td class="px-4 py-4">{{ $jadwal->jam }}</td>
+                            <td class="px-4 py-4">{{ $jadwal->ruangan }}</td>
+                            <td class="px-4 py-4">{{ $jadwal->dosen ?? '-' }}</td>
+                            <td class="px-4 py-4">{{ $jadwal->teknisi ?? '-' }}</td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>

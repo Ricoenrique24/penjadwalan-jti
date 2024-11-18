@@ -1,19 +1,3 @@
-@if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
-
-@if (session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
-    </div>
-@endif
-
 @extends('admin.default')
 @section('content')
     <div class="container mx-auto p-6 mt-12 min-h-screen">
@@ -109,164 +93,164 @@
                             <td class="px-4 py-4 text-sm text-gray-700">{{ $dt['teknisi'] }}</td>
                             <td class="px-4 py-4 text-sm text-gray-700">{{ $dt['ruangan'] }}</td>
                             <td class="p-2">
-                                <button type="button" data-modal-target="#edit-item-modal-{{ $i }}"
+                                <button type="button" data-modal-target="#edit-item-modal-{{ $dt->id }}"
                                     class="inline-flex items-center justify-center w-8 h-8 text-gray-800 bg-gray-200 border border-gray-300 rounded-sm shadow-sm hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500">
                                     <i class="fa-regular fa-pen-to-square text-lg"></i>
                                 </button>
-                                <form id="delete-form-{{ $i }}" action="{{ route('adminJadwal.destroy', $i) }}"  method="POST"
+                                <form id="delete-form-{{ $dt->id }}" action="{{ route('adminJadwal.destroy', $dt->id) }}"  method="POST"
                                     class="inline-block">
                                     @csrf
                                     @method('DELETE')
                                     <button type="button"
                                         class="inline-flex items-center justify-center w-8 h-8 text-white bg-red-700 border border-red-600 rounded shadow-sm hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-500 ml-1"
-                                        onclick="confirmDelete('{{ $i }}')">
+                                        onclick="confirmDelete('{{ $dt->id }}')">
                                         <i class="fa-regular fa-trash-can text-base"></i>
                                     </button>
                                 </form>
                             </td>
                         </tr>
                         <!-- Modal Edit Dosen -->
-<div id="edit-item-modal-<?php echo $i; ?>" tabindex="-1" aria-hidden="true"
-    class="fixed inset-0 z-50 flex items-center justify-center w-full p-4 overflow-x-hidden overflow-y-auto h-modal hidden">
-    <div class="relative w-full max-w-full md:max-w-md h-full max-h-full md:h-auto">
-        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-            <button type="button"
-                class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:text-gray-500 dark:hover:bg-gray-600 dark:hover:text-white"
-                data-modal-hide="#edit-item-modal-<?php echo $i; ?>">
-                <svg aria-hidden="true" class="w-5 h-5" fill="none" stroke="currentColor"
-                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M6 18L18 6M6 6l12 12"></path>
-                </svg>
-                <span class="sr-only">Close modal</span>
-            </button>
-            <div class="p-6 text-center">
-                <h3 class="text-lg font-semibold text-gray-900 my-4">Edit Penjadwalan</h3>
-                <form action="{{ route('adminJadwal.update', $i) }}" method="POST" class="p-4">
-                    @csrf
-                    @method('PUT')
-                    <div class="grid grid-cols-2 gap-4">
-                        <!-- Hari -->
-                        <div class="text-left">
-                            <label for="hari" class="block text-sm font-medium text-gray-900">Hari</label>
-                            <select name="hari" id="hari"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
-                                required>
-                                <option value="Senin" {{ $dt->hari == 'Senin' ? 'selected' : '' }}>Senin</option>
-                                <option value="Selasa" {{ $dt->hari == 'Selasa' ? 'selected' : '' }}>Selasa</option>
-                                <option value="Rabu" {{ $dt->hari == 'Rabu' ? 'selected' : '' }}>Rabu</option>
-                                <option value="Kamis" {{ $dt->hari == 'Kamis' ? 'selected' : '' }}>Kamis</option>
-                                <option value="Jumat" {{ $dt->hari == 'Jumat' ? 'selected' : '' }}>Jumat</option>
-                            </select>
-                        </div>
+                        <div id="edit-item-modal-<?php echo $dt->id; ?>" tabindex="-1" aria-hidden="true"
+                            class="fixed inset-0 z-50 flex items-center justify-center w-full p-4 overflow-x-hidden overflow-y-auto h-modal hidden">
+                            <div class="relative w-full max-w-full md:max-w-md h-full max-h-full md:h-auto">
+                                <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                    <button type="button"
+                                        class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:text-gray-500 dark:hover:bg-gray-600 dark:hover:text-white"
+                                        data-modal-hide="#edit-item-modal-<?php echo $dt->id; ?>">
+                                        <svg aria-hidden="true" class="w-5 h-5" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M6 18L18 6M6 6l12 12"></path>
+                                        </svg>
+                                        <span class="sr-only">Close modal</span>
+                                    </button>
+                                    <div class="p-6 text-center">
+                                        <h3 class="text-lg font-semibold text-gray-900 my-4">Edit Penjadwalan</h3>
+                                        <form action="{{ route('adminJadwal.update', $dt->id) }}" method="POST" class="p-4">
+                                            @csrf
+                                            @method('PUT')
+                                            <div class="grid grid-cols-2 gap-4">
+                                                <!-- Hari -->
+                                                <div class="text-left">
+                                                    <label for="hari" class="block text-sm font-medium text-gray-900">Hari</label>
+                                                    <select name="hari" id="hari"
+                                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
+                                                        required>
+                                                        <option value="Senin" {{ $dt->hari == 'Senin' ? 'selected' : '' }}>Senin</option>
+                                                        <option value="Selasa" {{ $dt->hari == 'Selasa' ? 'selected' : '' }}>Selasa</option>
+                                                        <option value="Rabu" {{ $dt->hari == 'Rabu' ? 'selected' : '' }}>Rabu</option>
+                                                        <option value="Kamis" {{ $dt->hari == 'Kamis' ? 'selected' : '' }}>Kamis</option>
+                                                        <option value="Jumat" {{ $dt->hari == 'Jumat' ? 'selected' : '' }}>Jumat</option>
+                                                    </select>
+                                                </div>
 
-                        <!-- Jam -->
-                        <div class="text-left">
-                            <label for="jam" class="block text-sm font-medium text-gray-900">Jam</label>
-                            <select name="jam" id="jam"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
-                                required>
-                                @foreach ($jam as $item)
-                                    <option value="{{ $item->jam_awal }} - {{ $item->jam_akhir }}" 
-                                    {{ $dt->jam == $item->jam_awal . ' - ' . $item->jam_akhir ? 'selected' : '' }}>
-                                        {{ $item->jam_awal }} - {{ $item->jam_akhir }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
+                                                <!-- Jam -->
+                                                <div class="text-left">
+                                                    <label for="jam" class="block text-sm font-medium text-gray-900">Jam</label>
+                                                    <select name="jam" id="jam"
+                                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
+                                                        required>
+                                                        @foreach ($jam as $item)
+                                                            <option value="{{ $item->jam_awal }} - {{ $item->jam_akhir }}" 
+                                                            {{ $dt->jam == $item->jam_awal . ' - ' . $item->jam_akhir ? 'selected' : '' }}>
+                                                                {{ $item->jam_awal }} - {{ $item->jam_akhir }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
 
-                        <!-- Mata Kuliah -->
-                        <div class="text-left">
-                            <label for="mata_kuliah" class="block text-sm font-medium text-gray-900">Mata Kuliah</label>
-                            <select name="mata_kuliah" id="mata_kuliah"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
-                                required>
-                                @foreach ($mataKuliah as $item)
-                                    <option value="{{ $item->id }}" 
-                                    {{ $dt->id == $item->id ? 'selected' : '' }}>
-                                        {{ $item->nama_matkul }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
+                                                <!-- Mata Kuliah -->
+                                                <div class="text-left">
+                                                    <label for="mata_kuliah" class="block text-sm font-medium text-gray-900">Mata Kuliah</label>
+                                                    <select name="mata_kuliah" id="mata_kuliah"
+                                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
+                                                        required>
+                                                        @foreach ($mataKuliah as $item)
+                                                            <option value="{{ $item->id }}" 
+                                                            {{ $dt->id == $item->id ? 'selected' : '' }}>
+                                                                {{ $item->nama_matkul }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
 
-                        <!-- Tahun Ajaran -->
-                        <div class="text-left">
-                            <label for="tahun_ajaran" class="block text-sm font-medium text-gray-900">Tahun Ajaran</label>
-                            <input type="text" name="tahun_ajaran" id="tahun_ajaran"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
-                                placeholder="2023/2024" value="{{ $dt->tahun_ajaran }}" required>
-                        </div>
+                                                <!-- Tahun Ajaran -->
+                                                <div class="text-left">
+                                                    <label for="tahun_ajaran" class="block text-sm font-medium text-gray-900">Tahun Ajaran</label>
+                                                    <input type="text" name="tahun_ajaran" id="tahun_ajaran"
+                                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
+                                                        placeholder="2023/2024" value="{{ $dt->tahun_ajaran }}" required>
+                                                </div>
 
-                        <!-- Semester -->
-                        <div class="text-left">
-                            <label for="semester" class="block text-sm font-medium text-gray-900">Semester</label>
-                            <select name="semester" id="semester"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
-                                required>
-                                @for ($i = 1; $i <= 8; $i++)
-                                    <option value="{{ $i }}" {{ $dt->semester == $i ? 'selected' : '' }}>{{ $i }}</option>
-                                @endfor
-                            </select>
-                        </div>
+                                                <!-- Semester -->
+                                                <div class="text-left">
+                                                    <label for="semester" class="block text-sm font-medium text-gray-900">Semester</label>
+                                                    <select name="semester" id="semester"
+                                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
+                                                        required>
+                                                        @for ($i = 1; $i <= 8; $i++)
+                                                            <option value="{{ $i }}" {{ $dt->semester == $i ? 'selected' : '' }}>{{ $i }}</option>
+                                                        @endfor
+                                                    </select>
+                                                </div>
 
-                        <!-- Dosen Pengampu -->
-                        <div class="text-left">
-                            <label for="dosen" class="block text-sm font-medium text-gray-900">Dosen Pengampu</label>
-                            <select name="dosen" id="dosen"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
-                                required>
-                                @foreach ($dosen as $item)
-                                    <option value="{{ $item->id }}" 
-                                    {{ $dt->id_dosen == $item->id ? 'selected' : '' }}>
-                                        {{ $item->nama_dosen }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
+                                                <!-- Dosen Pengampu -->
+                                                <div class="text-left">
+                                                    <label for="dosen" class="block text-sm font-medium text-gray-900">Dosen Pengampu</label>
+                                                    <select name="dosen" id="dosen"
+                                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
+                                                        required>
+                                                        @foreach ($dosen as $item)
+                                                            <option value="{{ $item->id }}" 
+                                                            {{ $dt->id_dosen == $item->id ? 'selected' : '' }}>
+                                                                {{ $item->nama_dosen }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
 
-                        <!-- Teknisi -->
-                        <div class="text-left">
-                            <label for="teknisi" class="block text-sm font-medium text-gray-900">Teknisi</label>
-                            <select name="teknisi" id="teknisi"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
-                                required>
-                                @foreach ($teknisi as $item)
-                                    <option value="{{ $item->id }}" 
-                                    {{ $dt->id_teknisi == $item->id ? 'selected' : '' }}>
-                                        {{ $item->nama_teknisi }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
+                                                <!-- Teknisi -->
+                                                <div class="text-left">
+                                                    <label for="teknisi" class="block text-sm font-medium text-gray-900">Teknisi</label>
+                                                    <select name="teknisi" id="teknisi"
+                                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
+                                                        required>
+                                                        @foreach ($teknisi as $item)
+                                                            <option value="{{ $item->id }}" 
+                                                            {{ $dt->id_teknisi == $item->id ? 'selected' : '' }}>
+                                                                {{ $item->nama_teknisi }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
 
-                        <!-- Ruangan -->
-                        <div class="text-left">
-                            <label for="ruangan" class="block text-sm font-medium text-gray-900">Ruangan</label>
-                            <select name="ruangan" id="ruangan"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
-                                required>
-                                @foreach ($ruangan as $item)
-                                    <option value="{{ $item->nama_ruangan }}" 
-                                    {{ $dt->ruangan == $item->nama_ruangan ? 'selected' : '' }}>
-                                        {{ $item->nama_ruangan }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
+                                                <!-- Ruangan -->
+                                                <div class="text-left">
+                                                    <label for="ruangan" class="block text-sm font-medium text-gray-900">Ruangan</label>
+                                                    <select name="ruangan" id="ruangan"
+                                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
+                                                        required>
+                                                        @foreach ($ruangan as $item)
+                                                            <option value="{{ $item->nama_ruangan }}" 
+                                                            {{ $dt->ruangan == $item->nama_ruangan ? 'selected' : '' }}>
+                                                                {{ $item->nama_ruangan }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
 
-                    <div class="flex justify-end mt-4">
-                        <button type="submit"
-                            class="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300 font-medium text-sm">
-                            Simpan
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+                                            <div class="flex justify-end mt-4">
+                                                <button type="submit"
+                                                    class="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300 font-medium text-sm">
+                                                    Simpan
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
                     @endforeach
                 </tbody>
