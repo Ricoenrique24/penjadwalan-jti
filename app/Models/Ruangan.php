@@ -3,23 +3,21 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Model;
 
-class User extends Authenticatable
+class Ruangan extends Model
 {
-    use HasFactory, Notifiable;
+    use HasFactory;
 
     // Nama tabel yang digunakan oleh model ini
-    protected $table = 'users';
+    protected $table = 'data_ruangan';
 
     // Kolom-kolom yang dapat diisi secara massal
     protected $fillable = [
-        'id',
-        'name',
-        'email',
+        'kd_ruangan',
+        'nama_ruangan',
+        'kapasitas',
         'status',
-        'password',
     ];
 
     // Menyesuaikan jika nama kolom primary key bukan 'id'
@@ -31,15 +29,4 @@ class User extends Authenticatable
 
     // Jika tidak menggunakan timestamps
     // public $timestamps = true;
-
-    // Mengatur password untuk disimpan dalam bentuk hashed
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
-
-    // Type casting untuk kolom tertentu
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
 }
