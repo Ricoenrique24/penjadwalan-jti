@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('nip');
             $table->string('nama_dosen');
             $table->string('jenis_kelamin');
-            $table->timestamps();
+            $table->nullableTimestamps();
         });
     }
 
