@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\KoorMatkul;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -21,6 +23,7 @@ class DatabaseSeeder extends Seeder
             DataJamSeeder::class,
             DataJadwalSeeder::class,
             DataUserSeeder::class,
+            KoorMatkulSeeder::class,
         ]);
     }
 }

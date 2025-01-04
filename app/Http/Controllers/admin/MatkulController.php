@@ -13,7 +13,7 @@ class MatkulController extends Controller
      */
     public function index()
     {
-        $matkul = Matkul::orderBy('id', 'desc')->paginate(5);
+        $matkul = Matkul::with('koor_matkul.dosen')->orderBy('id', 'desc')->paginate(5);
         return view('admin.mataKuliah', compact('matkul'));
     }
 

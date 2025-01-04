@@ -19,6 +19,7 @@ class DataMatkulSeeder extends Seeder
                 'nama_matkul' => 'Pemrograman Web',
                 'jumlah_sks' => 3,
                 'semester' => 3,
+                'jenis_matkul' => 'praktikum',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -27,6 +28,7 @@ class DataMatkulSeeder extends Seeder
                 'nama_matkul' => 'Sistem Operasi',
                 'jumlah_sks' => 4,
                 'semester' => 2,
+                'jenis_matkul' => 'teori',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -35,6 +37,7 @@ class DataMatkulSeeder extends Seeder
                 'nama_matkul' => 'Jaringan Komputer',
                 'jumlah_sks' => 3,
                 'semester' => 4,
+                'jenis_matkul' => 'praktikum',
                 'created_at' => now(),
                 'updated_at' => now(),
             ]
