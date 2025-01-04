@@ -10,13 +10,13 @@
     {{-- multipleselect --}}
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
 
-
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
     {{-- datatable --}}
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    {{-- <script src="https://code.jquery.com/jquery-3.7.1.js"></script> --}}
     <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.tailwindcss.css">
     <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/2.1.8/js/dataTables.tailwindcss.js"></script>
+
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         .select2-search {
             width: 100% !important;
