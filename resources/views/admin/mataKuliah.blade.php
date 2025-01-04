@@ -1,6 +1,6 @@
 @extends('admin.default')@section('content')
 <div class="container mx-auto p-6 mt-10 min-h-screen">
-    <div class="flex items-center justify-between p-2 border-b">
+    <div class="flex items-center justify-between p-2 py-5">
         <div class="flex-1 text-center">
             <h1 class="text-3xl font-bold text-gray-800">Mata Kuliah</h1>
         </div>
@@ -11,7 +11,7 @@
         </button>
     </div>
     <div class="overflow-x-auto">
-        <form class="max-w-md mx-auto my-4">
+        {{-- <form class="max-w-md mx-auto my-4">
             <label for="default-search"
                 class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
             <div class="relative">
@@ -28,11 +28,11 @@
                 <button type="submit"
                     class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
             </div>
-        </form>
+        </form> --}}
 
         <!-- Tabel Dosen -->
         <div class="overflow-x-auto">
-            <table class="w-full border-separate border-spacing-0 text-sm text-black">
+            <table id="dataTable" class="w-full border-separate border-spacing-0 text-sm text-black">
                 <thead class="bg-gray-200 text-gray-800">
                     <tr>
                         <th class="p-2 text-center">Kode Mata Kuliah</th>
@@ -58,7 +58,7 @@
                                 @endforeach
                             </td>
                             <td class="p-2">
-                                @if ($item->jenis_matkul == 'praktikum')
+                                @if ($item->jenis_matkul == 'Praktikum')
                                     <span
                                         class="px-2 py-1 text-xs font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
                                         {{ $item->jenis_matkul }}
@@ -134,8 +134,7 @@
                                                     Matkul</label>
                                                 <input type="text" name="jumlah_sks" id="jumlah_sks"
                                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
-                                                    placeholder="Masukkan Jumlah SKS"
-                                                    value="{{ $item->jumlah_sks }}">
+                                                    placeholder="Masukkan Jumlah SKS" value="{{ $item->jumlah_sks }}">
                                             </div>
 
                                             <div class="text-left mt-4">
@@ -144,6 +143,35 @@
                                                 <input type="text" name="semester" id="semester"
                                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
                                                     placeholder="Masukkan Semester"value="{{ $item->semester }}">
+                                            </div>
+                                            <div class="text-left mt-4">
+                                                <label for="jenis_matkul"
+                                                    class="block text-sm font-medium text-gray-900">Jenis
+                                                    Matakuliah</label>
+                                                <select id="jenis_matkul" name="jenis_matkul"
+                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1">
+                                                    <option @if ($item->jenis_matkul == 'Teori') selected @endif
+                                                        value="Teori">Teori</option>
+                                                    <option @if ($item->jenis_matkul == 'Praktikum') selected @endif
+                                                        value="Praktikum">Praktikum</option>
+                                                </select>
+                                            </div>
+                                            <div class="text-left mt-4">
+                                                <label class="block text-sm font-medium text-gray-900 mb-1"
+                                                    for="pair">
+                                                    Koordinator Matakuliah
+                                                </label>
+                                                <select class="js-example-basic-multiple text-sm rounded-lg "
+                                                    style="width: 100%;"
+                                                    data-placeholder="Select one more Koordinator..."
+                                                    data-allow-clear="false" multiple="multiple"
+                                                    title="Select Koordinator" name="koor_matkul[]">
+                                                    @foreach ($dosen as $dos)
+                                                        <option @if ($item->koor_matkul->contains('id_dosen', $dos->id)) selected @endif
+                                                            value="{{ $dos->id }}">{{ $dos->nama_dosen }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                             <div class="flex justify-end">
                                                 <button type="submit"
@@ -210,6 +238,27 @@
                         <input type="text" name="semester" id="semester"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
                             placeholder="Masukkan Semester" required>
+                    </div>
+                    <div class="text-left mt-4">
+                        <label for="jenis_matkul" class="block text-sm font-medium text-gray-900">Jenis
+                            Matakuliah</label>
+                        <select id="jenis_matkul" name="jenis_matkul"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1">
+                            <option value="Teori">Teori</option>
+                            <option value="Praktikum">Praktikum</option>
+                        </select>
+                    </div>
+                    <div class="text-left mt-4">
+                        <label class="block text-sm font-medium text-gray-900 mb-1" for="pair">
+                            Koordinator Matakuliah
+                        </label>
+                        <select class="js-example-basic-multiple text-sm rounded-lg " style="width: 100%;"
+                            data-placeholder="Select one more Koordinator..." data-allow-clear="false"
+                            multiple="multiple" title="Select Koordinator" name="koor_matkul[]">
+                            @foreach ($dosen as $item)
+                                <option value="{{ $item->id }}">{{ $item->nama_dosen }}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="flex justify-end">
                         <button type="submit"
@@ -282,5 +331,10 @@
             }
         })
     }
+    $(document).ready(function() {
+        $('.js-example-basic-multiple').select2();
+    });
+
+    $('#dataTable').DataTable();
 </script>
 @endsection

@@ -6,7 +6,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Penjadwalan JTI</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+    {{-- multipleselect --}}
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    {{-- datatable --}}
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.tailwindcss.css">
+    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.tailwindcss.js"></script>
+    <style>
+        .select2-search {
+            width: 100% !important;
+        }
+
+        .justify-self-end {
+            justify-self: end;
+        }
+    </style>
 </head>
 
 <body class="min-h-screen ">
@@ -52,10 +71,11 @@
                                 </p>
                             </div>
                             <ul class="py-1" role="none">
-                                 <li>
+                                <li>
                                     <form action="{{ route('logout') }}" method="POST" class="block px-4 py-2 text-sm">
                                         @csrf
-                                        <button type="submit" class="text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white">
+                                        <button type="submit"
+                                            class="text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white">
                                             Logout <i class="fa-solid fa-arrow-right-from-bracket"></i>
                                         </button>
                                     </form>
@@ -76,66 +96,75 @@
                 <li>
                     <a href="{{ route('adminDashboard') }}"
                         class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                        <i class="fa-solid fa-house w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+                        <i
+                            class="fa-solid fa-house w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
                         <span class="ms-3">Dashboard</span>
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('adminDosen') }}"
                         class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                        <i class="fa-solid fa-user w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+                        <i
+                            class="fa-solid fa-user w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
                         <span class="flex-1 ms-3 whitespace-nowrap">Dosen</span>
                     </a>
                 </li>
                 <li>
-                   <a href="{{ route('adminTeknisi') }}"
+                    <a href="{{ route('adminTeknisi') }}"
                         class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                        <i class="fa-solid fa-user-gear w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+                        <i
+                            class="fa-solid fa-user-gear w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
                         <span class="flex-1 ms-3 whitespace-nowrap">Teknisi</span>
                     </a>
                 </li>
                 <li>
-                <a href="{{ route('adminRuangan') }}"
+                    <a href="{{ route('adminRuangan') }}"
                         class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                        <i class="fa-solid fa-school w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+                        <i
+                            class="fa-solid fa-school w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
                         <span class="flex-1 ms-3 whitespace-nowrap">Ruangan</span>
                     </a>
                 </li>
                 <li>
-               <a href="{{ route('adminKelas') }}"
+                    <a href="{{ route('adminKelas') }}"
                         class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                        <i class="fa-solid fa-folder w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+                        <i
+                            class="fa-solid fa-folder w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
                         <span class="flex-1 ms-3 whitespace-nowrap">Kelas</span>
                     </a>
                 </li>
                 <li>
-                <a href="{{ route('adminMataKuliah') }}"
+                    <a href="{{ route('adminMataKuliah') }}"
                         class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                        <i class="fa-solid fa-book-open w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+                        <i
+                            class="fa-solid fa-book-open w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
                         <span class="flex-1 ms-3 whitespace-nowrap">Mata Kuliah</span>
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('adminJam') }}"
                         class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                        <i class="fa-solid fa-clock w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+                        <i
+                            class="fa-solid fa-clock w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
                         <span class="flex-1 ms-3 whitespace-nowrap">Jam</span>
                     </a>
                 </li>
                 <li>
-                <a href="{{ route('adminJadwal') }}"
-                      class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                      <i class="fa-regular fa-calendar-days w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
-                      <span class="flex-1 ms-3 whitespace-nowrap">Jadwal</span>
-                  </a>
-              </li>
-              <li>
-                <a href="{{ route('adminPengguna') }}"
-                    class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                    <i class="fa-solid fa-user-group w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
-                    <span class="flex-1 ms-3 whitespace-nowrap">Pengguna</span>
-                </a>
-            </li>
+                    <a href="{{ route('adminJadwal') }}"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        <i
+                            class="fa-regular fa-calendar-days w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+                        <span class="flex-1 ms-3 whitespace-nowrap">Jadwal</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('adminPengguna') }}"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        <i
+                            class="fa-solid fa-user-group w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+                        <span class="flex-1 ms-3 whitespace-nowrap">Pengguna</span>
+                    </a>
+                </li>
             </ul>
         </div>
     </aside>
@@ -169,7 +198,6 @@
     @endif
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 </body>
 
 </html>
