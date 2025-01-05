@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container mx-auto p-6 mt-10 min-h-screen">
-        <div class="flex items-center justify-between p-2 border-b">
+        <div class="flex items-center justify-between p-2 py-5">
             <div class="flex-1 text-center">
                 <h1 class="text-3xl font-bold text-gray-800">Dosen</h1>
             </div>
@@ -15,7 +15,7 @@
 
         <!-- Form Pencarian -->
         <div class="overflow-x-auto">
-            <form class="max-w-md mx-auto my-4" method="GET" action="{{ route('adminDosen') }}">
+            {{-- <form class="max-w-md mx-auto my-4" method="GET" action="{{ route('adminDosen') }}">
                 <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Search</label>
                 <div class="relative">
                     <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -32,11 +32,11 @@
                         Search
                     </button>
                 </div>
-            </form>
+            </form> --}}
 
             <!-- Tabel Dosen -->
             <div class="overflow-x-auto">
-                <table class="w-full border-separate border-spacing-0 text-sm text-black">
+                <table id="dataTable" class="w-full border-separate border-spacing-0 text-sm text-black">
                     <thead class="bg-gray-200 text-gray-800">
                         <tr>
                             <th class="p-2 text-center">Kode Dosen</th>
@@ -48,11 +48,11 @@
                     </thead>
                     <tbody class="bg-white text-center" id="dosenTableBody">
                         @if ($dosen->isEmpty())
-                        <tr>
-                            <td colspan="5" class="p-2 text-center">
-                                <p class="text-red-500 font-semibold">Data Dosen yang anda cari tidak ada.</p>
-                            </td>
-                        </tr>                        
+                            <tr>
+                                <td colspan="5" class="p-2 text-center">
+                                    <p class="text-red-500 font-semibold">Data Dosen yang anda cari tidak ada.</p>
+                                </td>
+                            </tr>
                         @else
                             @foreach ($dosen as $item)
                                 <tr class="border-b border-gray-200">
@@ -222,7 +222,7 @@
                 </div>
             </div>
         </div>
-        @if (empty(request()->query('search')))
+        {{-- @if (empty(request()->query('search')))
             <div class="flex flex-col items-center my-6">
                 <!-- Help text -->
                 <span class="text-sm text-gray-700 dark:text-gray-400">
@@ -247,7 +247,7 @@
                     </button>
                 </div>
             </div>
-        @endif
+        @endif --}}
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -282,5 +282,7 @@
                 }
             })
         }
+
+        $('#dataTable').DataTable();
     </script>
 @endsection

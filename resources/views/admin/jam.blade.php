@@ -1,7 +1,7 @@
 @extends('admin.default')
 @section('content')
     <div class="container mx-auto p-6 mt-10 min-h-screen">
-        <div class="flex items-center justify-between p-2 border-b">
+        <div class="flex items-center justify-between p-2 py-5">
             <div class="flex-1 text-center">
                 <h1 class="text-3xl font-bold text-gray-800">Jam Perkuliahan</h1>
             </div>
@@ -12,7 +12,7 @@
             </button>
         </div>
         <div class="overflow-x-auto">
-            <form class="max-w-md mx-auto my-4">
+            {{-- <form class="max-w-md mx-auto my-4">
                 <label for="default-search"
                     class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
                 <div class="relative">
@@ -29,10 +29,10 @@
                     <button type="submit"
                         class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
                 </div>
-            </form>
+            </form> --}}
 
             <div class="overflow-x-auto">
-                <table class="w-full border-separate border-spacing-0 text-sm text-black">
+                <table id="dataTable" class="w-full border-separate border-spacing-0 text-sm text-black">
                     <thead class="bg-gray-200 text-gray-800">
                         <tr>
                             <th class="p-2 text-center">Sesi</th>
@@ -83,7 +83,8 @@
                                         </button>
                                         <div class="p-6 text-center">
                                             <h3 class="text-lg font-semibold text-gray-900">Edit Jam Perkuliahan</h3>
-                                            <form action="{{ route('adminJam.update', $item->id) }}" method="POST" class="space-y-4">
+                                            <form action="{{ route('adminJam.update', $item->id) }}" method="POST"
+                                                class="space-y-4">
                                                 @csrf
                                                 @method('PUT')
                                                 <div class="text-left">
@@ -148,22 +149,19 @@
                     <form action="{{ route('adminJam.store') }}" method="POST" class="p-4">
                         @csrf
                         <div class="text-left">
-                            <label for="sesi"
-                                class="block text-sm font-medium text-gray-900">Sesi</label>
+                            <label for="sesi" class="block text-sm font-medium text-gray-900">Sesi</label>
                             <input type="text" name="sesi" id="sesi"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
                                 placeholder="Masukkan Sesi" required>
                         </div>
                         <div class="text-left mt-4">
-                            <label for="jam_awal"
-                                class="block text-sm font-medium text-gray-900">Waktu Mulai</label>
+                            <label for="jam_awal" class="block text-sm font-medium text-gray-900">Waktu Mulai</label>
                             <input type="time" name="jam_awal" id="jam_awal"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
                                 required>
                         </div>
                         <div class="text-left mt-4">
-                            <label for="jam_akhir"
-                                class="block text-sm font-medium text-gray-900">Waktu
+                            <label for="jam_akhir" class="block text-sm font-medium text-gray-900">Waktu
                                 Berakhir</label>
                             <input type="time" name="jam_akhir" id="jam_akhir"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
@@ -179,30 +177,30 @@
                 </div>
             </div>
         </div>
-   <!-- Custom Pagination -->
-   @if ($dataJam->total() > 5)
-   <div class="flex flex-col items-center my-6">
-       <span class="text-sm text-gray-700 dark:text-gray-400">
-           Menampilkan <span
-               class="font-semibold text-gray-900 dark:text-white">{{ $dataJam->firstItem() }}</span>
-           sampai
-           <span class="font-semibold text-gray-900 dark:text-white">{{ $dataJam->lastItem() }}</span> dari <span
-               class="font-semibold text-gray-900 dark:text-white">{{ $dataJam->total() }}</span> sesi
-       </span>
-       <div class="inline-flex mt-2 xs:mt-0">
-           <button {{ $dataJam->onFirstPage() ? 'disabled' : '' }}
-               class="flex items-center justify-center px-3 h-8 text-sm font-medium text-white bg-gray-800 rounded-s hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-               {{ $dataJam->previousPageUrl() ? 'onclick=window.location.href=\'' . $dataJam->previousPageUrl() . '\'' : '' }}>
-               Sebelumnya
-           </button>
-           <button {{ !$dataJam->hasMorePages() ? 'disabled' : '' }}
-               class="flex items-center justify-center px-3 h-8 text-sm font-medium text-white bg-gray-800 border-0 border-s border-gray-700 rounded-e hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-               {{ $dataJam->nextPageUrl() ? 'onclick=window.location.href=\'' . $dataJam->nextPageUrl() . '\'' : '' }}>
-               Selanjutnya
-           </button>
-       </div>
-   </div>
-@endif
+        <!-- Custom Pagination -->
+        @if ($dataJam->total() > 5)
+            <div class="flex flex-col items-center my-6">
+                <span class="text-sm text-gray-700 dark:text-gray-400">
+                    Menampilkan <span
+                        class="font-semibold text-gray-900 dark:text-white">{{ $dataJam->firstItem() }}</span>
+                    sampai
+                    <span class="font-semibold text-gray-900 dark:text-white">{{ $dataJam->lastItem() }}</span> dari <span
+                        class="font-semibold text-gray-900 dark:text-white">{{ $dataJam->total() }}</span> sesi
+                </span>
+                <div class="inline-flex mt-2 xs:mt-0">
+                    <button {{ $dataJam->onFirstPage() ? 'disabled' : '' }}
+                        class="flex items-center justify-center px-3 h-8 text-sm font-medium text-white bg-gray-800 rounded-s hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                        {{ $dataJam->previousPageUrl() ? 'onclick=window.location.href=\'' . $dataJam->previousPageUrl() . '\'' : '' }}>
+                        Sebelumnya
+                    </button>
+                    <button {{ !$dataJam->hasMorePages() ? 'disabled' : '' }}
+                        class="flex items-center justify-center px-3 h-8 text-sm font-medium text-white bg-gray-800 border-0 border-s border-gray-700 rounded-e hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                        {{ $dataJam->nextPageUrl() ? 'onclick=window.location.href=\'' . $dataJam->nextPageUrl() . '\'' : '' }}>
+                        Selanjutnya
+                    </button>
+                </div>
+            </div>
+        @endif
     </div>
 
 
@@ -240,5 +238,7 @@
                 }
             })
         }
+
+        $('#dataTable').DataTable();
     </script>
 @endsection

@@ -103,7 +103,7 @@
 
             <!-- Tabel -->
             <div class="overflow-x-auto">
-                <table class="w-full border-separate border-spacing-0 text-sm text-black">
+                <table id="dataTable" class="w-full border-separate border-spacing-0 text-sm text-black">
                     <thead class="bg-gray-200 text-gray-800">
                         <tr>
                             <th class="p-2 text-center">Pengguna</th>
@@ -261,5 +261,7 @@
                 }
             })
         }
+
+        $('#dataTable').DataTable();
     </script>
 @endsection

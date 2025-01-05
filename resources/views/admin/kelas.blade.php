@@ -1,7 +1,7 @@
 @extends('admin.default')
 @section('content')
     <div class="container mx-auto p-6 mt-10 min-h-screen">
-        <div class="flex items-center justify-between p-2 border-b">
+        <div class="flex items-center justify-between p-2 py-5">
             <div class="flex-1 text-center">
                 <h1 class="text-3xl font-bold text-gray-800">Kelas</h1>
             </div>
@@ -12,7 +12,7 @@
             </button>
         </div>
         <div class="overflow-x-auto">
-            <form class="max-w-md mx-auto my-4">
+            {{-- <form class="max-w-md mx-auto my-4">
                 <label for="default-search"
                     class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
                 <div class="relative">
@@ -29,11 +29,11 @@
                     <button type="submit"
                         class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
                 </div>
-            </form>
+            </form> --}}
 
             <!-- Tabel Dosen -->
             <div class="overflow-x-auto">
-                <table class="w-full border-separate border-spacing-0 text-sm text-black">
+                <table id="dataTable" class="w-full border-separate border-spacing-0 text-sm text-black">
                     <thead class="bg-gray-200 text-gray-800">
                         <tr>
                             <th class="p-2 text-center">Semester</th>
@@ -187,9 +187,11 @@
                                 required>
                                 <option value="" disabled {{ empty($item->prodi) ? 'selected' : '' }}>Pilih
                                     Program Studi</option>
-                                <option value="Teknik Informatika" {{ $item->prodi == 'Teknik Informatika' ? 'selected' : '' }}>
+                                <option value="Teknik Informatika"
+                                    {{ $item->prodi == 'Teknik Informatika' ? 'selected' : '' }}>
                                     Teknik Informatika</option>
-                                <option value="Manajemen Informatika" {{ $item->prodi == 'Manajemen Informatika' ? 'selected' : '' }}>
+                                <option value="Manajemen Informatika"
+                                    {{ $item->prodi == 'Manajemen Informatika' ? 'selected' : '' }}>
                                     Manajemen Informatika</option>
                             </select>
                         </div>
@@ -209,30 +211,29 @@
                 </div>
             </div>
         </div>
-         <!-- Custom Pagination -->
-         @if ($kelas->total() > 5)
-         <div class="flex flex-col items-center my-6">
-             <span class="text-sm text-gray-700 dark:text-gray-400">
-                 Menampilkan <span
-                     class="font-semibold text-gray-900 dark:text-white">{{ $kelas->firstItem() }}</span>
-                 sampai
-                 <span class="font-semibold text-gray-900 dark:text-white">{{ $kelas->lastItem() }}</span> dari <span
-                     class="font-semibold text-gray-900 dark:text-white">{{ $kelas->total() }}</span> kelas
-             </span>
-             <div class="inline-flex mt-2 xs:mt-0">
-                 <button {{ $kelas->onFirstPage() ? 'disabled' : '' }}
-                     class="flex items-center justify-center px-3 h-8 text-sm font-medium text-white bg-gray-800 rounded-s hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                     {{ $kelas->previousPageUrl() ? 'onclick=window.location.href=\'' . $kelas->previousPageUrl() . '\'' : '' }}>
-                     Sebelumnya
-                 </button>
-                 <button {{ !$kelas->hasMorePages() ? 'disabled' : '' }}
-                     class="flex items-center justify-center px-3 h-8 text-sm font-medium text-white bg-gray-800 border-0 border-s border-gray-700 rounded-e hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                     {{ $kelas->nextPageUrl() ? 'onclick=window.location.href=\'' . $kelas->nextPageUrl() . '\'' : '' }}>
-                     Selanjutnya
-                 </button>
-             </div>
-         </div>
-     @endif
+        <!-- Custom Pagination -->
+        @if ($kelas->total() > 5)
+            <div class="flex flex-col items-center my-6">
+                <span class="text-sm text-gray-700 dark:text-gray-400">
+                    Menampilkan <span class="font-semibold text-gray-900 dark:text-white">{{ $kelas->firstItem() }}</span>
+                    sampai
+                    <span class="font-semibold text-gray-900 dark:text-white">{{ $kelas->lastItem() }}</span> dari <span
+                        class="font-semibold text-gray-900 dark:text-white">{{ $kelas->total() }}</span> kelas
+                </span>
+                <div class="inline-flex mt-2 xs:mt-0">
+                    <button {{ $kelas->onFirstPage() ? 'disabled' : '' }}
+                        class="flex items-center justify-center px-3 h-8 text-sm font-medium text-white bg-gray-800 rounded-s hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                        {{ $kelas->previousPageUrl() ? 'onclick=window.location.href=\'' . $kelas->previousPageUrl() . '\'' : '' }}>
+                        Sebelumnya
+                    </button>
+                    <button {{ !$kelas->hasMorePages() ? 'disabled' : '' }}
+                        class="flex items-center justify-center px-3 h-8 text-sm font-medium text-white bg-gray-800 border-0 border-s border-gray-700 rounded-e hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                        {{ $kelas->nextPageUrl() ? 'onclick=window.location.href=\'' . $kelas->nextPageUrl() . '\'' : '' }}>
+                        Selanjutnya
+                    </button>
+                </div>
+            </div>
+        @endif
     </div>
 
 
@@ -270,5 +271,7 @@
                 }
             })
         }
+
+        $('#dataTable').DataTable();
     </script>
 @endsection

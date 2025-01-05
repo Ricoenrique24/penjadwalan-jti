@@ -1,7 +1,7 @@
 @extends('admin.default')
 @section('content')
     <div class="container mx-auto p-6 mt-12 min-h-screen">
-        <div class="flex items-center justify-between p-2 border-b">
+        <div class="flex items-center justify-between p-2 py-5">
             <div class="flex-1 text-center">
                 <h1 class="text-3xl font-bold text-gray-800">Penjadwalan</h1>
             </div>
@@ -12,8 +12,8 @@
             </button>
         </div>
 
-        <div class="overflow-x-auto shadow rounded-lg border border-gray-200 bg-white my-4">
-            <table class="w-full border-separate border-spacing-0 text-sm text-black">
+        <div class="overflow-x-auto">
+            <table id="dataTable" class="w-full border-separate border-spacing-0 text-sm text-black">
                 <thead class="bg-gray-200 text-gray-800">
                     <tr>
                         <th class="p-2 text-left">Hari</th>
@@ -97,7 +97,8 @@
                                     class="inline-flex items-center justify-center w-8 h-8 text-gray-800 bg-gray-200 border border-gray-300 rounded-sm shadow-sm hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500">
                                     <i class="fa-regular fa-pen-to-square text-lg"></i>
                                 </button>
-                                <form id="delete-form-{{ $dt->id }}" action="{{ route('adminJadwal.destroy', $dt->id) }}"  method="POST"
+                                <form id="delete-form-{{ $dt->id }}"
+                                    action="{{ route('adminJadwal.destroy', $dt->id) }}" method="POST"
                                     class="inline-block">
                                     @csrf
                                     @method('DELETE')
@@ -126,33 +127,41 @@
                                     </button>
                                     <div class="p-6 text-center">
                                         <h3 class="text-lg font-semibold text-gray-900 my-4">Edit Penjadwalan</h3>
-                                        <form action="{{ route('adminJadwal.update', $dt->id) }}" method="POST" class="p-4">
+                                        <form action="{{ route('adminJadwal.update', $dt->id) }}" method="POST"
+                                            class="p-4">
                                             @csrf
                                             @method('PUT')
                                             <div class="grid grid-cols-2 gap-4">
                                                 <!-- Hari -->
                                                 <div class="text-left">
-                                                    <label for="hari" class="block text-sm font-medium text-gray-900">Hari</label>
+                                                    <label for="hari"
+                                                        class="block text-sm font-medium text-gray-900">Hari</label>
                                                     <select name="hari" id="hari"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
                                                         required>
-                                                        <option value="Senin" {{ $dt->hari == 'Senin' ? 'selected' : '' }}>Senin</option>
-                                                        <option value="Selasa" {{ $dt->hari == 'Selasa' ? 'selected' : '' }}>Selasa</option>
-                                                        <option value="Rabu" {{ $dt->hari == 'Rabu' ? 'selected' : '' }}>Rabu</option>
-                                                        <option value="Kamis" {{ $dt->hari == 'Kamis' ? 'selected' : '' }}>Kamis</option>
-                                                        <option value="Jumat" {{ $dt->hari == 'Jumat' ? 'selected' : '' }}>Jumat</option>
+                                                        <option value="Senin"
+                                                            {{ $dt->hari == 'Senin' ? 'selected' : '' }}>Senin</option>
+                                                        <option value="Selasa"
+                                                            {{ $dt->hari == 'Selasa' ? 'selected' : '' }}>Selasa</option>
+                                                        <option value="Rabu" {{ $dt->hari == 'Rabu' ? 'selected' : '' }}>
+                                                            Rabu</option>
+                                                        <option value="Kamis"
+                                                            {{ $dt->hari == 'Kamis' ? 'selected' : '' }}>Kamis</option>
+                                                        <option value="Jumat"
+                                                            {{ $dt->hari == 'Jumat' ? 'selected' : '' }}>Jumat</option>
                                                     </select>
                                                 </div>
 
                                                 <!-- Jam -->
                                                 <div class="text-left">
-                                                    <label for="jam" class="block text-sm font-medium text-gray-900">Jam</label>
+                                                    <label for="jam"
+                                                        class="block text-sm font-medium text-gray-900">Jam</label>
                                                     <select name="jam" id="jam"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
                                                         required>
                                                         @foreach ($jam as $item)
-                                                            <option value="{{ $item->jam_awal }} - {{ $item->jam_akhir }}" 
-                                                            {{ $dt->jam == $item->jam_awal . ' - ' . $item->jam_akhir ? 'selected' : '' }}>
+                                                            <option value="{{ $item->jam_awal }} - {{ $item->jam_akhir }}"
+                                                                {{ $dt->jam == $item->jam_awal . ' - ' . $item->jam_akhir ? 'selected' : '' }}>
                                                                 {{ $item->jam_awal }} - {{ $item->jam_akhir }}
                                                             </option>
                                                         @endforeach
@@ -161,13 +170,14 @@
 
                                                 <!-- Mata Kuliah -->
                                                 <div class="text-left">
-                                                    <label for="mata_kuliah" class="block text-sm font-medium text-gray-900">Mata Kuliah</label>
+                                                    <label for="mata_kuliah"
+                                                        class="block text-sm font-medium text-gray-900">Mata Kuliah</label>
                                                     <select name="mata_kuliah" id="mata_kuliah"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
                                                         required>
                                                         @foreach ($mataKuliah as $item)
-                                                            <option value="{{ $item->id }}" 
-                                                            {{ $dt->id == $item->id ? 'selected' : '' }}>
+                                                            <option value="{{ $item->id }}"
+                                                                {{ $dt->id == $item->id ? 'selected' : '' }}>
                                                                 {{ $item->nama_matkul }}
                                                             </option>
                                                         @endforeach
@@ -176,7 +186,8 @@
 
                                                 <!-- Tahun Ajaran -->
                                                 <div class="text-left">
-                                                    <label for="tahun_ajaran" class="block text-sm font-medium text-gray-900">Tahun Ajaran</label>
+                                                    <label for="tahun_ajaran"
+                                                        class="block text-sm font-medium text-gray-900">Tahun Ajaran</label>
                                                     <input type="text" name="tahun_ajaran" id="tahun_ajaran"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
                                                         placeholder="2023/2024" value="{{ $dt->tahun_ajaran }}" required>
@@ -184,25 +195,30 @@
 
                                                 <!-- Semester -->
                                                 <div class="text-left">
-                                                    <label for="semester" class="block text-sm font-medium text-gray-900">Semester</label>
+                                                    <label for="semester"
+                                                        class="block text-sm font-medium text-gray-900">Semester</label>
                                                     <select name="semester" id="semester"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
                                                         required>
                                                         @for ($i = 1; $i <= 8; $i++)
-                                                            <option value="{{ $i }}" {{ $dt->semester == $i ? 'selected' : '' }}>{{ $i }}</option>
+                                                            <option value="{{ $i }}"
+                                                                {{ $dt->semester == $i ? 'selected' : '' }}>
+                                                                {{ $i }}</option>
                                                         @endfor
                                                     </select>
                                                 </div>
 
                                                 <!-- Dosen Pengampu -->
                                                 <div class="text-left">
-                                                    <label for="dosen" class="block text-sm font-medium text-gray-900">Dosen Pengampu</label>
+                                                    <label for="dosen"
+                                                        class="block text-sm font-medium text-gray-900">Dosen
+                                                        Pengampu</label>
                                                     <select name="dosen" id="dosen"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
                                                         required>
                                                         @foreach ($dosen as $item)
-                                                            <option value="{{ $item->id }}" 
-                                                            {{ $dt->id_dosen == $item->id ? 'selected' : '' }}>
+                                                            <option value="{{ $item->id }}"
+                                                                {{ $dt->id_dosen == $item->id ? 'selected' : '' }}>
                                                                 {{ $item->nama_dosen }}
                                                             </option>
                                                         @endforeach
@@ -211,13 +227,14 @@
 
                                                 <!-- Teknisi -->
                                                 <div class="text-left">
-                                                    <label for="teknisi" class="block text-sm font-medium text-gray-900">Teknisi</label>
+                                                    <label for="teknisi"
+                                                        class="block text-sm font-medium text-gray-900">Teknisi</label>
                                                     <select name="teknisi" id="teknisi"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
                                                         required>
                                                         @foreach ($teknisi as $item)
-                                                            <option value="{{ $item->id }}" 
-                                                            {{ $dt->id_teknisi == $item->id ? 'selected' : '' }}>
+                                                            <option value="{{ $item->id }}"
+                                                                {{ $dt->id_teknisi == $item->id ? 'selected' : '' }}>
                                                                 {{ $item->nama_teknisi }}
                                                             </option>
                                                         @endforeach
@@ -226,13 +243,14 @@
 
                                                 <!-- Ruangan -->
                                                 <div class="text-left">
-                                                    <label for="ruangan" class="block text-sm font-medium text-gray-900">Ruangan</label>
+                                                    <label for="ruangan"
+                                                        class="block text-sm font-medium text-gray-900">Ruangan</label>
                                                     <select name="ruangan" id="ruangan"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
                                                         required>
                                                         @foreach ($ruangan as $item)
-                                                            <option value="{{ $item->nama_ruangan }}" 
-                                                            {{ $dt->ruangan == $item->nama_ruangan ? 'selected' : '' }}>
+                                                            <option value="{{ $item->nama_ruangan }}"
+                                                                {{ $dt->ruangan == $item->nama_ruangan ? 'selected' : '' }}>
                                                                 {{ $item->nama_ruangan }}
                                                             </option>
                                                         @endforeach
@@ -251,7 +269,6 @@
                                 </div>
                             </div>
                         </div>
-
                     @endforeach
                 </tbody>
             </table>
@@ -296,7 +313,8 @@
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
                                     required>
                                     @foreach ($jam as $item)
-                                        <option value="{{ $item->jam_awal }} - {{ $item->jam_akhir }}">{{ $item->jam_awal }} - {{ $item->jam_akhir }}</option>
+                                        <option value="{{ $item->jam_awal }} - {{ $item->jam_akhir }}">
+                                            {{ $item->jam_awal }} - {{ $item->jam_akhir }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -307,7 +325,7 @@
                                 <select name="mata_kuliah" id="mata_kuliah"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
                                     required>
-                                     @foreach ($mataKuliah as $item)
+                                    @foreach ($mataKuliah as $item)
                                         <option value="{{ $item->id }}">{{ $item->nama_matkul }}</option>
                                     @endforeach
                                 </select>
@@ -343,7 +361,7 @@
                                 <select name="dosen" id="dosen"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
                                     required>
-                                     @foreach ($dosen as $item)
+                                    @foreach ($dosen as $item)
                                         <option value="{{ $item->id }}">{{ $item->nama_dosen }}</option>
                                     @endforeach
                                 </select>
@@ -354,7 +372,7 @@
                                 <select name="teknisi" id="teknisi"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
                                     required>
-                                     @foreach ($teknisi as $item)
+                                    @foreach ($teknisi as $item)
                                         <option value="{{ $item->id }}">{{ $item->nama_teknisi }}</option>
                                     @endforeach
                                 </select>
@@ -416,5 +434,7 @@
                 }
             })
         }
+
+        $('#dataTable').DataTable();
     </script>
 @endsection
