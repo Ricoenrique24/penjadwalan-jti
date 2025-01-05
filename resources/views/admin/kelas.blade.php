@@ -212,7 +212,7 @@
             </div>
         </div>
         <!-- Custom Pagination -->
-        @if ($kelas->total() > 5)
+        {{-- @if ($kelas->total() > 5)
             <div class="flex flex-col items-center my-6">
                 <span class="text-sm text-gray-700 dark:text-gray-400">
                     Menampilkan <span class="font-semibold text-gray-900 dark:text-white">{{ $kelas->firstItem() }}</span>
@@ -233,7 +233,7 @@
                     </button>
                 </div>
             </div>
-        @endif
+        @endif --}}
     </div>
 
 

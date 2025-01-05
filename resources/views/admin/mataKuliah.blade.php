@@ -271,7 +271,7 @@
         </div>
     </div>
     <!-- Custom Pagination -->
-    @if ($matkul->total() > 5)
+    {{-- @if ($matkul->total() > 5)
         <div class="flex flex-col items-center my-6">
             <span class="text-sm text-gray-700 dark:text-gray-400">
                 Menampilkan <span
@@ -293,7 +293,7 @@
                 </button>
             </div>
         </div>
-    @endif
+    @endif --}}
 </div>
 
 

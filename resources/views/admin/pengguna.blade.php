@@ -204,7 +204,7 @@
         </div>
 
         <!-- Custom Pagination -->
-        @if ($pengguna->total() > 5)
+        {{-- @if ($pengguna->total() > 5)
             <div class="flex flex-col items-center my-6">
                 <span class="text-sm text-gray-700 dark:text-gray-400">
                     Menampilkan <span
@@ -226,7 +226,7 @@
                     </button>
                 </div>
             </div>
-        @endif
+        @endif --}}
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
