@@ -19,11 +19,11 @@ class JadwalController extends Controller
     public function index()
     {
         $dataJadwal = Jadwal::orderBy('hari', 'desc')
-                        ->orderBy('jam', 'asc')
-                        ->get();
+            ->orderBy('jam', 'asc')
+            ->get();
 
         $jam = Jam::all(); // Ambil data jam
-        $mataKuliah = Matkul::all(); // Ambil data mata kuliah
+        $mataKuliah = Matkul::with('koor_matkul.dosen')->get(); // Ambil data mata kuliah & koordinator
         $dosen = Dosen::all(); // Ambil data dosen
         $teknisi = Teknisi::all(); // Ambil data teknisi
         $ruangan = Ruangan::all(); // Ambil data ruangan
@@ -33,7 +33,7 @@ class JadwalController extends Controller
         //     'data' => $dataJadwal
         // ]);
 
-        return view('admin.jadwal',compact('dataJadwal', 'jam', 'mataKuliah', 'dosen', 'teknisi', 'ruangan'));
+        return view('admin.jadwal', compact('dataJadwal', 'jam', 'mataKuliah', 'dosen', 'teknisi', 'ruangan'));
     }
 
     /**
@@ -42,8 +42,8 @@ class JadwalController extends Controller
     public function store(Request $request)
     {
         $existingJadwal = Jadwal::where('hari', $request->hari)
-                            ->where('jam', $request->jam)
-                            ->first();
+            ->where('jam', $request->jam)
+            ->first();
 
         if ($existingJadwal) {
             return back()->withErrors(['message' => 'Jadwal yang sama sudah ada.']);
@@ -85,9 +85,9 @@ class JadwalController extends Controller
     {
         // Validasi jika jadwal yang sama sudah ada (berdasarkan hari dan jam)
         $existingJadwal = Jadwal::where('hari', $request->hari)
-                                ->where('jam', $request->jam)
-                                ->where('id', '!=', $id) // Pastikan bukan jadwal yang sedang diupdate
-                                ->first();
+            ->where('jam', $request->jam)
+            ->where('id', '!=', $id) // Pastikan bukan jadwal yang sedang diupdate
+            ->first();
 
         if ($existingJadwal) {
             return back()->withErrors(['message' => 'Jadwal yang sama sudah ada.']);

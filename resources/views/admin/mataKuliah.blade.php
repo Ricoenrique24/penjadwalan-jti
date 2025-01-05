@@ -58,17 +58,16 @@
                                 @endforeach
                             </td>
                             <td class="p-2">
-                                @if ($item->jenis_matkul == 'Praktikum')
-                                    <span
-                                        class="px-2 py-1 text-xs font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
-                                        {{ $item->jenis_matkul }}
-                                    </span>
-                                @else
-                                    <span
-                                        class="px-2 py-1 text-xs font-semibold leading-tight text-blue-700 bg-blue-100 rounded-full dark:bg-blue-700 dark:text-blue-100">
-                                        {{ $item->jenis_matkul }}
-                                    </span>
-                                @endif
+
+                                <span
+                                    class="px-2 py-1 text-xs font-semibold leading-tight 
+                                        @if ($item->jenis_matkul == 'Praktikum') text-green-700 bg-green-100 dark:bg-green-700 dark:text-green-100 
+                                        @else 
+                                        text-blue-700 bg-blue-100 dark:bg-blue-700 dark:text-blue-100 @endif
+                                        rounded-full ">
+                                    {{ $item->jenis_matkul }}
+                                </span>
+
                             </td>
                             <td class="p-2">
                                 <button type="button" data-modal-target="#edit-item-modal-{{ $item->id }}"
