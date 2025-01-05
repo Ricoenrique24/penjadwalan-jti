@@ -15,7 +15,7 @@ class PenggunaController extends Controller
     {
         // Menampilkan semua pengguna
         // $pengguna = User::all();
-        $pengguna = User::orderBy('id', 'desc')->paginate(5);
+        $pengguna = User::orderBy('id', 'desc')->get();
         // Menghitung jumlah pengguna berdasarkan status
         $totalDosen     = User::where('status', 'dosen')->count();
         $totalTeknisi   = User::where('status', 'teknisi')->count();
@@ -28,7 +28,7 @@ class PenggunaController extends Controller
         //     'pengguna' => $pengguna,
         // ]);
 
-        return view('admin.pengguna', compact('pengguna','totalTeknisi','totalDosen','totalAdmin'));
+        return view('admin.pengguna', compact('pengguna', 'totalTeknisi', 'totalDosen', 'totalAdmin'));
     }
 
     /**

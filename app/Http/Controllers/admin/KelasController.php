@@ -5,14 +5,15 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Kelas;
+
 class KelasController extends Controller
 {
-     /**
+    /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $kelas = Kelas::orderBy('id', 'desc')->paginate(5);
+        $kelas = Kelas::orderBy('id', 'desc')->get();
         return view('admin.kelas', compact('kelas'));
     }
 

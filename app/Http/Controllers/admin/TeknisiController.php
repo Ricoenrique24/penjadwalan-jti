@@ -21,20 +21,20 @@ class TeknisiController extends Controller
     {
         $query = $request->input('search'); // Mendapatkan query pencarian
         $teknisi = teknisi::query();
-    
+
         // Jika ada pencarian, terapkan pencarian
         if ($query) {
             $teknisi->where('nama_teknisi', 'like', "%$query%")
                 ->orWhere('nik', 'like', "%$query%")
                 ->orWhere('jabatan', 'like', "%$query%");
         }
-    
+
         // Mengurutkan berdasarkan ID terbesar (data terbaru)
         $teknisi = $teknisi->orderBy('id', 'desc');
-    
+
         // Jika ada pencarian, ambil semua data, jika tidak, gunakan pagination
-        $teknisi = $query ? $teknisi->get() : $teknisi->paginate(5);
-    
+        $teknisi = $teknisi->get();
+
         return view('admin.teknisi', compact('teknisi', 'query'));
     }
     /**

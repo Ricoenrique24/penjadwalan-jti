@@ -13,7 +13,7 @@ class RuanganController extends Controller
      */
     public function index()
     {
-        $ruangan = Ruangan::orderBy('id', 'desc')->paginate(5);
+        $ruangan = Ruangan::orderBy('id', 'desc')->get();
         return view('admin.ruangan', compact('ruangan'));
     }
 

@@ -22,23 +22,23 @@ class DosenController extends Controller
     {
         $query = $request->input('search'); // Mendapatkan query pencarian
         $dosen = Dosen::query();
-    
+
         // Jika ada pencarian, terapkan pencarian
         if ($query) {
             $dosen->where('nama_dosen', 'like', "%$query%")
                 ->orWhere('nip', 'like', "%$query%")
                 ->orWhere('kd_dosen', 'like', "%$query%");
         }
-    
+
         // Mengurutkan berdasarkan ID terbesar (data terbaru)
         $dosen = $dosen->orderBy('id', 'desc');
-    
+
         // Jika ada pencarian, ambil semua data, jika tidak, gunakan pagination
-        $dosen = $query ? $dosen->get() : $dosen->paginate(5);
-    
+        $dosen = $dosen->get();
+
         return view('admin.dosen', compact('dosen', 'query'));
     }
-    
+
 
     /**
      * Show the form for creating a new resource.
@@ -54,7 +54,7 @@ class DosenController extends Controller
     public function store(Request $request)
     {
         // dd($request);
-        
+
         // Simpan data langsung ke database
         $dosen = new Dosen();
         $dosen->kd_dosen        = $request->kd_dosen;

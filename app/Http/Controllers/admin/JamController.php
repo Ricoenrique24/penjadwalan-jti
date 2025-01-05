@@ -15,7 +15,7 @@ class JamController extends Controller
     {
         // Ambil semua data jam dari tabel data_jam
         // $dataJam = Jam::all();
-        $dataJam = Jam::orderBy('id', 'desc')->paginate(5);
+        $dataJam = Jam::orderBy('id', 'desc')->get();
         return view('admin.jam', compact('dataJam'));
     }
 

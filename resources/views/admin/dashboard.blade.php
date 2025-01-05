@@ -1,7 +1,7 @@
 @extends('admin.default')
 
 @section('content')
-    <div class="container mx-auto p-6 mt-12 bg-gray-50 rounded-lg shadow-lg min-h-screen">
+    <div class="container mx-auto p-6 mt-12 rounded-lg shadow-lg min-h-screen">
         <div class="flex flex-col sm:flex-row justify-between items-center mb-6 space-y-4 sm:space-y-0">
             <div class="flex items-center w-1/4">
                 {{-- <label for="tahun_ajaran" class="block text-sm font-medium text-gray-700 mr-2">

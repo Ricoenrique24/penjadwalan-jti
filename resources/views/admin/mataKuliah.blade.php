@@ -1,5 +1,5 @@
 @extends('admin.default')@section('content')
-<div class="container mx-auto p-6 mt-10 min-h-screen">
+<div class="container mx-auto p-6 mt-10 min-h-screen ">
     <div class="flex items-center justify-between p-2 py-5">
         <div class="flex-1 text-center">
             <h1 class="text-3xl font-bold text-gray-800">Mata Kuliah</h1>
@@ -10,7 +10,7 @@
             <i class="fa-solid fa-plus"></i> Tambah Mata Kuliah
         </button>
     </div>
-    <div class="overflow-x-auto  shadow rounded-lg border border-gray-200 bg-white bg-nota p-5">
+    <div class="overflow-x-auto">
         {{-- <form class="max-w-md mx-auto my-4">
             <label for="default-search"
                 class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
