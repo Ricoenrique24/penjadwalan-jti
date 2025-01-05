@@ -10,7 +10,7 @@
             <i class="fa-solid fa-plus"></i> Tambah Mata Kuliah
         </button>
     </div>
-    <div class="overflow-x-auto">
+    <div class="overflow-x-auto  shadow rounded-lg border border-gray-200 bg-white bg-nota p-5">
         {{-- <form class="max-w-md mx-auto my-4">
             <label for="default-search"
                 class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
@@ -31,7 +31,7 @@
         </form> --}}
 
         <!-- Tabel Dosen -->
-        <div class="overflow-x-auto">
+        <div class="overflow-x-auto  shadow rounded-lg border border-gray-200 bg-white bg-nota p-5">
             <table id="dataTable" class="w-full border-separate border-spacing-0 text-sm text-black">
                 <thead class="bg-gray-200 text-gray-800">
                     <tr>

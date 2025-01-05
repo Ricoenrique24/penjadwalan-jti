@@ -32,7 +32,7 @@
             </form> --}}
 
             <!-- Tabel Dosen -->
-            <div class="overflow-x-auto">
+            <div class="overflow-x-auto  shadow rounded-lg border border-gray-200 bg-white bg-nota p-5">
                 <table id="dataTable" class="w-full border-separate border-spacing-0 text-sm text-black">
                     <thead class="bg-gray-200 text-gray-800">
                         <tr>
