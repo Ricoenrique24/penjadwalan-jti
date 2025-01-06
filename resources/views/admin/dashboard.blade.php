@@ -37,18 +37,30 @@
                         <th class="p-2 text-left">Semester</th>
                         <th class="p-2 text-left">Ruangan</th>
                         <th class="p-2 text-left">Teknisi</th>
+                        <th class="p-2 text-left">Status</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white">
-                    @foreach ($dataJadwal as $data)
+                    @foreach ($dataJadwal as $i => $dt)
                         <tr class="border-b border-gray-200">
-                            <td class="px-4 py-4 text-sm text-gray-700">{{ $data['hari'] }}</td>
-                            <td class="px-4 py-4 text-sm text-gray-700">{{ $data['jam'] }}</td>
-                            <td class="px-4 py-4 text-sm text-gray-700">{{ $data['matkul'] }}</td>
-                            <td class="px-4 py-4 text-sm text-gray-700">{{ $data['dosen'] }}</td>
-                            <td class="px-4 py-4 text-sm text-gray-700">{{ $data['semester'] }}</td>
-                            <td class="px-4 py-4 text-sm text-gray-700">{{ $data['ruangan'] }}</td>
-                            <td class="px-4 py-4 text-sm text-gray-700">{{ $data['teknisi'] }}</td>
+                            <td class="px-4 py-4 text-sm text-gray-700">{{ $dt->hari }}</td>
+                            <td class="px-4 py-4 text-sm text-gray-700">{{ $dt->jam->jam_awal }} - {{ $dt->jam->jam_akhir }}
+                            </td>
+                            <td class="px-4 py-4 text-sm text-gray-700">{{ $dt->matkul->nama_matkul }}</td>
+                            <td class="px-4 py-4 text-sm text-gray-700">{{ $dt->dosen->nama_dosen }}</td>
+                            <td class="px-4 py-4 text-sm text-gray-700">{{ $dt->semester }}</td>
+                            <td class="px-4 py-4 text-sm text-gray-700">{{ $dt->ruangan->nama_ruangan }}</td>
+                            <td class="px-4 py-4 text-sm text-gray-700">{{ $dt->teknisi->nama_teknisi }}</td>
+                            <td class="px-4 py-4 text-sm text-gray-700">
+                                <span
+                                    class="px-2 py-1 text-xs font-semibold leading-tight 
+                                        @if ($dt->matkul->jenis_matkul == 'Praktikum') text-green-700 bg-green-100 dark:bg-green-700 dark:text-green-100 
+                                        @else 
+                                        text-blue-700 bg-blue-100 dark:bg-blue-700 dark:text-blue-100 @endif
+                                        rounded-full ">
+                                    {{ $dt->matkul->jenis_matkul }}
+                                </span>
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>

@@ -23,11 +23,12 @@
                         <th class="p-2 text-left">Dosen Pengampu</th>
                         <th class="p-2 text-left">Teknisi</th>
                         <th class="p-2 text-left">Ruangan</th>
+                        <th class="p-2 text-left">Status</th>
                         <th class="p-2 text-left">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white">
-                    @php
+                    {{-- @php
                         // Array jadwal kuliah contoh
                         $jadwal = [
                             [
@@ -81,17 +82,28 @@
                                 'ruangan' => 'Lab AI',
                             ],
                         ];
-                    @endphp
+                    @endphp --}}
 
                     @foreach ($dataJadwal as $i => $dt)
                         <tr class="border-b border-gray-200">
-                            <td class="px-4 py-4 text-sm text-gray-700">{{ $dt['hari'] }}</td>
-                            <td class="px-4 py-4 text-sm text-gray-700">{{ $dt['jam'] }}</td>
-                            <td class="px-4 py-4 text-sm text-gray-700">{{ $dt['matkul'] }}</td>
-                            <td class="px-4 py-4 text-sm text-gray-700">{{ $dt['semester'] }}</td>
-                            <td class="px-4 py-4 text-sm text-gray-700">{{ $dt['dosen'] }}</td>
-                            <td class="px-4 py-4 text-sm text-gray-700">{{ $dt['teknisi'] }}</td>
-                            <td class="px-4 py-4 text-sm text-gray-700">{{ $dt['ruangan'] }}</td>
+                            <td class="px-4 py-4 text-sm text-gray-700">{{ $dt->hari }}</td>
+                            <td class="px-4 py-4 text-sm text-gray-700">{{ $dt->jam->jam_awal }} - {{ $dt->jam->jam_akhir }}
+                            </td>
+                            <td class="px-4 py-4 text-sm text-gray-700">{{ $dt->matkul->nama_matkul }}</td>
+                            <td class="px-4 py-4 text-sm text-gray-700">{{ $dt->semester }}</td>
+                            <td class="px-4 py-4 text-sm text-gray-700">{{ $dt->dosen->nama_dosen }}</td>
+                            <td class="px-4 py-4 text-sm text-gray-700">{{ $dt->teknisi->nama_teknisi }}</td>
+                            <td class="px-4 py-4 text-sm text-gray-700">{{ $dt->ruangan->nama_ruangan }}</td>
+                            <td class="px-4 py-4 text-sm text-gray-700">
+                                <span
+                                    class="px-2 py-1 text-xs font-semibold leading-tight 
+                                        @if ($dt->matkul->jenis_matkul == 'Praktikum') text-green-700 bg-green-100 dark:bg-green-700 dark:text-green-100 
+                                        @else 
+                                        text-blue-700 bg-blue-100 dark:bg-blue-700 dark:text-blue-100 @endif
+                                        rounded-full ">
+                                    {{ $dt->matkul->jenis_matkul }}
+                                </span>
+                            </td>
                             <td class="p-2">
                                 <button type="button" data-modal-target="#edit-item-modal-{{ $dt->id }}"
                                     class="inline-flex items-center justify-center w-8 h-8 text-gray-800 bg-gray-200 border border-gray-300 rounded-sm shadow-sm hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500">
@@ -160,7 +172,7 @@
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
                                                         required>
                                                         @foreach ($jam as $item)
-                                                            <option value="{{ $item->jam_awal }} - {{ $item->jam_akhir }}"
+                                                            <option value="{{ $item->id }}"
                                                                 {{ $dt->jam == $item->jam_awal . ' - ' . $item->jam_akhir ? 'selected' : '' }}>
                                                                 {{ $item->jam_awal }} - {{ $item->jam_akhir }}
                                                             </option>
@@ -249,7 +261,7 @@
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
                                                         required>
                                                         @foreach ($ruangan as $item)
-                                                            <option value="{{ $item->nama_ruangan }}"
+                                                            <option value="{{ $item->id }}"
                                                                 {{ $dt->ruangan == $item->nama_ruangan ? 'selected' : '' }}>
                                                                 {{ $item->nama_ruangan }}
                                                             </option>
@@ -313,7 +325,7 @@
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
                                     required>
                                     @foreach ($jam as $item)
-                                        <option value="{{ $item->jam_awal }} - {{ $item->jam_akhir }}">
+                                        <option value="{{ $item->id }}">
                                             {{ $item->jam_awal }} - {{ $item->jam_akhir }}</option>
                                     @endforeach
                                 </select>
@@ -336,7 +348,8 @@
                                     Ajaran</label>
                                 <input type="text" name="tahun_ajaran" id="tahun_ajaran"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
-                                    placeholder="2023/2024" required>
+                                    placeholder="{{ date('Y') }}/{{ date('Y') + 1 }}"
+                                    value="{{ date('Y') }}/{{ date('Y') + 1 }}" required>
                             </div>
 
                             <div class="text-left">
@@ -384,7 +397,7 @@
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
                                     required>
                                     @foreach ($ruangan as $item)
-                                        <option value="{{ $item->nama_ruangan }}">{{ $item->nama_ruangan }}</option>
+                                        <option value="{{ $item->id }}">{{ $item->nama_ruangan }}</option>
                                     @endforeach
                                 </select>
                             </div>

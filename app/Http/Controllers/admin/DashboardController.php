@@ -14,9 +14,9 @@ class DashboardController extends Controller
     public function index()
     {
         // Mengurutkan data berdasarkan hari
-        $dataJadwal = Jadwal::orderBy('hari', 'desc')
-                        ->orderBy('jam', 'asc')
-                        ->get();
+        $dataJadwal = Jadwal::with(['dosen', 'teknisi', 'matkul', 'matkul.koor_matkul.dosen', 'ruangan', 'jam' => function ($query) {
+            $query->orderBy('jam_awal', 'asc');
+        }])->orderBy('hari', 'desc')->get();
 
         return view('admin.dashboard', compact('dataJadwal'));
     }

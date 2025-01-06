@@ -13,17 +13,14 @@ return new class extends Migration
     {
         Schema::create('data_jadwal', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('id_dosen');
-            $table->bigInteger('id_teknisi');
-            $table->bigInteger('id_matkul');
-            $table->String('hari');
-            $table->string('jam');
-            $table->string('matkul');
+            $table->foreignId('id_dosen')->references('id')->on('data_dosen')->onDelete('cascade');
+            $table->foreignId('id_teknisi')->references('id')->on('data_teknisi')->onDelete('cascade');
+            $table->foreignId('id_matkul')->references('id')->on('data_matkul')->onDelete('cascade');
+            $table->string('hari');
+            $table->foreignId('id_jam')->references('id')->on('data_jam')->onDelete('cascade');
             $table->string('tahun_ajaran');
             $table->integer('semester');
-            $table->string('ruangan');
-            $table->string('dosen');
-            $table->string('teknisi');
+            $table->foreignId('id_ruangan')->references('id')->on('data_ruangan')->onDelete('cascade');
             $table->timestamps();
         });
     }

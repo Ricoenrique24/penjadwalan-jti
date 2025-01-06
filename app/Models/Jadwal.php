@@ -14,14 +14,14 @@ class Jadwal extends Model
 
     // Kolom-kolom yang dapat diisi secara massal
     protected $fillable = [
+        'id_dosen',
+        'id_teknisi',
+        'id_matkul',
         'hari',
-        'jam',
-        'matkul',
+        'id_jam',
+        'tahun_ajaran',
         'semester',
-        'ruangan',
-        'dosen',
-        'teknisi',
-        'kelas',
+        'id_ruangan'
     ];
 
     // Menyesuaikan jika nama kolom primary key bukan 'id'
@@ -36,16 +36,25 @@ class Jadwal extends Model
 
     public function dosen()
     {
-        return $this->belongsTo(Dosen::class, 'id_dosen', 'id');
+        return $this->belongsTo(Dosen::class, 'id_dosen');
     }
 
     public function teknisi()
     {
-        return $this->belongsTo(Teknisi::class, 'id_teknisi' ,'id');
+        return $this->belongsTo(Teknisi::class, 'id_teknisi');
     }
 
     public function matkul()
     {
-        return $this->belongsTo(Matkul::class, 'id_matkul','id');
+        return $this->belongsTo(Matkul::class, 'id_matkul');
+    }
+
+    public function ruangan()
+    {
+        return $this->belongsTo(Ruangan::class, 'id_ruangan');
+    }
+    public function jam()
+    {
+        return $this->belongsTo(Jam::class, 'id_jam');
     }
 }
