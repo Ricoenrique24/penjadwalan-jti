@@ -89,7 +89,7 @@
                             <td class="px-4 py-4 text-sm text-gray-700">{{ $dt->hari }}</td>
                             <td class="px-4 py-4 text-sm text-gray-700">{{ $dt->jam->jam_awal }} - {{ $dt->jam->jam_akhir }}
                             </td>
-                            <td class="px-4 py-4 text-sm text-gray-700">{{ $dt->matkul->nama_matkul }}</td>
+                            <td class="px-4 py-4 text-sm text-gray-700 text-wrap">{{ $dt->matkul->nama_matkul }}</td>
                             <td class="px-4 py-4 text-sm text-gray-700">{{ $dt->semester }}</td>
                             <td class="px-4 py-4 text-sm text-gray-700">{{ $dt->dosen->nama_dosen }}</td>
                             <td class="px-4 py-4 text-sm text-gray-700">{{ $dt->teknisi->nama_teknisi }}</td>
