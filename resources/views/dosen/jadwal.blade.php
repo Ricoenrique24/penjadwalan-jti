@@ -19,11 +19,11 @@
                     @foreach ($dataJadwal as $index => $jadwal)
                         <tr class="border-b border-gray-200 hover:bg-gray-100 transition-colors duration-150">
                             <td class="px-4 py-4">{{ $jadwal->hari }}</td>
-                            <td class="px-4 py-4">{{ $jadwal->matkul ?? '-' }}</td> <!-- Menampilkan nama mata kuliah -->
-                            <td class="px-4 py-4">{{ $jadwal->jam }}</td>
-                            <td class="px-4 py-4">{{ $jadwal->ruangan }}</td>
-                            <td class="px-4 py-4">{{ $jadwal->dosen ?? '-' }}</td>
-                            <td class="px-4 py-4">{{ $jadwal->teknisi ?? '-' }}</td>
+                            <td class="px-4 py-4">{{ $jadwal->matkul->nama_matkul ?? '-' }}</td> <!-- Menampilkan nama mata kuliah -->
+                            <td class="px-4 py-4">{{ $jadwal->jam->jam_awal ?? '-' }} - {{ $jadwal->jam->jam_akhir ?? '-' }}</td> <!-- Menampilkan ID jam atau sesuaikan -->
+                            <td class="px-4 py-4">{{ $jadwal->id_ruangan ?? '-' }}</td> <!-- Menampilkan ID ruangan atau sesuaikan -->
+                            <td class="px-4 py-4">{{ $jadwal->dosen->nama_dosen ?? '-' }}</td> <!-- Menampilkan nama dosen -->
+                            <td class="px-4 py-4">{{ $jadwal->teknisi->nama_teknisi ?? '-' }}</td> <!-- Menampilkan nama teknisi -->
                         </tr>
                     @endforeach
                 </tbody>

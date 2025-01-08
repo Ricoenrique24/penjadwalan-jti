@@ -23,11 +23,11 @@ class BebanDosen extends Controller
         if ($userRole == 'dosen') {
             // Jika user adalah dosen, ambil jadwal berdasarkan id_dosen
             $dataJadwal = Jadwal::where('id_dosen', $userId) // Mengambil jadwal berdasarkan id_dosen
-                                ->get('matkul');
+                                ->get('id_matkul');
         } elseif ($userRole == 'teknisi') {
             // Jika user adalah teknisi, ambil jadwal berdasarkan id_teknisi
             $dataJadwal = Jadwal::where('id_teknisi', $userId) // Mengambil jadwal berdasarkan id_teknisi
-                                ->get('matkul');
+                                ->get('id_matkul');
         } else {
             // Jika user tidak terdaftar sebagai dosen atau teknisi, beri response atau penanganan lain
             return response()->json(['message' => 'User tidak memiliki akses untuk melihat jadwal.'], 403);

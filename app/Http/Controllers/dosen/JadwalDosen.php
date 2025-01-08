@@ -23,13 +23,13 @@ class JadwalDosen extends Controller
             // Jika user adalah dosen, ambil jadwal berdasarkan id_dosen
             $dataJadwal = Jadwal::with(['dosen', 'teknisi','matkul'])
                 ->where('id_dosen', $userId)
-                ->orderBy('jam', 'asc')
+                ->orderBy('id_jam', 'asc')
                 ->get();
         } elseif ($userRole === 'teknisi') {
             // Jika user adalah teknisi, ambil jadwal berdasarkan id_teknisi
             $dataJadwal = Jadwal::with(['dosen', 'teknisi','matkul'])
                 ->where('id_teknisi', $userId)
-                ->orderBy('jam', 'asc')
+                ->orderBy('id_jam', 'asc')
                 ->get();
         } 
 

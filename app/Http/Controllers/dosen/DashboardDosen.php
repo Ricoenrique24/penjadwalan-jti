@@ -32,14 +32,14 @@ class DashboardDosen extends Controller
             $dataJadwal = Jadwal::with(['dosen', 'teknisi'])
                 ->where('id_dosen', $userId)
                 ->where('hari', $currentDay)
-                ->orderBy('jam', 'asc')
+                ->orderBy('id_jam', 'asc')
                 ->get();
         } elseif ($userRole === 'teknisi') {
             // Jika user adalah teknisi, ambil jadwal berdasarkan id_teknisi
             $dataJadwal = Jadwal::with(['dosen', 'teknisi'])
                 ->where('id_teknisi', $userId)
                 ->where('hari', $currentDay)
-                ->orderBy('jam', 'asc')
+                ->orderBy('id_jam', 'asc')
                 ->get();
         } 
 
