@@ -1,6 +1,6 @@
 @extends('admin.default')
 @section('content')
-    <div class="container mx-auto p-6 mt-10 min-h-screen">
+    <div class="container mx-auto p-6 mt-10 min-h-screen" x-data="{ userRole: 'dosen' }">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <!-- Card Total Admin -->
             <div class="bg-white shadow-lg rounded-lg p-6">
@@ -158,25 +158,10 @@
                     </div>
                     <form action="{{ route('adminPengguna.store') }}" method="POST" class="p-4">
                         @csrf
+
                         <div class="text-left">
-                            <label for="name" class="block text-sm font-medium text-gray-900">Nama
-                                Pengguna</label>
-                            <input type="text" name="name" id="name"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
-                                placeholder="Masukkan Nama Pengguna" required>
-                        </div>
-
-                        <div class="text-left mt-4">
-                            <label for="email" class="block text-sm font-medium text-gray-900">Email
-                                Pengguna</label>
-                            <input type="email" name="email" id="email"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
-                                placeholder="Masukkan Email Pengguna" required>
-                        </div>
-
-                        <div class="text-left mt-4">
                             <label for="status" class="block text-sm font-medium text-gray-900">Status</label>
-                            <select name="status" id="status"
+                            <select name="status" id="status" x-model="userRole"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
                                 required>
                                 <option value="" disabled selected>Pilih Status</option>
@@ -185,6 +170,60 @@
                                 <option value="admin">Admin</option>
                             </select>
                         </div>
+
+                        <div class="text-left mt-4">
+                            <label class="block text-sm font-medium text-gray-900 mb-1" for="pair"
+                                x-show="userRole !== 'admin'">
+                                Pilih <span x-text="userRole"></span>
+                            </label>
+
+                            <select id="dosen" name="dosen"
+                                class="selectpicker-tag bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
+                                style="width: 100%" data-placeholder="Select Koordinator" data-allow-clear="false"
+                                title="Select Dosen..." x-show="userRole === 'dosen'" required>
+                                <option selected disabled>
+                                    Pilih Dosen</option>
+                                @foreach ($dosen as $ds)
+                                    <option value="{{ $ds->id }}">
+                                        {{ $ds->nama_dosen }}
+                                    </option>
+                                @endforeach
+                            </select>
+
+                            <select id="teknisi" name="teknisi"
+                                class="selectpicker-tag bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
+                                style="width: 100%" data-placeholder="Select Koordinator" data-allow-clear="false"
+                                title="Select Teknisi..." x-show="userRole === 'teknisi'" required>
+                                <option selected disabled>
+                                    Pilih teknisi</option>
+                                @foreach ($teknisi as $ts)
+                                    <option value="{{ $ts->id }}">
+                                        {{ $ts->nama_teknisi }}
+                                    </option>
+                                @endforeach
+                            </select>
+
+
+                        </div>
+
+                        <div x-show="userRole === 'admin'">
+                            <div class="text-left mt-4">
+                                <label for="name" class="block text-sm font-medium text-gray-900">Nama
+                                    Pengguna</label>
+                                <input type="text" name="name" id="name"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
+                                    placeholder="Masukkan Nama Pengguna" required>
+                            </div>
+
+                            <div class="text-left mt-4">
+                                <label for="email" class="block text-sm font-medium text-gray-900">Email
+                                    Pengguna</label>
+                                <input type="email" name="email" id="email"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
+                                    placeholder="Masukkan Email Pengguna" required>
+                            </div>
+                        </div>
+
 
                         <div class="text-left mt-4">
                             <label for="password" class="block text-sm font-medium text-gray-900">Password</label>
@@ -261,7 +300,9 @@
                 }
             })
         }
-
-        $('#dataTable').DataTable();
+        $(document).ready(function() {
+            $('#dataTable').DataTable();
+            $('.selectpicker').select2();
+        });
     </script>
 @endsection

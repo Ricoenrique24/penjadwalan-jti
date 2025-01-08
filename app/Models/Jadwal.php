@@ -14,8 +14,6 @@ class Jadwal extends Model
 
     // Kolom-kolom yang dapat diisi secara massal
     protected $fillable = [
-        'id_dosen',
-        'id_teknisi',
         'id_matkul',
         'hari',
         'id_jam',
@@ -34,14 +32,14 @@ class Jadwal extends Model
     // Jika tidak menggunakan timestamps
     // public $timestamps = true;
 
-    public function dosen()
+    public function dosens()
     {
-        return $this->belongsTo(Dosen::class, 'id_dosen');
+        return $this->hasMany(JadwalDosen::class, 'id_data_jadwal');
     }
 
-    public function teknisi()
+    public function teknisis()
     {
-        return $this->belongsTo(Teknisi::class, 'id_teknisi');
+        return $this->hasMany(JadwalTeknisi::class, 'id_data_jadwal');
     }
 
     public function matkul()

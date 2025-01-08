@@ -15,9 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('kd_matkul')->unique();
             $table->string('nama_matkul');
-            $table->integer('jumlah_sks');
+            $table->integer('sks_teori')->nullable();
+            $table->integer('sks_praktikum')->nullable();
             $table->integer('semester');
-            $table->string('jenis_matkul')->default('Teori');
+            $table->foreignId('id_jenis_matkul')->nullable()->references('id')->on('jenis_matkul')->nullOnDelete();
+            $table->foreignId('id_koor_matkul')->nullable()->references('id')->on('data_dosen')->nullOnDelete();
             $table->timestamps();
         });
     }

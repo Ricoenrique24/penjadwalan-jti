@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\JenisMatkul;
 use App\Models\KoorMatkul;
 use Illuminate\Database\Seeder;
 
@@ -19,11 +20,13 @@ class DatabaseSeeder extends Seeder
             DataTeknisiSeeder::class,
             DataRuanganSeeder::class,
             DataKelasSeeder::class,
+            JenisMatkulSeeder::class,
             DataMatkulSeeder::class,
             DataJamSeeder::class,
             DataJadwalSeeder::class,
+            JadwalDosenSeeder::class,
+            JadwalTeknisiSeeder::class,
             DataUserSeeder::class,
-            KoorMatkulSeeder::class,
         ]);
     }
 }

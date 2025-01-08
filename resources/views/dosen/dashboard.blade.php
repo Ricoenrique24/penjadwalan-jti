@@ -14,8 +14,8 @@
             </div>
         </div>
 
-        <div class="overflow-x-auto shadow-lg rounded-lg border border-gray-200 bg-white">
-            <table class="w-full border-separate border-spacing-0 text-sm text-gray-700" id="jadwalTable">
+        <div class="overflow-x-auto shadow-lg rounded-lg border border-gray-200 bg-white p-5">
+            <table class="w-full border-separate border-spacing-0 text-sm text-gray-700" id="dataTable">
                 <thead class="bg-gray-200 text-gray-800">
                     <tr>
                         <th class="p-3 text-left">No.</th>
@@ -27,22 +27,23 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($dataJadwal as $index => $jadwal)
+                    @foreach ($dataJadwal as $index => $jadwal)
                         <tr class="border-b border-gray-200 hover:bg-gray-100 transition-colors duration-150">
-                            <td class="px-4 py-4">{{ $index + 1 }}</td>
-                            <td class="px-4 py-4">{{ $jadwal->matkul }}</td>
-                            <td class="px-4 py-4">{{ $jadwal->jam }}</td>
-                            <td class="px-4 py-4">{{ $jadwal->ruangan }}</td>
-                            <td class="px-4 py-4">{{ $jadwal->dosen ?? '-' }}</td>
-                            <td class="px-4 py-4">{{ $jadwal->teknisi ?? '-' }}</td>
+                            <td class="px-4 py-4">{{ $loop->iteration }}</td>
+                            <td class="px-4 py-4">{{ $jadwal->matkul->nama_matkul }}</td>
+                            <td class="px-4 py-4">{{ $jadwal->jam->jam_awal }} - {{ $jadwal->jam->jam_akhir }}</td>
+                            <td class="px-4 py-4">{{ $jadwal->ruangan->nama_ruangan }}</td>
+                            <td class="px-4 py-4">{{ $jadwal->dosen->nama_dosen ?? '-' }}</td>
+                            <td class="px-4 py-4">{{ $jadwal->teknisi->nama_teknisi ?? '-' }}</td>
                         </tr>
-                    @empty
-                        <tr>
-                            <td colspan="8" class="px-4 py-4 text-center text-gray-500">Tidak ada jadwal untuk hari ini.</td>
-                        </tr>
-                    @endforelse
+                    @endforeach
                 </tbody>
             </table>
         </div>
     </div>
+
+
+    <script>
+        $('#dataTable').DataTable();
+    </script>
 @endsection

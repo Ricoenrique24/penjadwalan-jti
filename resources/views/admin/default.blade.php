@@ -6,15 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Penjadwalan JTI</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     {{-- multipleselect --}}
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js"></script> --}}
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css"> --}}
 
     {{-- datatable --}}
     {{-- <script src="https://code.jquery.com/jquery-3.7.1.js"></script> --}}
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.tailwindcss.css">
-    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
-    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.tailwindcss.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.2.0/css/dataTables.tailwindcss.css">
+    <script src="https://cdn.datatables.net/2.2.0/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.2.0/js/dataTables.tailwindcss.js"></script>
+
+    {{-- alpine --}}
+    <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/intersect@3.x.x/dist/cdn.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>

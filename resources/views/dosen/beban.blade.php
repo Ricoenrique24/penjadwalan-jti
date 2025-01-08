@@ -28,7 +28,7 @@
                         class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
                 </div> --}}
             </form>
-            <table class="w-full border-separate border-spacing-0 text-sm text-gray-700" id="jadwalTable">
+            <table class="w-full border-separate border-spacing-0 text-sm text-gray-700" id="dataTable">
                 <thead class="bg-gray-200 text-gray-800">
                     <tr>
                         <th class="p-3 text-left">No.</th>
@@ -58,4 +58,8 @@
             </table>
 
         </div>
+
+        <script>
+            $('#dataTable').DataTable();
+        </script>
     @endsection

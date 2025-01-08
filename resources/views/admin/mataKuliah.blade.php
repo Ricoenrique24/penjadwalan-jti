@@ -35,13 +35,18 @@
             <table id="dataTable" class="w-full border-separate border-spacing-0 text-sm text-black">
                 <thead class="bg-gray-200 text-gray-800">
                     <tr>
-                        <th class="p-2 text-center">Kode Mata Kuliah</th>
-                        <th class="p-2 text-center">Mata Kuliah</th>
-                        <th class="p-2 text-center">Jumlah SKS</th>
-                        <th class="p-2 text-center">Semester</th>
-                        <th class="p-2 text-center">Koordinator</th>
-                        <th class="p-2 text-center">Jenis</th>
-                        <th class="p-2 text-center">Aksi</th>
+                        <th class="p-2 text-center" rowspan="2">Kode Mata Kuliah</th>
+                        <th class="p-2 text-center" rowspan="2">Mata Kuliah</th>
+                        <th class="p-2 text-center" colspan="2">SKS</th>
+                        <th class="p-2 text-center" rowspan="2">Semester</th>
+                        <th class="p-2 text-center" rowspan="2">Koordinator</th>
+                        <th class="p-2 text-center" rowspan="2">Jenis</th>
+                        <th class="p-2 text-center" rowspan="2">Aksi</th>
+                    </tr>
+                    <tr>
+
+                        <th class="p-2 text-center">SKS Teori</th>
+                        <th class="p-2 text-center">SKS Praktikum</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white text-center" id="dosenTableBody">
@@ -50,22 +55,21 @@
 
                             <td class="p-2">{{ $item->kd_matkul }}</td>
                             <td class="p-2">{{ $item->nama_matkul }}</td>
-                            <td class="p-2">{{ $item->jumlah_sks }}</td>
+                            <td class="p-2">{{ $item->sks_teori }}</td>
+                            <td class="p-2">{{ $item->sks_praktikum }}</td>
                             <td class="p-2">{{ $item->semester }}</td>
-                            <td class="p-2">
-                                @foreach ($item->koor_matkul as $res)
-                                    {{ $res->dosen->nama_dosen }}<br>
-                                @endforeach
-                            </td>
+                            <td class="p-2">{{ $item->koor_matkul->nama_dosen ?? '-' }}</td>
                             <td class="p-2">
 
                                 <span
                                     class="px-2 py-1 text-xs font-semibold leading-tight 
-                                        @if ($item->jenis_matkul == 'Praktikum') text-green-700 bg-green-100 dark:bg-green-700 dark:text-green-100 
+                                        @if ($item->id_jenis_matkul == 1) text-blue-700 bg-blue-100 dark:bg-blue-700 dark:text-blue-100
+                                        @elseif ($item->id_jenis_matkul == 2)
+                                        text-green-700 bg-green-100 dark:bg-green-700 dark:text-green-100 
                                         @else 
-                                        text-blue-700 bg-blue-100 dark:bg-blue-700 dark:text-blue-100 @endif
+                                        text-yellow-700 bg-yellow-100 dark:bg-yellow-700 dark:text-yellow-100 @endif
                                         rounded-full ">
-                                    {{ $item->jenis_matkul }}
+                                    {{ $item->jenis_matkul->nama ?? '-' }}
                                 </span>
 
                             </td>
@@ -128,14 +132,27 @@
                                             </div>
 
                                             <div class="text-left mt-4">
-                                                <label for="jumlah_sks"
-                                                    class="block text-sm font-medium text-gray-900">Jumlah
-                                                    Matkul</label>
-                                                <input type="text" name="jumlah_sks" id="jumlah_sks"
-                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
-                                                    placeholder="Masukkan Jumlah SKS" value="{{ $item->jumlah_sks }}">
-                                            </div>
+                                                <div class="grid grid-cols-2 gap-2">
+                                                    <div>
+                                                        <label for="sks_teori"
+                                                            class="block text-sm font-medium text-gray-900">SKS
+                                                            Teori</label>
+                                                        <input type="text" name="sks_teori" id="sks_teori"
+                                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500  p-2.5 mt-1"
+                                                            placeholder="SKS Teori" value="{{ $item->sks_teori }}">
+                                                    </div>
+                                                    <div>
+                                                        <label for="sks_praktikum"
+                                                            class="block text-sm font-medium text-gray-900">SKS
+                                                            Praktikum</label>
+                                                        <input type="text" name="sks_praktikum" id="sks_praktikum"
+                                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500  p-2.5 mt-1"
+                                                            placeholder="SKS Praktikum"
+                                                            value="{{ $item->sks_praktikum }}">
+                                                    </div>
 
+                                                </div>
+                                            </div>
                                             <div class="text-left mt-4">
                                                 <label for="semester"
                                                     class="block text-sm font-medium text-gray-900">Semester</label>
@@ -149,10 +166,10 @@
                                                     Matakuliah</label>
                                                 <select id="jenis_matkul" name="jenis_matkul"
                                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1">
-                                                    <option @if ($item->jenis_matkul == 'Teori') selected @endif
-                                                        value="Teori">Teori</option>
-                                                    <option @if ($item->jenis_matkul == 'Praktikum') selected @endif
-                                                        value="Praktikum">Praktikum</option>
+                                                    @foreach ($jenis_matkul as $jm)
+                                                        <option @if ($item->id_jenis_matkul == $jm->id) selected @endif
+                                                            value="{{ $jm->id }}">{{ $jm->nama }}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                             <div class="text-left mt-4">
@@ -160,14 +177,15 @@
                                                     for="pair">
                                                     Koordinator Matakuliah
                                                 </label>
-                                                <select class="js-example-basic-multiple text-sm rounded-lg "
-                                                    style="width: 100%;"
-                                                    data-placeholder="Select one more Koordinator..."
-                                                    data-allow-clear="false" multiple="multiple"
-                                                    title="Select Koordinator" name="koor_matkul[]">
-                                                    @foreach ($dosen as $dos)
-                                                        <option @if ($item->koor_matkul->contains('id_dosen', $dos->id)) selected @endif
-                                                            value="{{ $dos->id }}">{{ $dos->nama_dosen }}
+                                                <select id="koor_matkul" name="koor_matkul"
+                                                    class="selectpicker-tag bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
+                                                    style="width: 100%" data-placeholder="Select Koordinator"
+                                                    data-allow-clear="false" title="Select Koordinator...">
+                                                    <option @if (!$item->id_koor_matkul) selected @endif disabled>
+                                                        Pilih Koordinator</option>
+                                                    @foreach ($dosen as $ds)
+                                                        <option @if ($item->id_koor_matkul == $ds->id) selected @endif
+                                                            value="{{ $ds->id }}">{{ $ds->nama_dosen }}
                                                         </option>
                                                     @endforeach
                                                 </select>
@@ -225,13 +243,24 @@
                     </div>
 
                     <div class="text-left mt-4">
-                        <label for="jumlah_sks" class="block text-sm font-medium text-gray-900">Jumlah
-                            Matkul</label>
-                        <input type="text" name="jumlah_sks" id="jumlah_sks"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
-                            placeholder="Masukkan Jumlah SKS" required>
-                    </div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label for="sks_teori" class="block text-sm font-medium text-gray-900">SKS
+                                    Teori</label>
+                                <input type="text" name="sks_teori" id="sks_teori"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500  p-2.5 mt-1"
+                                    placeholder="SKS Teori" required>
+                            </div>
+                            <div>
+                                <label for="sks_praktikum" class="block text-sm font-medium text-gray-900">SKS
+                                    Praktikum</label>
+                                <input type="text" name="sks_praktikum" id="sks_praktikum"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500  p-2.5 mt-1"
+                                    placeholder="SKS Praktikum" required>
+                            </div>
 
+                        </div>
+                    </div>
                     <div class="text-left mt-4">
                         <label for="semester" class="block text-sm font-medium text-gray-900">Semester</label>
                         <input type="text" name="semester" id="semester"
@@ -243,19 +272,20 @@
                             Matakuliah</label>
                         <select id="jenis_matkul" name="jenis_matkul"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1">
-                            <option value="Teori">Teori</option>
-                            <option value="Praktikum">Praktikum</option>
+                            @foreach ($jenis_matkul as $jm)
+                                <option value="{{ $jm->id }}">{{ $jm->nama }}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="text-left mt-4">
-                        <label class="block text-sm font-medium text-gray-900 mb-1" for="pair">
-                            Koordinator Matakuliah
-                        </label>
-                        <select class="js-example-basic-multiple text-sm rounded-lg " style="width: 100%;"
-                            data-placeholder="Select one more Koordinator..." data-allow-clear="false"
-                            multiple="multiple" title="Select Koordinator" name="koor_matkul[]">
-                            @foreach ($dosen as $item)
-                                <option value="{{ $item->id }}">{{ $item->nama_dosen }}</option>
+                        <label for="koor_matkul" class="block text-sm font-medium text-gray-900">Koordinator
+                            Matakuliah</label>
+                        <select id="koor_matkul" name="koor_matkul"
+                            class="selectpicker bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
+                            style="width: 100%" data-placeholder="Select Koordinator" data-allow-clear="false"
+                            title="Select Koordinator...">
+                            @foreach ($dosen as $ds)
+                                <option value="{{ $ds->id }}">{{ $ds->nama_dosen }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -304,6 +334,9 @@
         button.addEventListener('click', () => {
             const modalId = button.getAttribute('data-modal-target');
             document.querySelector(modalId).classList.remove('hidden');
+            $(modalId).find('.selectpicker-tag').select2({
+                tags: true
+            });
         });
     });
     document.querySelectorAll('[data-modal-hide]').forEach(button => {
@@ -330,10 +363,10 @@
             }
         })
     }
-    $(document).ready(function() {
-        $('.js-example-basic-multiple').select2();
-    });
 
-    $('#dataTable').DataTable();
+    $(document).ready(function() {
+        $('#dataTable').DataTable();
+        $('.selectpicker').select2();
+    });
 </script>
 @endsection

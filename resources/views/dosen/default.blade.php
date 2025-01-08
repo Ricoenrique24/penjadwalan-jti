@@ -6,6 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Penjadwalan JTI (Dosen)</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    {{-- datatable --}}
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.2.0/css/dataTables.tailwindcss.css">
+    <script src="https://cdn.datatables.net/2.2.0/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.2.0/js/dataTables.tailwindcss.js"></script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
@@ -48,14 +54,15 @@
                             id="dropdown-user">
                             <div class="px-4 py-3" role="none">
                                 <p class="text-sm text-gray-900 dark:text-white" role="none">
-                                   {{ Auth::user()->name }}
+                                    {{ Auth::user()->name }}
                                 </p>
                             </div>
                             <ul class="py-1" role="none">
                                 <li>
                                     <form action="{{ route('logout') }}" method="POST" class="block px-4 py-2 text-sm">
                                         @csrf
-                                        <button type="submit" class="text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white">
+                                        <button type="submit"
+                                            class="text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white">
                                             Logout <i class="fa-solid fa-arrow-right-from-bracket"></i>
                                         </button>
                                     </form>
@@ -76,24 +83,27 @@
                 <li>
                     <a href="{{ route('dosenDashboard') }}"
                         class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                        <i class="fa-solid fa-house w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+                        <i
+                            class="fa-solid fa-house w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
                         <span class="ms-3">Dashboard</span>
                     </a>
                 </li>
                 <a href="{{ route('dosenJadwal') }}"
-                      class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                      <i class="fa-regular fa-calendar-days w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
-                      <span class="flex-1 ms-3 whitespace-nowrap">Lihat Jadwal</span>
-                  </a>
-              </li>
-              <li>
-                <a href="{{ route('dosenBeban') }}"
                     class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                    <i class="fa-solid fa-weight-hanging w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
-                    <span class="flex-1 ms-3 whitespace-nowrap">Lihat Beban</span>
+                    <i
+                        class="fa-regular fa-calendar-days w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+                    <span class="flex-1 ms-3 whitespace-nowrap">Lihat Jadwal</span>
                 </a>
-            </li>
-            {{-- <li>
+                </li>
+                <li>
+                    <a href="{{ route('dosenBeban') }}"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        <i
+                            class="fa-solid fa-weight-hanging w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+                        <span class="flex-1 ms-3 whitespace-nowrap">Lihat Beban</span>
+                    </a>
+                </li>
+                {{-- <li>
                 <a href="{{ route('dosenRuangan') }}"
                     class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                     <i class="fa-solid fa-id-badge w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Dosen;
+use App\Models\JenisMatkul;
 use App\Models\KoorMatkul;
 use Illuminate\Http\Request;
 use App\Models\Matkul;
@@ -15,10 +16,12 @@ class MatkulController extends Controller
      */
     public function index()
     {
-        $matkul = Matkul::with('koor_matkul.dosen')->orderBy('id', 'desc')->get();
+        $matkul = Matkul::with('koor_matkul', 'jenis_matkul')->orderBy('id', 'desc')->get();
 
         $dosen = Dosen::all();
-        return view('admin.mataKuliah', compact('matkul', 'dosen'));
+        $jenis_matkul = JenisMatkul::all();
+
+        return view('admin.mataKuliah', compact('matkul', 'dosen', 'jenis_matkul'));
     }
 
     /**
@@ -40,17 +43,12 @@ class MatkulController extends Controller
         $matkul = new Matkul();
         $matkul->kd_matkul = $request->kd_matkul;
         $matkul->nama_matkul = $request->nama_matkul;
-        $matkul->jumlah_sks = $request->jumlah_sks;
+        $matkul->sks_teori = $request->sks_teori;
+        $matkul->sks_praktikum = $request->sks_praktikum;
         $matkul->semester = $request->semester;
-        $matkul->jenis_matkul = $request->jenis_matkul;
+        $matkul->id_jenis_matkul = $request->jenis_matkul;
+        $matkul->id_koor_matkul = $request->koor_matkul;
         $matkul->save();
-
-        foreach ($request->koor_matkul as $koor) {
-            KoorMatkul::create([
-                'id_matkul' => $matkul->id,
-                'id_dosen' => $koor
-            ]);
-        }
 
 
         return redirect()->route('adminMataKuliah')->with('success', 'matkul berhasil ditambahkan.');
@@ -82,25 +80,15 @@ class MatkulController extends Controller
         if (!$matkul) {
             return redirect()->back()->with('error', 'matkul tidak ditemukan.');
         }
-        $matkul->kd_matkul             = $request->kd_matkul;
-        $matkul->nama_matkul      = $request->nama_matkul;
-        $matkul->jumlah_sks = $request->jumlah_sks;
-        $matkul->semester = $request->semester;
-        $matkul->jenis_matkul = $request->jenis_matkul;
-        $matkul->save();
 
-        foreach ($request->koor_matkul as $koor) {
-            KoorMatkul::updateOrCreate(
-                [
-                    'id_matkul' => $matkul->id,
-                    'id_dosen' => $koor
-                ],
-                [
-                    'created_at' => now(),
-                    'updated_at' => now()
-                ]
-            );
-        }
+        $matkul->kd_matkul = $request->kd_matkul;
+        $matkul->nama_matkul = $request->nama_matkul;
+        $matkul->sks_teori = $request->sks_teori;
+        $matkul->sks_praktikum = $request->sks_praktikum;
+        $matkul->semester = $request->semester;
+        $matkul->id_jenis_matkul = $request->jenis_matkul;
+        $matkul->id_koor_matkul = $request->koor_matkul;
+        $matkul->save();
 
         return redirect()->route('adminMataKuliah')->with('success', 'Matkul berhasil diperbarui.');
     }
@@ -121,7 +109,6 @@ class MatkulController extends Controller
 
         // Hapus data matkul
         $matkul->delete();
-        KoorMatkul::where('id_matkul', $id)->delete();
 
         return redirect()->route('adminMataKuliah')->with('success', 'matkul terkait berhasil dihapus.');
     }

@@ -16,10 +16,11 @@ class Matkul extends Model
     protected $fillable = [
         'kd_matkul',
         'nama_matkul',
-        'jumlah_sks',
+        'sks_teori',
+        'sks_praktikum',
         'semester',
-        'koor_matkul',
-        'jenis_matkul'
+        'id_jenis_matkul',
+        'id_koor_matkul'
     ];
 
     // Menyesuaikan jika nama kolom primary key bukan 'id'
@@ -32,13 +33,13 @@ class Matkul extends Model
     // Jika tidak menggunakan timestamps
     // public $timestamps = true;
 
-    function dosen()
+    function jenis_matkul()
     {
-        return $this->belongsTo(Dosen::class, 'koor_matkul');
+        return $this->belongsTo(JenisMatkul::class, 'id_jenis_matkul');
     }
 
     function koor_matkul()
     {
-        return $this->hasMany(KoorMatkul::class, 'id_matkul');
+        return $this->belongsTo(Dosen::class, 'id_koor_matkul');
     }
 }

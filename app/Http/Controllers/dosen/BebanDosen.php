@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\dosen;
 
 use App\Http\Controllers\Controller;
+use App\Models\Dosen;
 use Illuminate\Http\Request;
 use App\Models\Jadwal;
 use App\Models\Matkul;
+use App\Models\Teknisi;
 use Illuminate\Support\Facades\Auth;
 
 class BebanDosen extends Controller
@@ -16,50 +18,41 @@ class BebanDosen extends Controller
     public function index()
     {
         // Ambil id dari usernya (Gunakan Auth)
-        $userId = Auth::id();
         $userRole = Auth::user()->status; // Pastikan ada atribut 'role' pada tabel users, misalnya 'dosen' atau 'teknisi'
+        $id = ($userRole == 'dosen') ? Dosen::where('nip', Auth::user()->nip)->first()->id : Teknisi::where('nik', Auth::user()->nip)->first()->id;
+        $userId = $id;
 
-        // Lalu, Tarik data jadwal berdasarkan user dulu
-        if ($userRole == 'dosen') {
-            // Jika user adalah dosen, ambil jadwal berdasarkan id_dosen
-            $dataJadwal = Jadwal::where('id_dosen', $userId) // Mengambil jadwal berdasarkan id_dosen
-                                ->get('matkul');
-        } elseif ($userRole == 'teknisi') {
-            // Jika user adalah teknisi, ambil jadwal berdasarkan id_teknisi
-            $dataJadwal = Jadwal::where('id_teknisi', $userId) // Mengambil jadwal berdasarkan id_teknisi
-                                ->get('matkul');
-        } else {
-            // Jika user tidak terdaftar sebagai dosen atau teknisi, beri response atau penanganan lain
-            return response()->json(['message' => 'User tidak memiliki akses untuk melihat jadwal.'], 403);
-        }
+        $dataJadwal = Jadwal::with(['dosens.dosen', 'teknisis.teknisi', 'matkul', 'matkul.koor_matkul', 'matkul.jenis_matkul', 'ruangan', 'jam' => function ($query) {
+            $query->orderBy('jam_awal', 'asc');
+        }])
+            ->when($userRole == 'dosen', function ($query) use ($userId) {
+                // dosen
+                return $query->whereHas('dosens.dosen', function ($query) use ($userId) {
+                    $query->where('id', $userId);
+                });
+            })
+            ->when($userRole == 'teknisi', function ($query) use ($userId) {
+                // teknisi
+                return $query->whereHas('teknisis.teknisi', function ($query) use ($userId) {
+                    $query->where('id', $userId);
+                });
+            })
+            ->orderBy('hari', 'desc')
+            ->get();
 
-        // Tarik matkul berdasarkan matkul yang ada di DB
-        $matkuls = collect(); 
-        $total_beban = 0;
+        $matkuls = $dataJadwal->map(function ($jadwal) use ($userRole) {
+            return [
+                'matkul' => $jadwal->matkul->nama_matkul,
+                'sks' => $jadwal->matkul->sks_teori + $jadwal->matkul->sks_praktikum,
+                'tim_teaching' => ($userRole == 'dosen') ? $jadwal->dosens->count() : $jadwal->teknisis->count(),
+                'sks_individu' => ($jadwal->matkul->sks_teori + $jadwal->matkul->sks_praktikum) / (($userRole == 'dosen') ? $jadwal->dosens->count() : $jadwal->teknisis->count())
+            ];
+        });
 
-        foreach ($dataJadwal as $item) {
-            // Mengambil data matkul berdasarkan nama matkul
-            $matkul = Matkul::where('nama_matkul', $item['matkul'])->firstOrFail();
+        $total_beban = $matkuls->sum('sks_individu');
 
-            // Mengambil jumlah pengampu (dosen atau teknisi) yang mengajar mata kuliah tersebut
-            $jumlahPengampu = Jadwal::where('id_matkul', $matkul->id)
-                ->distinct($userRole == 'dosen' ? 'id_dosen' : 'id_teknisi') // Memilih id_dosen untuk dosen dan id_teknisi untuk teknisi
-                ->count($userRole == 'dosen' ? 'id_dosen' : 'id_teknisi'); // Menghitung jumlah pengampu yang mengajar matkul tersebut
+        // dd($dataMapped, $total_beban);
 
-            // Menggabungkan data matkul dan jumlah pengampu
-            $item['matkul'] = $matkul->nama_matkul;
-            $item['sks']    = $matkul->jumlah_sks;
-            $item['tim_teaching'] = $jumlahPengampu;
-            $item['sks_individu'] = $matkul->jumlah_sks / $jumlahPengampu;
-
-            $total_beban += $matkul->jumlah_sks / $jumlahPengampu;
-            
-            // Menyimpan hasil ke koleksi
-            $matkuls->push($item);
-        }
-
-
-        // return response()->json($total_beban);
-        return view('dosen.beban', compact('matkuls','total_beban'));
+        return view('dosen.beban', compact('matkuls', 'total_beban'));
     }
 }

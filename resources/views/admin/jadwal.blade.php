@@ -20,69 +20,14 @@
                         <th class="p-2 text-left">Jam</th>
                         <th class="p-2 text-left">Mata Kuliah</th>
                         <th class="p-2 text-left">Semester</th>
+                        <th class="p-2 text-left">Ruangan</th>
                         <th class="p-2 text-left">Dosen Pengampu</th>
                         <th class="p-2 text-left">Teknisi</th>
-                        <th class="p-2 text-left">Ruangan</th>
                         <th class="p-2 text-left">Status</th>
                         <th class="p-2 text-left">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white">
-                    {{-- @php
-                        // Array jadwal kuliah contoh
-                        $jadwal = [
-                            [
-                                'hari' => 'Senin',
-                                'jam' => '08:00 - 10:00',
-                                'mata_kuliah' => 'Algoritma',
-                                'sks' => 3,
-                                'semester' => 1,
-                                'dosen' => 'Dr. John Doe',
-                                'teknisi' => 'Jane Smith',
-                                'ruangan' => 'Lab Komputer 1',
-                            ],
-                            [
-                                'hari' => 'Selasa',
-                                'jam' => '10:00 - 12:00',
-                                'mata_kuliah' => 'Database',
-                                'sks' => 3,
-                                'semester' => 2,
-                                'dosen' => 'Prof. Jane Doe',
-                                'teknisi' => 'Tom James',
-                                'ruangan' => 'Lab Komputer 2',
-                            ],
-                            [
-                                'hari' => 'Rabu',
-                                'jam' => '13:00 - 15:00',
-                                'mata_kuliah' => 'Jaringan',
-                                'sks' => 4,
-                                'semester' => 3,
-                                'dosen' => 'Dr. Alan Turing',
-                                'teknisi' => 'Anna Clark',
-                                'ruangan' => 'Lab Jaringan',
-                            ],
-                            [
-                                'hari' => 'Kamis',
-                                'jam' => '15:00 - 17:00',
-                                'mata_kuliah' => 'Pemrograman Web',
-                                'sks' => 4,
-                                'semester' => 4,
-                                'dosen' => 'Mr. Linus Torvalds',
-                                'teknisi' => 'David Johnson',
-                                'ruangan' => 'Lab Komputer 3',
-                            ],
-                            [
-                                'hari' => 'Jumat',
-                                'jam' => '08:00 - 10:00',
-                                'mata_kuliah' => 'Kecerdasan Buatan',
-                                'sks' => 3,
-                                'semester' => 5,
-                                'dosen' => 'Ms. Ada Lovelace',
-                                'teknisi' => 'Sarah White',
-                                'ruangan' => 'Lab AI',
-                            ],
-                        ];
-                    @endphp --}}
 
                     @foreach ($dataJadwal as $i => $dt)
                         <tr class="border-b border-gray-200">
@@ -90,18 +35,36 @@
                             <td class="px-4 py-4 text-sm text-gray-700">{{ $dt->jam->jam_awal }} - {{ $dt->jam->jam_akhir }}
                             </td>
                             <td class="px-4 py-4 text-sm text-gray-700 text-wrap">{{ $dt->matkul->nama_matkul }}</td>
-                            <td class="px-4 py-4 text-sm text-gray-700">{{ $dt->semester }}</td>
-                            <td class="px-4 py-4 text-sm text-gray-700">{{ $dt->dosen->nama_dosen }}</td>
-                            <td class="px-4 py-4 text-sm text-gray-700">{{ $dt->teknisi->nama_teknisi }}</td>
+                            <td class="px-4 py-4 text-sm text-gray-700">{{ $dt->matkul->semester }}</td>
                             <td class="px-4 py-4 text-sm text-gray-700">{{ $dt->ruangan->nama_ruangan }}</td>
+                            <td class="px-4 py-4 text-sm text-gray-700 text-wrap">
+                                @foreach ($dt->dosens as $item)
+                                    <span>
+                                        {{ $item->dosen->nama_dosen }}
+                                    </span>
+                                    <hr>
+                                    <br>
+                                @endforeach
+                            </td>
+                            <td class="px-4 py-4 text-sm text-gray-700 text-wrap">
+                                @foreach ($dt->teknisis as $item)
+                                    <span>
+                                        {{ $item->teknisi->nama_teknisi }}
+                                    </span>
+                                    <hr>
+                                    <br>
+                                @endforeach
+                            </td>
                             <td class="px-4 py-4 text-sm text-gray-700">
                                 <span
                                     class="px-2 py-1 text-xs font-semibold leading-tight 
-                                        @if ($dt->matkul->jenis_matkul == 'Praktikum') text-green-700 bg-green-100 dark:bg-green-700 dark:text-green-100 
+                                        @if ($dt->matkul->jenis_matkul->id == 1) text-blue-700 bg-blue-100 dark:bg-blue-700 dark:text-blue-100
+                                        @elseif ($dt->matkul->jenis_matkul->id == 2)
+                                        text-green-700 bg-green-100 dark:bg-green-700 dark:text-green-100 
                                         @else 
-                                        text-blue-700 bg-blue-100 dark:bg-blue-700 dark:text-blue-100 @endif
+                                        text-yellow-700 bg-yellow-100 dark:bg-yellow-700 dark:text-yellow-100 @endif
                                         rounded-full ">
-                                    {{ $dt->matkul->jenis_matkul }}
+                                    {{ $dt->matkul->jenis_matkul->nama ?? '-' }}
                                 </span>
                             </td>
                             <td class="p-2">
@@ -199,7 +162,8 @@
                                                 <!-- Tahun Ajaran -->
                                                 <div class="text-left">
                                                     <label for="tahun_ajaran"
-                                                        class="block text-sm font-medium text-gray-900">Tahun Ajaran</label>
+                                                        class="block text-sm font-medium text-gray-900">Tahun
+                                                        Ajaran</label>
                                                     <input type="text" name="tahun_ajaran" id="tahun_ajaran"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
                                                         placeholder="2023/2024" value="{{ $dt->tahun_ajaran }}" required>
@@ -220,39 +184,6 @@
                                                     </select>
                                                 </div>
 
-                                                <!-- Dosen Pengampu -->
-                                                <div class="text-left">
-                                                    <label for="dosen"
-                                                        class="block text-sm font-medium text-gray-900">Dosen
-                                                        Pengampu</label>
-                                                    <select name="dosen" id="dosen"
-                                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
-                                                        required>
-                                                        @foreach ($dosen as $item)
-                                                            <option value="{{ $item->id }}"
-                                                                {{ $dt->id_dosen == $item->id ? 'selected' : '' }}>
-                                                                {{ $item->nama_dosen }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-
-                                                <!-- Teknisi -->
-                                                <div class="text-left">
-                                                    <label for="teknisi"
-                                                        class="block text-sm font-medium text-gray-900">Teknisi</label>
-                                                    <select name="teknisi" id="teknisi"
-                                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
-                                                        required>
-                                                        @foreach ($teknisi as $item)
-                                                            <option value="{{ $item->id }}"
-                                                                {{ $dt->id_teknisi == $item->id ? 'selected' : '' }}>
-                                                                {{ $item->nama_teknisi }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-
                                                 <!-- Ruangan -->
                                                 <div class="text-left">
                                                     <label for="ruangan"
@@ -268,8 +199,44 @@
                                                         @endforeach
                                                     </select>
                                                 </div>
-                                            </div>
 
+                                                <!-- Dosen Pengampu -->
+                                                <div class="text-left">
+                                                    <label class="block text-sm font-medium text-gray-900 mb-1"
+                                                        for="pair">
+                                                        Dosen Pengampu
+                                                    </label>
+                                                    <select class="multiple_input text-sm rounded-lg "
+                                                        style="width: 100%;" data-placeholder="Select more Penagampu..."
+                                                        data-allow-clear="false" multiple="multiple"
+                                                        title="Select Dosen Pengampu" name="dosen_pengampu[]" required>
+                                                        @foreach ($dosen as $d)
+                                                            <option @if ($dt->dosens->contains('id_data_dosen', $d->id)) selected @endif
+                                                                value="{{ $d->id }}">{{ $d->nama_dosen }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                                <!-- Teknisi -->
+                                                <div class="text-left">
+                                                    <label class="block text-sm font-medium text-gray-900 mb-1"
+                                                        for="pair">
+                                                        Teknisi
+                                                    </label>
+                                                    <select class="multiple_input text-sm rounded-lg "
+                                                        style="width: 100%;" data-placeholder="Select More Teknisi..."
+                                                        data-allow-clear="false" multiple="multiple"
+                                                        title="Select Teknisi" name="teknisi[]" required>
+                                                        @foreach ($teknisi as $t)
+                                                            <option @if ($dt->teknisis->contains('id_data_teknisi', $t->id)) selected @endif
+                                                                value="{{ $t->id }}">{{ $t->nama_teknisi }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+
+
+                                            </div>
                                             <div class="flex justify-end mt-4">
                                                 <button type="submit"
                                                     class="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300 font-medium text-sm">
@@ -369,29 +336,6 @@
                             </div>
 
                             <div class="text-left">
-                                <label for="dosen" class="block text-sm font-medium text-gray-900">Dosen
-                                    Pengampu</label>
-                                <select name="dosen" id="dosen"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
-                                    required>
-                                    @foreach ($dosen as $item)
-                                        <option value="{{ $item->id }}">{{ $item->nama_dosen }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <div class="text-left">
-                                <label for="teknisi" class="block text-sm font-medium text-gray-900">Teknisi</label>
-                                <select name="teknisi" id="teknisi"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
-                                    required>
-                                    @foreach ($teknisi as $item)
-                                        <option value="{{ $item->id }}">{{ $item->nama_teknisi }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <div class="text-left">
                                 <label for="ruangan" class="block text-sm font-medium text-gray-900">Ruangan</label>
                                 <select name="ruangan" id="ruangan"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
@@ -401,6 +345,33 @@
                                     @endforeach
                                 </select>
                             </div>
+
+                            <div class="text-left">
+                                <label class="block text-sm font-medium text-gray-900 mb-1" for="pair">
+                                    Dosen Pengampu
+                                </label>
+                                <select class="multiple_input text-sm rounded-lg " style="width: 100%;"
+                                    data-placeholder="Select more Penagampu..." data-allow-clear="false"
+                                    multiple="multiple" title="Select Dosen Pengampu" name="dosen_pengampu[]">
+                                    @foreach ($dosen as $item)
+                                        <option value="{{ $item->id }}">{{ $item->nama_dosen }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="text-left">
+                                <label class="block text-sm font-medium text-gray-900 mb-1" for="pair">
+                                    Teknisi
+                                </label>
+                                <select class="multiple_input text-sm rounded-lg " style="width: 100%;"
+                                    data-placeholder="Select More Teknisi..." data-allow-clear="false"
+                                    multiple="multiple" title="Select Teknisi" name="teknisi[]">
+                                    @foreach ($teknisi as $t)
+                                        <option value="{{ $t->id }}">{{ $t->nama_teknisi }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
                         </div>
 
                         <div class="flex justify-end mt-4">
@@ -421,6 +392,9 @@
             button.addEventListener('click', () => {
                 const modalId = button.getAttribute('data-modal-target');
                 document.querySelector(modalId).classList.remove('hidden');
+                $(modalId).find('.multiple_input-tag').select2({
+                    tags: true
+                });
             });
         });
         document.querySelectorAll('[data-modal-hide]').forEach(button => {
@@ -447,6 +421,10 @@
                 }
             })
         }
+
+        $(document).ready(function() {
+            $('.multiple_input').select2();
+        });
 
         $('#dataTable').DataTable();
     </script>

@@ -18,27 +18,16 @@ class JadwalController extends Controller
      */
     public function index()
     {
-        $dataJadwal = Jadwal::with(['dosen', 'teknisi', 'matkul', 'matkul.koor_matkul.dosen', 'ruangan', 'jam' => function ($query) {
+        $dataJadwal = Jadwal::with(['dosens.dosen', 'teknisis.teknisi', 'matkul', 'matkul.koor_matkul', 'matkul.jenis_matkul', 'ruangan', 'jam' => function ($query) {
             $query->orderBy('jam_awal', 'asc');
         }])->orderBy('hari', 'desc')->get();
+        // dd($dataJadwal);
         $jam = Jam::all();
-        $mataKuliah = Matkul::with('koor_matkul.dosen')->get();
+        $mataKuliah = Matkul::with('koor_matkul')->get();
         $dosen = Dosen::all();
         $teknisi = Teknisi::all();
         $ruangan = Ruangan::all();
-        $ruangan = Ruangan::all();
-        // dd($dataJadwal);
 
-        // $jam = Jam::all(); // Ambil data jam
-        // $mataKuliah = Matkul::with('koor_matkul.dosen')->get(); // Ambil data mata kuliah & koordinator
-        // $dosen = Dosen::all(); // Ambil data dosen
-        // $teknisi = Teknisi::all(); // Ambil data teknisi
-        // $ruangan = Ruangan::all(); // Ambil data ruangan
-
-        // return response()->json([
-        //     'status' => 'success',
-        //     'data' => $dataJadwal
-        // ]);
 
         return view('admin.jadwal', compact('dataJadwal', 'jam', 'mataKuliah', 'dosen', 'teknisi', 'ruangan'));
     }
@@ -48,13 +37,18 @@ class JadwalController extends Controller
      */
     public function store(Request $request)
     {
-        $existingJadwal = Jadwal::where('hari', $request->hari)
+        $existingJadwal = Jadwal::with('dosens.dosen', 'teknisis.teknisi')
+            ->where('hari', $request->hari)
             ->where('id_jam', $request->jam)
-            ->where('id_dosen', $request->dosen)
             ->where('id_ruangan', $request->ruangan)
             ->where('tahun_ajaran', $request->tahun_ajaran)
-            ->where('semester', $request->semester)
             ->where('id_matkul', $request->mata_kuliah)
+            ->whereHas('dosens.dosen', function ($query) use ($request) {
+                $query->whereIn('id', $request->dosen_pengampu);
+            })
+            ->whereHas('teknisis.teknisi', function ($query) use ($request) {
+                $query->whereIn('id', $request->teknisi);
+            })
             ->first();
 
         if ($existingJadwal) {
@@ -65,17 +59,29 @@ class JadwalController extends Controller
         $jadwal = new Jadwal();
 
         // Menetapkan nilai atribut untuk jadwal
-        $jadwal->id_dosen = $request->dosen;
-        $jadwal->id_teknisi = $request->teknisi;
         $jadwal->id_matkul = $request->mata_kuliah;
         $jadwal->hari = $request->hari;
         $jadwal->id_jam = $request->jam;
         $jadwal->tahun_ajaran = $request->tahun_ajaran;
-        $jadwal->semester = $request->semester;
         $jadwal->id_ruangan = $request->ruangan;
 
         // Menyimpan data ke database
         $jadwal->save();
+
+
+        foreach ($request->dosen_pengampu as $dosenId) {
+            $jadwal->dosens()->create([
+                'id_data_dosen' => $dosenId,
+                'id_data_jadwal' => $jadwal->id
+            ]);
+        }
+
+        foreach ($request->teknisi as $teknisiId) {
+            $jadwal->teknisis()->create([
+                'id_data_teknisi' => $teknisiId,
+                'id_data_jadwal' => $jadwal->id
+            ]);
+        }
 
         // Redirect atau memberikan respons setelah berhasil menyimpan
         return redirect()->route('adminJadwal')->with('success', 'Jadwal berhasil ditambahkan.');
@@ -91,11 +97,15 @@ class JadwalController extends Controller
         $existingJadwal = Jadwal::where('id', '!=', $id)
             ->where('hari', $request->hari)
             ->where('id_jam', $request->jam)
-            ->where('id_dosen', $request->dosen)
             ->where('id_ruangan', $request->ruangan)
             ->where('tahun_ajaran', $request->tahun_ajaran)
-            ->where('semester', $request->semester)
             ->where('id_matkul', $request->mata_kuliah)
+            ->whereHas('dosens', function ($query) use ($request) {
+                $query->whereIn('id_data_dosen', $request->dosen_pengampu);
+            })
+            ->whereHas('teknisis', function ($query) use ($request) {
+                $query->whereIn('id_data_teknisi', $request->teknisi);
+            })
             ->first();
 
         if ($existingJadwal) {
@@ -106,17 +116,32 @@ class JadwalController extends Controller
         $jadwal = Jadwal::find($id);
 
         // Menetapkan nilai atribut untuk jadwal
-        $jadwal->id_dosen = $request->dosen;
-        $jadwal->id_teknisi = $request->teknisi;
         $jadwal->id_matkul = $request->mata_kuliah;
         $jadwal->hari = $request->hari;
         $jadwal->id_jam = $request->jam;
         $jadwal->tahun_ajaran = $request->tahun_ajaran;
-        $jadwal->semester = $request->semester;
         $jadwal->id_ruangan = $request->ruangan;
 
         // Simpan perubahan
         $jadwal->save();
+
+        $jadwal->dosens()->delete();
+
+        foreach ($request->dosen_pengampu as $dosenId) {
+            $jadwal->dosens()->create([
+                'id_data_dosen' => $dosenId,
+                'id_data_jadwal' => $jadwal->id
+            ]);
+        }
+
+        $jadwal->teknisis()->delete();
+
+        foreach ($request->teknisi as $teknisiId) {
+            $jadwal->teknisis()->create([
+                'id_data_teknisi' => $teknisiId,
+                'id_data_jadwal' => $jadwal->id
+            ]);
+        }
 
         // Redirect atau memberikan respons setelah berhasil memperbarui
         return redirect()->route('adminJadwal')->with('success', 'Jadwal berhasil diperbarui.');
@@ -139,6 +164,8 @@ class JadwalController extends Controller
         }
 
         $jadwal->delete();
+        $jadwal->dosens()->delete();
+        $jadwal->teknisis()->delete();
 
         return redirect()->route('adminJadwal')->with('success', 'Jadwal berhasil diperbarui.');
     }
