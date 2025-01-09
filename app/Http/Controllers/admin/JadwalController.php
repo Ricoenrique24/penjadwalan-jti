@@ -10,17 +10,25 @@ use App\Models\Matkul;
 use App\Models\Dosen;
 use App\Models\Teknisi;
 use App\Models\Ruangan;
+use Carbon\Carbon;
 
 class JadwalController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+
+        $tahunAjaran = Jadwal::select('tahun_ajaran')->groupBy('tahun_ajaran')->get();
+        $tahunAjaranNow = Carbon::now()->format('Y') . "/" . Carbon::now()->addYear(1)->format('Y');
+        $tahunAjaranSelected = $request->tahun_ajaran ?? $tahunAjaranNow;
+
         $dataJadwal = Jadwal::with(['dosens.dosen', 'teknisis.teknisi', 'matkul', 'matkul.koor_matkul', 'matkul.jenis_matkul', 'ruangan', 'jam' => function ($query) {
             $query->orderBy('jam_awal', 'asc');
-        }])->orderBy('hari', 'desc')->get();
+        }])
+            ->where('tahun_ajaran', $tahunAjaranSelected)
+            ->orderBy('hari', 'desc')->get();
         // dd($dataJadwal);
         $jam = Jam::all();
         $mataKuliah = Matkul::with('koor_matkul')->get();
@@ -28,8 +36,7 @@ class JadwalController extends Controller
         $teknisi = Teknisi::all();
         $ruangan = Ruangan::all();
 
-
-        return view('admin.jadwal', compact('dataJadwal', 'jam', 'mataKuliah', 'dosen', 'teknisi', 'ruangan'));
+        return view('admin.jadwal', compact('dataJadwal', 'jam', 'mataKuliah', 'dosen', 'teknisi', 'ruangan', 'tahunAjaran', 'tahunAjaranNow', 'tahunAjaranSelected'));
     }
 
     /**

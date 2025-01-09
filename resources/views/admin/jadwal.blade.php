@@ -2,6 +2,23 @@
 @section('content')
     <div class="container mx-auto p-6 mt-12 min-h-screen">
         <div class="flex items-center justify-between p-2 py-5">
+            <div class="flex items-center">
+                <form action="{{ route('adminJadwal') }}" method="GET" class="flex items-center">
+                    <select name="tahun_ajaran" id="tahun_ajaran"
+                        class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mr-2"
+                        required>
+                        @foreach ($tahunAjaran as $tahun)
+                            <option value="{{ $tahun->tahun_ajaran }}" @if ($tahunAjaranSelected === $tahun->tahun_ajaran) selected @endif>
+                                {{ $tahun->tahun_ajaran }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <button type="submit"
+                        class="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300 text-sm">
+                        Pilih
+                    </button>
+                </form>
+            </div>
             <div class="flex-1 text-center">
                 <h1 class="text-3xl font-bold text-gray-800">Penjadwalan</h1>
             </div>
