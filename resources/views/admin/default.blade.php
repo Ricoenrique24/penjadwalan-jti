@@ -164,6 +164,14 @@
                     </a>
                 </li>
                 <li>
+                    <a href="{{ route('adminPlotMatkul') }}"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        <i
+                            class="fa-regular fa-file w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+                        <span class="flex-1 ms-3 whitespace-nowrap">Plot MK</span>
+                    </a>
+                </li>
+                <li>
                     <a href="{{ route('adminPengguna') }}"
                         class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                         <i

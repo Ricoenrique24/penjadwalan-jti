@@ -20,6 +20,7 @@ use App\Http\Controllers\dosen\BebanDosen;
 use App\Http\Controllers\dosen\DashboardDosen;
 use App\Http\Controllers\dosen\JadwalDosen;
 use App\Http\Controllers\dosen\RuanganDosen;
+use App\Http\Controllers\PlotMatkulController;
 
 /*
 |--------------------------------------------------------------------------
@@ -97,7 +98,7 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     // Route untuk halaman beranda
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('adminDashboard');
 
-     // Route untuk halaman beranda
+    // Route untuk halaman beranda
     Route::get('/beranda', [BerandaController::class, 'index'])->name('admin.beranda');
 
     // Route untuk data dosen
@@ -153,6 +154,8 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::put('/jam/{id}', [JamController::class, 'update'])->name('adminJam.update');
     Route::delete('/jam/{id}', [JamController::class, 'destroy'])->name('adminJam.destroy');
 
+    // Route Plot Matakuliah dan jadwal
+    Route::get('/plot-matkul', [PlotMatkulController::class, 'index'])->name('adminPlotMatkul');
 });
 
 Route::prefix('dosen')->middleware('auth')->group(function () {
@@ -164,10 +167,7 @@ Route::prefix('dosen')->middleware('auth')->group(function () {
 
     // Route untuk Jadwal Dosen
     Route::get('/jadwal', [JadwalDosen::class, 'index'])->name('dosenJadwal');
-    
+
     // // Route untuk Ruangan Dosen
     // Route::get('/ruangan', [RuanganDosen::class, 'index'])->name('dosenRuangan');
 });
-
-
-
