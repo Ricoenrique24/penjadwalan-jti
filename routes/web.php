@@ -12,6 +12,7 @@ use App\Http\Controllers\admin\JadwalController;
 use App\Http\Controllers\admin\KelasController;
 use App\Http\Controllers\admin\MatkulController;
 use App\Http\Controllers\admin\PenggunaController;
+use App\Http\Controllers\admin\PlotMatkulController;
 use App\Http\Controllers\admin\RuanganController;
 use App\Http\Controllers\admin\TeknisiController;
 
@@ -19,8 +20,6 @@ use App\Http\Controllers\admin\TeknisiController;
 use App\Http\Controllers\dosen\BebanDosen;
 use App\Http\Controllers\dosen\DashboardDosen;
 use App\Http\Controllers\dosen\JadwalDosen;
-use App\Http\Controllers\dosen\RuanganDosen;
-use App\Http\Controllers\PlotMatkulController;
 
 /*
 |--------------------------------------------------------------------------
