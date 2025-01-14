@@ -8,6 +8,7 @@ use App\Models\Jadwal;
 use App\Models\Jam;
 use App\Models\Matkul;
 use App\Models\Dosen;
+use App\Models\Kelas;
 use App\Models\Teknisi;
 use App\Models\Ruangan;
 use Carbon\Carbon;
@@ -24,7 +25,7 @@ class JadwalController extends Controller
         $tahunAjaranNow = Carbon::now()->format('Y') . "/" . Carbon::now()->addYear(1)->format('Y');
         $tahunAjaranSelected = $request->tahun_ajaran ?? $tahunAjaranNow;
 
-        $dataJadwal = Jadwal::with(['dosens.dosen', 'teknisis.teknisi', 'matkul', 'matkul.koor_matkul', 'matkul.jenis_matkul', 'ruangan', 'jam' => function ($query) {
+        $dataJadwal = Jadwal::with(['dosens.dosen', 'kelas', 'teknisis.teknisi', 'matkul', 'matkul.koor_matkul', 'matkul.jenis_matkul', 'ruangan', 'jam' => function ($query) {
             $query->orderBy('jam_awal', 'asc');
         }])
             ->where('tahun_ajaran', $tahunAjaranSelected)
@@ -35,8 +36,10 @@ class JadwalController extends Controller
         $dosen = Dosen::all();
         $teknisi = Teknisi::all();
         $ruangan = Ruangan::all();
+        $kelas = Kelas::all();
 
-        return view('admin.jadwal', compact('dataJadwal', 'jam', 'mataKuliah', 'dosen', 'teknisi', 'ruangan', 'tahunAjaran', 'tahunAjaranNow', 'tahunAjaranSelected'));
+
+        return view('admin.jadwal', compact('dataJadwal', 'jam', 'mataKuliah', 'dosen', 'teknisi', 'ruangan', 'tahunAjaran', 'tahunAjaranNow', 'tahunAjaranSelected', 'kelas'));
     }
 
     /**
@@ -48,6 +51,7 @@ class JadwalController extends Controller
             ->where('hari', $request->hari)
             ->where('id_jam', $request->jam)
             ->where('id_ruangan', $request->ruangan)
+            ->where('id_kelas', $request->kelas)
             ->where('tahun_ajaran', $request->tahun_ajaran)
             ->where('id_matkul', $request->mata_kuliah)
             ->whereHas('dosens.dosen', function ($query) use ($request) {
@@ -71,6 +75,7 @@ class JadwalController extends Controller
         $jadwal->id_jam = $request->jam;
         $jadwal->tahun_ajaran = $request->tahun_ajaran;
         $jadwal->id_ruangan = $request->ruangan;
+        $jadwal->id_kelas = $request->kelas;
 
         // Menyimpan data ke database
         $jadwal->save();
@@ -105,6 +110,7 @@ class JadwalController extends Controller
             ->where('hari', $request->hari)
             ->where('id_jam', $request->jam)
             ->where('id_ruangan', $request->ruangan)
+            ->where('id_kelas', $request->kelas)
             ->where('tahun_ajaran', $request->tahun_ajaran)
             ->where('id_matkul', $request->mata_kuliah)
             ->whereHas('dosens', function ($query) use ($request) {
@@ -128,6 +134,7 @@ class JadwalController extends Controller
         $jadwal->id_jam = $request->jam;
         $jadwal->tahun_ajaran = $request->tahun_ajaran;
         $jadwal->id_ruangan = $request->ruangan;
+        $jadwal->id_kelas = $request->kelas;
 
         // Simpan perubahan
         $jadwal->save();

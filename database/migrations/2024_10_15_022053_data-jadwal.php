@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('id_jam')->references('id')->on('data_jam')->onDelete('cascade');
             $table->string('tahun_ajaran');
             $table->foreignId('id_ruangan')->references('id')->on('data_ruangan')->onDelete('cascade');
+            $table->foreignId('id_kelas')->references('id')->on('data_kelas')->onDelete('cascade');
             $table->timestamps();
         });
     }

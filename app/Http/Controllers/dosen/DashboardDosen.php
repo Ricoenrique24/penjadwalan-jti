@@ -32,7 +32,7 @@ class DashboardDosen extends Controller
         // Query Jadwal berdasarkan role user
         if ($userRole === 'dosen') {
             // Jika user adalah dosen, ambil jadwal berdasarkan id_dosen
-            $dataJadwal = Jadwal::with('dosens.dosen', 'teknisis.teknisi', 'jam', 'matkul', 'ruangan')
+            $dataJadwal = Jadwal::with('dosens.dosen', 'kelas', 'teknisis.teknisi', 'jam', 'matkul', 'ruangan')
                 ->whereHas('dosens.dosen', function ($query) use ($userId) {
                     $query->where('id', $userId);
                 })
@@ -44,7 +44,7 @@ class DashboardDosen extends Controller
                 ]);
         } elseif ($userRole === 'teknisi') {
             // Jika user adalah teknisi, ambil jadwal berdasarkan id_teknisi
-            $dataJadwal = Jadwal::with('dosens.dosen', 'teknisis.teknisi', 'jam', 'matkul', 'ruangan')
+            $dataJadwal = Jadwal::with('dosens.dosen', 'kelas', 'teknisis.teknisi', 'jam', 'matkul', 'ruangan')
                 ->whereHas('teknisis.teknisi', function ($query) use ($userId) {
                     $query->where('id', $userId);
                 })

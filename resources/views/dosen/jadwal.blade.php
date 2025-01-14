@@ -10,6 +10,7 @@
                         <th class="p-3 text-left">Hari</th>
                         <th class="p-3 text-left">Mata Kuliah</th>
                         <th class="p-3 text-left">Jam</th>
+                        <th class="p-3 text-left">Kelas</th>
                         <th class="p-3 text-left">Ruangan</th>
                         <th class="p-3 text-left">Dosen</th>
                         <th class="p-3 text-left">Teknisi</th>
@@ -21,6 +22,7 @@
                             <td class="px-4 py-4">{{ $jadwal->hari }}</td>
                             <td class="px-4 py-4">{{ $jadwal->matkul->nama_matkul }}</td>
                             <td class="px-4 py-4">{{ $jadwal->jam->jam_awal }} - {{ $jadwal->jam->jam_akhir }}</td>
+                            <td class="px-4 py-4">{{ $jadwal->kelas->golongan }} - {{ $jadwal->kelas->prodi }}
                             <td class="px-4 py-4">{{ $jadwal->ruangan->nama_ruangan }}</td>
                             <td class="px-4 py-4">
                                 @foreach ($jadwal->dosens as $res)

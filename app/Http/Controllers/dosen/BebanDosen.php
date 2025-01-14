@@ -25,6 +25,8 @@ class BebanDosen extends Controller
         $dataJadwal = Jadwal::with(['dosens.dosen', 'teknisis.teknisi', 'matkul', 'matkul.koor_matkul', 'matkul.jenis_matkul', 'ruangan', 'jam' => function ($query) {
             $query->orderBy('jam_awal', 'asc');
         }])
+            ->withCount('dosens as jumlah_dosen')
+            ->withCount('teknisis as jumlah_teknisi')
             ->when($userRole == 'dosen', function ($query) use ($userId) {
                 // dosen
                 return $query->whereHas('dosens.dosen', function ($query) use ($userId) {
@@ -39,6 +41,8 @@ class BebanDosen extends Controller
             })
             ->orderBy('hari', 'desc')
             ->get();
+
+        // dd($dataJadwal);
 
         $matkuls = $dataJadwal->map(function ($jadwal) use ($userRole) {
             return [
