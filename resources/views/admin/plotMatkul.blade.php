@@ -21,7 +21,7 @@
                 </form>
             </div>
             <div class="flex-1 text-center">
-                <h1 class="text-3xl font-bold text-gray-800">Penjadwalan</h1>
+                <h1 class="text-3xl font-bold text-gray-800">Plotting Jadwal Matakuliah</h1>
             </div>
         </div>
 

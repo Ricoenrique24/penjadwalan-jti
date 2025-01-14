@@ -19,7 +19,8 @@ class Jadwal extends Model
         'id_jam',
         'tahun_ajaran',
         'semester',
-        'id_ruangan'
+        'id_ruangan',
+        'id_kelas'
     ];
 
     // Menyesuaikan jika nama kolom primary key bukan 'id'
@@ -50,6 +51,10 @@ class Jadwal extends Model
     public function ruangan()
     {
         return $this->belongsTo(Ruangan::class, 'id_ruangan');
+    }
+    public function kelas()
+    {
+        return $this->belongsTo(Kelas::class, 'id_kelas');
     }
     public function jam()
     {

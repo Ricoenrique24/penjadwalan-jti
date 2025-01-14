@@ -34,6 +34,7 @@
                         <th class="p-2 text-left">Jam</th>
                         <th class="p-2 text-left">Mata Kuliah</th>
                         <th class="p-2 text-left">Semester</th>
+                        <th class="p-2 text-left">Kelas</th>
                         <th class="p-2 text-left">Ruangan</th>
                         <th class="p-2 text-left">Dosen Pengampu</th>
                         <th class="p-2 text-left">Teknisi</th>
@@ -48,6 +49,7 @@
                             </td>
                             <td class="px-4 py-4 text-sm text-gray-700">{{ $dt->matkul->nama_matkul }}</td>
                             <td class="px-4 py-4 text-sm text-gray-700">{{ $dt->matkul->semester }}</td>
+                            <td class="px-4 py-4 text-sm text-gray-700">{{ $dt->kelas->golongan }} - {{ $dt->kelas->prodi }}
                             <td class="px-4 py-4 text-sm text-gray-700">{{ $dt->ruangan->nama_ruangan }}</td>
                             <td class="px-4 py-4 text-sm text-gray-700">
                                 @foreach ($dt->dosens as $item)

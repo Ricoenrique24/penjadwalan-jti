@@ -37,6 +37,7 @@
                         <th class="p-2 text-left">Jam</th>
                         <th class="p-2 text-left">Mata Kuliah</th>
                         <th class="p-2 text-left">Semester</th>
+                        <th class="p-2 text-left">Kelas</th>
                         <th class="p-2 text-left">Ruangan</th>
                         <th class="p-2 text-left">Dosen Pengampu</th>
                         <th class="p-2 text-left">Teknisi</th>
@@ -53,6 +54,8 @@
                             </td>
                             <td class="px-4 py-4 text-sm text-gray-700 text-wrap">{{ $dt->matkul->nama_matkul }}</td>
                             <td class="px-4 py-4 text-sm text-gray-700">{{ $dt->matkul->semester }}</td>
+                            <td class="px-4 py-4 text-sm text-gray-700">{{ $dt->kelas->golongan }} - {{ $dt->kelas->prodi }}
+                            </td>
                             <td class="px-4 py-4 text-sm text-gray-700">{{ $dt->ruangan->nama_ruangan }}</td>
                             <td class="px-4 py-4 text-sm text-gray-700 text-wrap">
                                 @foreach ($dt->dosens as $item)
@@ -201,6 +204,23 @@
                                                     </select>
                                                 </div>
 
+                                                <div class="text-left">
+                                                    <label class="block text-sm font-medium text-gray-900 mb-1"
+                                                        for="pair">
+                                                        Kelas
+                                                    </label>
+                                                    <select class="multiple_input text-sm rounded-lg "
+                                                        style="width: 100%;" data-placeholder="Select Kelas..."
+                                                        data-allow-clear="false" title="Select Kelas" name="kelas">
+                                                        @foreach ($kelas as $k)
+                                                            <option {{ $dt->kelas->id == $k->id ? 'selected' : '' }}
+                                                                value="{{ $k->id }}">{{ $k->golongan }} -
+                                                                {{ $k->prodi }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+
                                                 <!-- Ruangan -->
                                                 <div class="text-left">
                                                     <label for="ruangan"
@@ -217,6 +237,9 @@
                                                     </select>
                                                 </div>
 
+                                            </div>
+
+                                            <div class="grid grid-cols-2 gap-2 mt-4">
                                                 <!-- Dosen Pengampu -->
                                                 <div class="text-left">
                                                     <label class="block text-sm font-medium text-gray-900 mb-1"
@@ -251,9 +274,8 @@
                                                         @endforeach
                                                     </select>
                                                 </div>
-
-
                                             </div>
+
                                             <div class="flex justify-end mt-4">
                                                 <button type="submit"
                                                     class="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300 font-medium text-sm">
@@ -353,6 +375,20 @@
                             </div>
 
                             <div class="text-left">
+                                <label class="block text-sm font-medium text-gray-900 mb-1" for="pair">
+                                    Kelas
+                                </label>
+                                <select class="multiple_input text-sm rounded-lg " style="width: 100%;"
+                                    data-placeholder="Select Kelas..." data-allow-clear="false" title="Select Kelas"
+                                    name="kelas">
+                                    @foreach ($kelas as $k)
+                                        <option value="{{ $k->id }}">{{ $k->golongan }} - {{ $k->prodi }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="text-left">
                                 <label for="ruangan" class="block text-sm font-medium text-gray-900">Ruangan</label>
                                 <select name="ruangan" id="ruangan"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
@@ -363,6 +399,9 @@
                                 </select>
                             </div>
 
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4 mt-4">
                             <div class="text-left">
                                 <label class="block text-sm font-medium text-gray-900 mb-1" for="pair">
                                     Dosen Pengampu
@@ -388,7 +427,6 @@
                                     @endforeach
                                 </select>
                             </div>
-
                         </div>
 
                         <div class="flex justify-end mt-4">
